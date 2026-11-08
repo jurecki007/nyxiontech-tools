@@ -52,6 +52,9 @@ Polish pages (strony po polsku): [Narzędzia PDF](https://tools.nyxiontech.com/p
 ## Guides
 
 - [How to check a PDF redaction really removed the text](https://tools.nyxiontech.com/guides/check-pdf-redaction): copy-paste, search and pdftotext checks; comments, forms and metadata.
+- [How to sign a PDF without uploading it](https://tools.nyxiontech.com/guides/sign-pdf-without-uploading): drawn, typed or scanned signature in the browser; simple vs qualified signatures (eIDAS art. 25, US ESIGN Act).
+- [How to check and remove hidden PDF metadata](https://tools.nyxiontech.com/guides/remove-pdf-metadata): information dictionary and XMP, pdfinfo and exiftool checks, what Edit metadata removes and what it keeps.
+- [How to compress a PDF to send it by e-mail](https://tools.nyxiontech.com/guides/compress-pdf-for-email): e-mail size limits and base64 overhead, lossless vs image levels, what compression cannot shrink.
 - [Anonimizacja dokumentów PDF zgodnie z RODO](https://tools.nyxiontech.com/pl/poradnik/anonimizacja-pdf-rodo) (Polish): anonymisation vs pseudonymisation, verification, checklist for CVs and contracts.
 
 ## Frequently asked questions

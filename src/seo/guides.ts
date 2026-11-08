@@ -30,6 +30,13 @@ const EDPB_PSEUDONYMISATION = 'https://www.edpb.europa.eu/news/news/2025/edpb-ad
 const PORTAL_OSWIATOWY_BIP = 'https://www.portaloswiatowy.pl/wazne-wydarzenia-dla-szkol-i-przedszkoli/bip-w-szkole-pod-kontrola-uodo-27339.html';
 const WPROST_MEN = 'https://www.wprost.pl/polityka/12145822/men-zaliczylo-wpadke-chodzi-o-anonimizacje-danych.html';
 const KSEF_TERMINY = 'https://ksef.podatki.gov.pl/od-kiedy-trzeba-wystawiac-faktury-w-ksef';
+const EIDAS = 'https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32014R0910';
+const ESIGN = 'https://www.govinfo.gov/content/pkg/USCODE-2024-title15/html/USCODE-2024-title15-chap96.htm';
+const PDF2_METADATA = 'https://pdf-issues.pdfa.org/32000-2-2020/clause14.html#H14.3';
+const WORD_TO_PDF = 'https://support.microsoft.com/office/save-or-convert-to-pdf-d85416c5-7d77-4fd6-a216-6f4bf7c7c110';
+const EXIFTOOL_PDF = 'https://exiftool.org/TagNames/PDF.html';
+const OUTLOOK_LIMITS = 'https://support.microsoft.com/en-us/office/send-large-files-with-outlook-8c698842-b462-4a4c-8d53-5c5dd04f77ef';
+const RFC2045_BASE64 = 'https://www.rfc-editor.org/rfc/rfc2045#section-6.8';
 
 export const GUIDES: Guide[] = [
   {
@@ -390,6 +397,250 @@ export const GUIDES: Guide[] = [
       },
       { p: 'Whichever tool you use, run the five checks on the result before you send it.' },
       { p: '**[Open Redact PDF](/redact-pdf)**' },
+    ],
+  },
+  {
+    path: '/guides/sign-pdf-without-uploading',
+    lang: 'en',
+    tool: 'sign',
+    title: 'How to sign a PDF without uploading it',
+    description:
+      'Sign a contract or lease in your browser with a drawn, typed or scanned signature, and what such a signature means under eIDAS and the US ESIGN Act.',
+    h1: 'How to sign a PDF without uploading it',
+    name: 'Guide: sign a PDF without uploading it',
+    published: '2026-11-08',
+    blocks: [
+      {
+        p: 'You have a lease or a contract as a PDF and need to sign it and send it back. Most online signing sites want the document uploaded first, which puts a contract with your name, address and often bank details on someone else\'s server. This guide shows how to sign a PDF in your browser with our [Sign PDF](/sign-pdf) tool, where the file stays on your device, and what kind of signature you end up with.',
+      },
+      { p: 'This is a practical guide, not legal advice. For a high-value contract, ask the other side or a lawyer what they accept.' },
+
+      { h2: 'Sign the PDF step by step' },
+      {
+        ol: [
+          'Open [Sign PDF](/sign-pdf) and drop the file on **Choose PDF files to open in the editor**, or click it to pick the file. If you choose several PDFs, they are merged into one document. Your browser reads the file; nothing is sent to a server.',
+          'The **Add signature** dialog opens with the document. Pick a tab: **Draw** to sign with a mouse, touchpad or finger; **Type** to enter your name under **Your name** and choose one of three handwriting fonts; or **Upload image** to use a photo or scan of your signature on paper (click **Choose image**).',
+          'For a drawn or typed signature, pick the **Ink** colour: black, dark blue or dark green. **Clear** empties the drawing pad. For an upload, keep **Remove white background** ticked so that only the ink lands on the page.',
+          'Click **Insert signature**. It appears near the bottom right of the current page. With the **Select** tool, drag it into place and use the corner handle to resize it.',
+          'To add the date, your printed name or initials, pick **Text** in the sidebar, click where the text should start and type. To sign another page, go to it and pick **Signature** in the sidebar, or press S.',
+          'Check the name under **File name used for download** and click **Download PDF**.',
+        ],
+      },
+      { p: 'Next time, the dialog offers **Use last**, which inserts the signature you made before.' },
+
+      { h2: 'What changes in the file' },
+      {
+        ul: [
+          'The signature is drawn into the page as a PNG image with a transparent background, like a stamp or a logo.',
+          'The download is a new PDF built from the pages of the original. Their text stays selectable and searchable, but document properties such as title and author are not carried over.',
+          'If the PDF already carries a certificate-based digital signature from the other party, that signature will not validate in the new file. Sign first and let them sign after you, or ask for a copy that is not yet digitally signed.',
+        ],
+      },
+
+      { h2: 'What kind of signature this is in the EU' },
+      {
+        p: 'The eIDAS Regulation, [Regulation (EU) No 910/2014](' +
+          EIDAS +
+          '), defines an electronic signature broadly in Article 3(10): "data in electronic form which is attached to or logically associated with other data in electronic form and which is used by the signatory to sign". An image of your signature placed on a contract and sent by you fits that definition. It is usually called a simple electronic signature.',
+      },
+      {
+        p: 'Article 25(1) says such a signature "shall not be denied legal effect and admissibility as evidence in legal proceedings solely on the grounds that it is in an electronic form or that it does not meet the requirements for qualified electronic signatures". Article 25(2) sets the higher bar: "A qualified electronic signature shall have the equivalent legal effect of a handwritten signature." A qualified signature needs a qualified certificate from a trust service provider. An advanced signature (Article 26) must be uniquely linked to you and make later changes detectable. A drawn or typed image is neither.',
+      },
+      {
+        p: 'In practice, a simple signature counts but does not prove itself: if it is disputed, other evidence matters, such as the e-mail you sent the file with. Where national law requires a handwritten or qualified signature for a document, an image is not enough.',
+      },
+
+      { h2: 'And in the United States' },
+      {
+        p: 'The [ESIGN Act](' +
+          ESIGN +
+          ') says that, for transactions in or affecting interstate or foreign commerce, a signature or contract "may not be denied legal effect, validity, or enforceability solely because it is in electronic form" (15 U.S.C. 7001(a)). Section 7006 defines an electronic signature as "an electronic sound, symbol, or process, attached to or logically associated with a contract or other record and executed or adopted by a person with the intent to sign the record". Section 7003 leaves some documents out, among them wills, adoption and divorce matters, court documents, and eviction or foreclosure notices for a primary residence.',
+      },
+
+      { h2: 'Limits to know about' },
+      {
+        ul: [
+          'There is no certificate and no tamper seal. Anyone with a PDF editor can change the file after you sign it, or copy your signature image out of it. Send signed files only to the people who need them.',
+          'Existing text in the PDF cannot be edited. Fill blanks with **Text**, or use [Fill PDF form](/fill-pdf-form) first if the PDF has interactive fields.',
+        ],
+      },
+
+      { h2: 'Privacy on a shared computer' },
+      {
+        p: 'Nothing is uploaded, but two things stay in the browser on purpose: your last signature, so that **Use last** works, and the document itself, under **Recent documents** on the dashboard. On a shared computer, remove the document there with **Delete** and clear the site data in the browser settings to drop the signature, or work in a private window, which forgets both when closed.',
+      },
+      { p: '**[Open Sign PDF](/sign-pdf)**' },
+    ],
+  },
+  {
+    path: '/guides/remove-pdf-metadata',
+    lang: 'en',
+    tool: 'metadata',
+    title: 'How to check and remove hidden PDF metadata',
+    description:
+      'A PDF can carry the author\'s name, the app that made it, dates and an XMP copy of it all. How to see that metadata and remove it before you share the file.',
+    h1: 'How to check and remove hidden PDF metadata',
+    name: 'Guide: check and remove PDF metadata',
+    published: '2026-11-08',
+    blocks: [
+      {
+        p: 'Before you publish a PDF, send it to a client or submit it anonymously, look at what the file says about itself. Besides the pages, a PDF can carry the name of the person who wrote it, the program that made it, when it was created and last changed, and sometimes the title of an earlier draft. None of this shows on the page. This guide shows where that metadata sits, how to check it, and what our [Edit metadata](/edit-pdf-metadata) tool removes and what it leaves.',
+      },
+
+      { h2: 'Where the metadata lives' },
+      {
+        p: 'A PDF has two places for document metadata. The older one is the document information dictionary, with entries such as Title, Author, Subject, Keywords, Creator (the app that made the original, for example a word processor), Producer (the software that wrote the PDF), CreationDate and ModDate. The newer one is an XMP metadata stream, an XML packet stored inside the file. The PDF 2.0 standard, ISO 32000-2, calls metadata streams the preferred method and also allows them on parts of a document, not only on the whole file ([clause 14.3](' +
+          PDF2_METADATA +
+          ')).',
+      },
+      {
+        p: 'Many apps write both, so a name can be in the file twice. Microsoft Word, for example, puts the document properties into an exported PDF when **Document properties** is selected in the options of the PDF export ([Microsoft support](' +
+          WORD_TO_PDF +
+          ')).',
+      },
+      {
+        p: 'Other places can name people too: each comment stores the name of whoever wrote it, photos inside the PDF can keep their own camera data, and the file name is often the most revealing of all.',
+      },
+
+      { h2: 'How to check what a PDF contains' },
+      {
+        ol: [
+          '**In your PDF viewer.** Most viewers show the information dictionary under Document properties. Few show the XMP packet.',
+          '**With pdfinfo.** pdfinfo, part of Poppler (`poppler-utils` on most Linux systems, `poppler` in Homebrew on a Mac), prints the information dictionary. With `-meta` it prints the XMP packet instead.',
+          '**With exiftool.** `exiftool -a -G1` lists both, each entry labelled with its group, so you can see whether a value comes from the information dictionary or from XMP.',
+          '**In the tool.** Drop the file on [Edit metadata](/edit-pdf-metadata) to see the six text fields of the information dictionary. The tool does not show the dates or the XMP packet, so use pdfinfo or exiftool for those.',
+        ],
+      },
+      { pre: 'pdfinfo report.pdf\npdfinfo -meta report.pdf\nexiftool -a -G1 report.pdf' },
+
+      { h2: 'Remove it with Edit metadata' },
+      {
+        ol: [
+          'Open [Edit metadata](/edit-pdf-metadata) and drop the PDF on **Choose a PDF**. It is read in your browser and not uploaded.',
+          'The **Title**, **Author**, **Subject**, **Keywords**, **Creator** and **Producer** fields show what the file contains. Edit any of them, or click **Clear all fields**.',
+          'Click **Save metadata** and download the result. It keeps the original file name, so rename it if the name gives something away.',
+        ],
+      },
+      {
+        p: 'The tool writes the whole file again instead of appending a change at the end, so the old values are not left in an earlier revision. That is not a given: the ExifTool documentation warns that its own PDF edits are reversible because "old information is never actually deleted from the file" ([ExifTool PDF tags](' +
+          EXIFTOOL_PDF +
+          ')).',
+      },
+
+      { h2: 'What Edit metadata does not remove' },
+      {
+        ul: [
+          '**Creation and modification dates.** They stay as they are.',
+          '**The XMP packet.** If the file has one, it stays, with whatever author and title it holds.',
+          '**Comments, form field values and data inside embedded images.**',
+          '**Anything on the page.** A name in a header or footer is page text, not metadata. Remove it with [Redact PDF](/redact-pdf).',
+        ],
+      },
+
+      { h2: 'When the XMP packet or the dates must go too' },
+      {
+        p: 'Build a new file from the pages. In [Split PDF](/split-pdf), choose **By ranges**, type `1-` under **Ranges** and click **Split PDF**. You get one file with every page, named like `report_p1-12.pdf`.',
+      },
+      {
+        p: 'That file is made from scratch. The old information dictionary and the XMP packet of the document are not copied, both dates are set to the moment of the split, and Creator and Producer name pdf-lib, the library the tool uses. Run the result through Edit metadata if you want those two fields empty as well. Comments and any metadata attached to single pages or images travel with the pages. Bookmarks and interactive form fields of the original are not carried over, so do this on the final version.',
+      },
+
+      { h2: 'Checklist before you share' },
+      {
+        ul: [
+          '`pdfinfo` shows no name, company or old title you did not mean to share.',
+          '`pdfinfo -meta` prints nothing, or nothing personal.',
+          'The comments panel is empty, or holds only comments meant for the recipient.',
+          'The file name is neutral.',
+        ],
+      },
+      { p: '**[Open Edit metadata](/edit-pdf-metadata)**' },
+    ],
+  },
+  {
+    path: '/guides/compress-pdf-for-email',
+    lang: 'en',
+    tool: 'compress',
+    title: 'How to compress a PDF to send it by e-mail',
+    description:
+      'Why a PDF is too big for e-mail, which files shrink and which do not, and how to choose between lossless and image compression in your browser.',
+    h1: 'How to compress a PDF to send it by e-mail',
+    name: 'Guide: compress a PDF for e-mail',
+    published: '2026-11-08',
+    blocks: [
+      {
+        p: 'A PDF that is too big to attach is usually full of scanned pages or large photos. Compression helps a lot with those, and very little with a document that is mostly text. This guide explains what to expect, how to use our [Compress PDF](/compress-pdf) tool, which runs in your browser so the document is never uploaded, and what to do when compression is the wrong answer.',
+      },
+
+      { h2: 'How big is too big' },
+      {
+        p: 'The limit depends on your provider and on the recipient\'s server. Microsoft\'s Outlook help, for example, gives 20 MB for internet accounts such as Outlook.com or Gmail and a default of 10 MB for Exchange business accounts, counting the attachment and the message together ([Send large files with Outlook](' +
+          OUTLOOK_LIMITS +
+          ')).',
+      },
+      {
+        p: 'The attachment also grows on the way. E-mail carries files as base64 text, which encodes every 3 bytes as 4 characters ([RFC 2045, section 6.8](' +
+          RFC2045_BASE64 +
+          ')), so a file takes about a third more space in the message than on disk. A 16 MB PDF can already fail against a 20 MB limit.',
+      },
+
+      { h2: 'Which PDFs shrink' },
+      {
+        ul: [
+          '**Scans and photographed documents.** Every page is a picture, often at a high resolution. These shrink the most.',
+          '**Documents with large photos**, such as reports and brochures. They shrink, but turning their pages into images costs the text.',
+          '**Text documents exported from a word processor or a website.** They are usually small already. Turning their pages into images can make them bigger, not smaller.',
+        ],
+      },
+
+      { h2: 'The four levels' },
+      { p: 'Compress PDF has a **Level** switch with four options:' },
+      {
+        ul: [
+          '**Lossless** repacks the structure of the file and keeps the text, links, forms and quality. Savings are usually small, sometimes none.',
+          '**Light**, **Recommended** and **Strong** render every page as a JPEG image, at 150, 120 and 85 dpi, with stronger JPEG compression at each step, and build a new PDF from those images.',
+        ],
+      },
+      {
+        p: 'After Light, Recommended or Strong, text can no longer be selected or searched, links and form fields are gone, and the document properties are not carried over. Strong suits pages that only need to be read on screen; small print can become hard to read.',
+      },
+
+      { h2: 'Step by step' },
+      {
+        ol: [
+          'Open [Compress PDF](/compress-pdf) and drop the file on **Choose a PDF**.',
+          'Under **Level**, choose **Lossless** for a text document or **Recommended** for a scan.',
+          'Click **Compress**. The tool shows the size before and after and how much smaller the result is. If the file did not get smaller, it says so: try a stronger level, or keep the original.',
+          'Open the result and zoom in on the smallest print, a signature or a stamp. If it is hard to read, go back and try **Light**.',
+          'Click **Download**. The new file name ends in `_compressed`.',
+        ],
+      },
+      { p: 'Every page is rendered on your own device, so a long scan takes a while on an older phone or laptop. The progress is shown while it works.' },
+
+      { h2: 'Make a compressed scan searchable again' },
+      {
+        p: 'If the recipient needs to search or copy the text, run the compressed file through [OCR](/ocr-pdf), which recognises Polish and English text and adds it back as a searchable layer. Check the size again afterwards.',
+      },
+
+      { h2: 'When compression is the wrong tool' },
+      {
+        ul: [
+          '**Photos of paper documents.** Shrink and resize the photos first with [Compress & convert images](/image-converter), then put them into one file with [Images to PDF](/image-to-pdf). Images to PDF keeps the pixel size of each photo, so smaller photos give a smaller PDF.',
+          '**Only some pages matter.** Send just those: in [Split PDF](/split-pdf), choose **Extract pages** and list them.',
+          '**It is still too big.** Split the document into parts and send several e-mails, or share it through a storage service you already use. Keep in mind that a shared link puts the file on that service.',
+        ],
+      },
+
+      { h2: 'What this tool cannot do' },
+      {
+        ul: [
+          'It cannot recompress the photos inside a PDF and keep the text. The image levels turn whole pages into pictures, and Lossless leaves images as they are.',
+          'It does not remove or shrink embedded fonts.',
+          'There is no target size: you pick a level and see the result.',
+          'A password-protected PDF has to be unlocked first with [Unlock PDF](/unlock-pdf). Protect the compressed file again with [Protect PDF](/protect-pdf) if it needs a password.',
+        ],
+      },
+      { p: '**[Open Compress PDF](/compress-pdf)**' },
     ],
   },
 ];

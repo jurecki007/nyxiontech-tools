@@ -73,6 +73,9 @@ test.describe('static tool pages', () => {
     for (const id of TOOL_IDS) expect(xml).toContain(`<xhtml:link rel="alternate" hreflang="pl" href="${SITE}${toolPath(id, 'pl')}" />`);
     expect(GUIDES.map((g) => g.path).sort()).toEqual([
       '/guides/check-pdf-redaction',
+      '/guides/compress-pdf-for-email',
+      '/guides/remove-pdf-metadata',
+      '/guides/sign-pdf-without-uploading',
       '/pl/poradnik/anonimizacja-bip-szkola',
       '/pl/poradnik/anonimizacja-pdf-rodo',
       '/pl/poradnik/ocr-i-laczenie-dokumentow-bez-chmury',
