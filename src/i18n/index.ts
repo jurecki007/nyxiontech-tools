@@ -12,14 +12,18 @@
 import { useSyncExternalStore } from 'react';
 import { isDesktop } from '../lib/desktop';
 import { parsePath, type Lang } from '../utilities/routes';
+import { de } from './de';
 import { en, type Messages } from './en';
+import { es } from './es';
+import { fr } from './fr';
 import { pl } from './pl';
+import { uk } from './uk';
 
 export type { Messages } from './en';
-export { plural } from './plural';
+export { plural, pluralUk } from './plural';
 
 /** Every interface language. Each one must have every key of `en` (TypeScript checks it). */
-export const MESSAGES = { en, pl } satisfies Record<Lang, Messages> & Record<string, Messages>;
+export const MESSAGES = { en, pl, de, es, fr, uk } satisfies Record<Lang, Messages> & Record<string, Messages>;
 
 export type UiLang = keyof typeof MESSAGES;
 export const UI_LANGS = Object.keys(MESSAGES) as UiLang[];
@@ -28,6 +32,10 @@ export const UI_LANGS = Object.keys(MESSAGES) as UiLang[];
 export const LANG_NAMES: Record<UiLang, { short: string; name: string }> = {
   en: { short: 'EN', name: 'English' },
   pl: { short: 'PL', name: 'Polski' },
+  de: { short: 'DE', name: 'Deutsch' },
+  es: { short: 'ES', name: 'Español' },
+  fr: { short: 'FR', name: 'Français' },
+  uk: { short: 'UA', name: 'Українська' },
 };
 
 const isUiLang = (l: string | null | undefined): l is UiLang => !!l && (UI_LANGS as string[]).includes(l);

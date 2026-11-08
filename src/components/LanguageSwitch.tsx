@@ -8,8 +8,9 @@ import { TOOL_SLUGS, type Lang } from '../utilities/routes';
 const WEB_LANGS = Object.keys(Object.values(TOOL_SLUGS)[0]) as Lang[];
 
 /**
- * EN / PL switch. On the web each option is a link to the same page in that language
- * (/merge-pdf, /pl/polacz-pdf); in the desktop app it switches the language and remembers it.
+ * The language switch. On the web it offers the languages that have addresses (EN, PL) and each
+ * option is a link to the same page in that language (/merge-pdf, /pl/polacz-pdf); in the desktop
+ * app it lists every interface language, switches to it and remembers the choice.
  */
 export function LanguageSwitch() {
   const t = useT();
