@@ -74,11 +74,14 @@ test.describe('static tool pages', () => {
     expect(GUIDES.map((g) => g.path).sort()).toEqual([
       '/guides/check-pdf-redaction',
       '/guides/compress-pdf-for-email',
+      '/guides/heic-to-jpg-without-uploading',
+      '/guides/pdf-to-word-without-uploading',
       '/guides/remove-pdf-metadata',
       '/guides/sign-pdf-without-uploading',
       '/pl/poradnik/anonimizacja-bip-szkola',
       '/pl/poradnik/anonimizacja-pdf-rodo',
       '/pl/poradnik/ocr-i-laczenie-dokumentow-bez-chmury',
+      '/pl/poradnik/podpis-pdf-bez-wysylania',
     ]);
     // A guide exists in one language only: no alternates.
     for (const g of GUIDES) expect(xml).toContain(`<url>\n    <loc>${SITE}${g.path}</loc>\n  </url>`);

@@ -37,6 +37,12 @@ const WORD_TO_PDF = 'https://support.microsoft.com/office/save-or-convert-to-pdf
 const EXIFTOOL_PDF = 'https://exiftool.org/TagNames/PDF.html';
 const OUTLOOK_LIMITS = 'https://support.microsoft.com/en-us/office/send-large-files-with-outlook-8c698842-b462-4a4c-8d53-5c5dd04f77ef';
 const RFC2045_BASE64 = 'https://www.rfc-editor.org/rfc/rfc2045#section-6.8';
+const EIDAS_PL = 'https://eur-lex.europa.eu/legal-content/PL/TXT/HTML/?uri=CELEX:32014R0910';
+const KODEKS_CYWILNY = 'https://eli.gov.pl/eli/DU/2025/1071/ogl/pol/pdf';
+const USTAWA_INFORMATYZACJA = 'https://eli.gov.pl/eli/DU/2024/1557/ogl/pol/pdf';
+const GOV_PODPIS = 'https://www.gov.pl/web/gov/podpisz-dokument-elektronicznie-wykorzystaj-podpis-zaufany';
+const APPLE_HEIF = 'https://support.apple.com/en-us/116944';
+const WORD_OPEN_PDF = 'https://support.microsoft.com/en-us/word/opening-pdfs-in-word';
 
 export const GUIDES: Guide[] = [
   {
@@ -641,6 +647,238 @@ export const GUIDES: Guide[] = [
         ],
       },
       { p: '**[Open Compress PDF](/compress-pdf)**' },
+    ],
+  },
+  {
+    path: '/pl/poradnik/podpis-pdf-bez-wysylania',
+    lang: 'pl',
+    tool: 'sign',
+    title: 'Jak podpisać PDF bez wysyłania pliku na serwer',
+    description:
+      'Podpis rysowany, wpisany lub ze skanu wstawisz w przeglądarce. Czym jest według eIDAS i kiedy potrzebny jest podpis zaufany albo kwalifikowany.',
+    h1: 'Jak podpisać PDF w przeglądarce bez wysyłania pliku',
+    name: 'Poradnik: podpis PDF bez wysyłania pliku',
+    published: '2026-11-08',
+    blocks: [
+      {
+        p: 'Umowa najmu, umowa zlecenia albo oświadczenie przychodzi jako PDF i trzeba je odesłać z podpisem. Większość serwisów do podpisywania każe najpierw wgrać dokument, razem z Twoimi danymi. Ten poradnik pokazuje, jak podpisać PDF w narzędziu [Podpisz PDF](/pl/podpisz-pdf), które działa w przeglądarce, i wyjaśnia, czym prawnie jest taki podpis, a kiedy potrzebny jest podpis zaufany albo kwalifikowany.',
+      },
+      { p: 'To poradnik praktyczny, a nie porada prawna. Przy ważnej umowie zapytaj drugą stronę albo prawnika, jaki podpis przyjmie.' },
+
+      { h2: 'Podpisz PDF krok po kroku' },
+      {
+        ol: [
+          'Otwórz [Podpisz PDF](/pl/podpisz-pdf) i upuść plik na pole **Wybierz pliki PDF do otwarcia w edytorze** albo kliknij je i wybierz plik. Plik odczytuje przeglądarka; nic nie trafia na serwer.',
+          'Razem z dokumentem otwiera się okno **Dodaj podpis**. Wybierz kartę: **Narysuj**, żeby podpisać się myszką, touchpadem lub palcem; **Wpisz**, żeby wpisać **Imię i nazwisko** i wybrać jedną z trzech odręcznych czcionek; albo **Wgraj obraz**, żeby użyć zdjęcia lub skanu podpisu z kartki (przycisk **Wybierz obraz**).',
+          'Przy podpisie rysowanym lub wpisanym wybierz kolor w polu **Atrament**: czarny, granatowy lub ciemnozielony. Przy wgrywaniu zostaw zaznaczone **Usuń białe tło**, żeby na stronę trafił sam podpis.',
+          'Kliknij **Wstaw podpis**. Podpis pojawi się przy prawym dolnym rogu bieżącej strony. Narzędziem **Zaznacz** przeciągnij go na miejsce, a uchwytem w rogu zmień rozmiar.',
+          'Datę albo parafkę dodasz narzędziem **Tekst**: kliknij na stronie i pisz. Żeby podpisać kolejną stronę, przejdź do niej i wybierz **Podpis** na pasku narzędzi albo naciśnij S.',
+          'Sprawdź **Nazwa pliku do pobrania** i kliknij **Pobierz PDF**.',
+        ],
+      },
+
+      { h2: 'Co zmienia się w pliku' },
+      {
+        ul: [
+          'Podpis trafia na stronę jako obraz PNG z przezroczystym tłem, tak jak pieczątka albo logo.',
+          'Pobierasz nowy PDF ze stron oryginału. Tekst da się nadal zaznaczać, ale tytuł i autor z właściwości dokumentu nie są przenoszone.',
+          'Jeśli PDF ma już podpis elektroniczny drugiej strony oparty na certyfikacie, np. kwalifikowany albo zaufany, w nowym pliku ten podpis nie będzie się weryfikował. Podpisz jako pierwszy albo poproś o wersję bez podpisu.',
+        ],
+      },
+
+      { h2: 'Czym jest podpis w formie obrazu według eIDAS' },
+      {
+        p: 'Rozporządzenie eIDAS, czyli [rozporządzenie (UE) nr 910/2014](' +
+          EIDAS_PL +
+          '), w art. 3 pkt 10 definiuje podpis elektroniczny bardzo szeroko: to „dane w postaci elektronicznej, które są dołączone lub logicznie powiązane z innymi danymi w postaci elektronicznej, i które użyte są przez podpisującego jako podpis”. Obraz podpisu wstawiony w umowę i wysłany przez Ciebie mieści się w tej definicji. To tak zwany zwykły podpis elektroniczny.',
+      },
+      {
+        p: 'Art. 25 ust. 1 stanowi, że podpisowi elektronicznemu „nie można odmówić skutku prawnego ani dopuszczalności jako dowodu w postępowaniu sądowym wyłącznie z tego powodu, że podpis ten ma postać elektroniczną lub że nie spełnia wymogów dla kwalifikowanych podpisów elektronicznych”. Wyżej stoi podpis zaawansowany (art. 26), przy którym „każda późniejsza zmiana danych jest rozpoznawalna”. Najwyżej jest podpis kwalifikowany, który według art. 25 ust. 2 „ma skutek prawny równoważny podpisowi własnoręcznemu”. Opiera się na kwalifikowanym certyfikacie (art. 3 pkt 12). Obraz podpisu nie jest ani zaawansowany, ani kwalifikowany.',
+      },
+      { p: 'Zwykły podpis się liczy, ale sam niczego nie dowodzi: w sporze ważne są inne dowody, np. e-mail, z którym wysłano plik.' },
+
+      { h2: 'Podpis zaufany i podpis kwalifikowany' },
+      {
+        p: 'Usługa [Podpisz dokument elektronicznie](' +
+          GOV_PODPIS +
+          ') w serwisie gov.pl pozwala podpisać plik profilem zaufanym (podpis zaufany), e-dowodem (podpis osobisty) albo certyfikatem kwalifikowanym (podpis kwalifikowany). Profil zaufany założysz bezpłatnie, a podpis zaufany to według gov.pl najczęściej stosowana, bezpłatna metoda. Działa to jednak inaczej niż nasze narzędzie: dokument dodajesz na stronie podpis.gov.pl, czyli wysyłasz go do usługi rządowej. Naraz podpiszesz do 5 plików, łącznie do 25 MB. Do podpisu kwalifikowanego potrzebny jest certyfikat kwalifikowany, czytnik karty i aplikacja Podpis GOV.',
+      },
+      {
+        p: 'Według art. 20ae ust. 2 [ustawy o informatyzacji działalności podmiotów realizujących zadania publiczne](' +
+          USTAWA_INFORMATYZACJA +
+          ') dane opatrzone podpisem zaufanym „są równoważne pod względem skutków prawnych dokumentowi opatrzonemu podpisem własnoręcznym, chyba że przepisy odrębne stanowią inaczej”.',
+      },
+
+      { h2: 'Kiedy który podpis jest potrzebny' },
+      {
+        p: 'Formy czynności prawnych określa [Kodeks cywilny](' +
+          KODEKS_CYWILNY +
+          ') (tekst jednolity: Dz.U. z 2025 r. poz. 1071). Forma pisemna to według art. 78 § 1 własnoręczny podpis na dokumencie. Art. 78¹ § 1: „Do zachowania elektronicznej formy czynności prawnej wystarcza złożenie oświadczenia woli w postaci elektronicznej i opatrzenie go kwalifikowanym podpisem elektronicznym”, a § 2 dodaje, że taka forma jest równoważna z pisemną. Do formy dokumentowej (art. 77²) wystarcza dokument, który pozwala ustalić, kto złożył oświadczenie.',
+      },
+      {
+        ul: [
+          '**Brak wymaganej formy.** Według art. 60 wolę można wyrazić każdym zachowaniem, także w postaci elektronicznej, więc zwykle wystarczy PDF z podpisem w formie obrazu.',
+          '**Forma dokumentowa**, np. umowa pożyczki powyżej tysiąca złotych (art. 720 § 2). PDF z podpisem w formie obrazu wysłany z Twojego adresu zwykle się nada.',
+          '**Forma pisemna albo elektroniczna.** Obraz podpisu nie wystarcza: potrzebny jest podpis własnoręczny na papierze albo podpis kwalifikowany. Przykład: umowa najmu nieruchomości lub pomieszczenia na dłużej niż rok „powinna być zawarta na piśmie” (art. 660), inaczej uważa się ją za zawartą na czas nieoznaczony. Jeśli chcesz użyć podpisu zaufanego, ustal wcześniej z drugą stroną, czy go przyjmie.',
+          '**Skutki braku formy.** Według art. 73 § 1 czynność bez zastrzeżonej formy jest nieważna tylko wtedy, gdy ustawa przewiduje rygor nieważności. W innych przypadkach art. 74 § 1 ogranicza dowody w sporze, np. zeznania świadków.',
+        ],
+      },
+
+      { h2: 'Ograniczenia' },
+      {
+        ul: [
+          'Nie ma certyfikatu ani zabezpieczenia przed zmianą. Każdy, kto ma edytor PDF, może zmienić plik po podpisaniu albo skopiować z niego obraz podpisu.',
+          'Istniejącego tekstu w PDF nie da się przepisać. Puste miejsca wypełnij narzędziem **Tekst**, a pola interaktywne w narzędziu [Wypełnij formularz PDF](/pl/wypelnij-formularz-pdf).',
+          'Ostatni podpis zostaje w przeglądarce (przycisk **Użyj ostatniego**), a dokument w sekcji **Ostatnie dokumenty** na pulpicie. Na wspólnym komputerze usuń dokument przyciskiem **Usuń**, a podpis, czyszcząc dane witryny, albo pracuj w oknie prywatnym.',
+        ],
+      },
+      { p: '**[Otwórz narzędzie Podpisz PDF](/pl/podpisz-pdf)**' },
+    ],
+  },
+  {
+    path: '/guides/heic-to-jpg-without-uploading',
+    lang: 'en',
+    tool: 'heic-to-jpg',
+    title: 'How to convert HEIC to JPG without uploading',
+    description:
+      'Convert iPhone HEIC photos to JPG in your browser, in batches, with a quality slider and optional resizing. What happens to EXIF data, and the limits.',
+    h1: 'How to convert HEIC photos to JPG without uploading them',
+    name: 'Guide: convert HEIC to JPG without uploading',
+    published: '2026-11-08',
+    blocks: [
+      {
+        p: 'Photos from an iPhone or iPad are often HEIC files. They take less space than JPG, but plenty of websites, forms and older computers refuse them. Most online converters want the photos uploaded first, and personal photos tend to show your home, your family or the documents you photographed. This guide shows how to convert them in your browser with our [HEIC to JPG](/heic-to-jpg) tool, where the photos stay on your device, and how to stop the problem at the source.',
+      },
+
+      { h2: 'What HEIC is' },
+      {
+        p: 'Apple\'s support page [Using HEIF or HEVC media on Apple devices](' +
+          APPLE_HEIF +
+          ') explains that iOS 11 and macOS High Sierra introduced HEIF (High Efficiency Image File Format) for photos and HEVC for videos, and that both "offer better compression than JPEG and H.264, so they use less storage space on your devices and iCloud Photos, while preserving the same visual quality." It lists the iPhone 7 and later among the devices that capture in these formats. The tool accepts files ending in `.heic` and `.heif`.',
+      },
+
+      { h2: 'Convert HEIC to JPG step by step' },
+      {
+        ol: [
+          'Open [HEIC to JPG](/heic-to-jpg) and drop the photos on **Add images**, or click it to choose them. You can add as many as you like, and add more later. The files are read by your browser; nothing is sent to a server.',
+          'Under **Save as**, keep **JPG**. **WebP** gives smaller files that all modern browsers open, and **PNG** is lossless but larger.',
+          'Set the quality slider, which starts at **Quality 80%** and goes from 30% to 100%. The hint next to it says 70 to 85% usually looks the same as the original. PNG has no quality setting.',
+          'To make the photos smaller, tick **Shrink images larger than** under **Resize** and fill in **Max width (px)** and **Max height (px)**. Both start at 1920. Larger photos are scaled down to fit that box with their proportions kept; smaller ones keep their size.',
+          'Click the convert button, which names the count, for example **Convert 12 images**. A progress bar shows how far it has got.',
+          'With one photo, click **Download**. With several, **Download all (.zip)** saves them in `images.zip`, or download them one by one from the list. Each file keeps its name, with `.jpg` in place of `.heic`. The tool also shows the total size before and after.',
+        ],
+      },
+      { p: 'The same converter is also on the [Compress & convert images](/image-converter) page, and it takes JPG, PNG, WebP and GIF too. To put HEIC photos straight into a PDF, use [Images to PDF](/image-to-pdf).' },
+
+      { h2: 'What happens to the photo and its data' },
+      {
+        ul: [
+          'Each HEIC photo is decoded on your device by libheif, a HEIF decoder that the page loads only when you convert one. The rotation stored in the photo is applied, so portrait shots stay upright.',
+          'The JPG is drawn fresh from the decoded pixels. None of the original metadata is copied: as the tool notes after converting, location and camera data (EXIF) are removed. That also drops the date and time the photo was taken, so keep the originals if you need them.',
+          'Conversion runs on your own processor, so a large batch takes a while on an older phone or laptop.',
+        ],
+      },
+
+      { h2: 'What it cannot do' },
+      {
+        ul: [
+          'It converts only the first image stored in a HEIC file. If a file holds several images, the others are not converted.',
+          'It does not convert HEVC videos.',
+          'The result is a standard 8-bit image, so any extra brightness range a photo stores for HDR displays is not carried over.',
+          'There is no option to keep the EXIF data.',
+          'JPG and WebP are lossy: each conversion loses a little detail, at any quality setting. Keep the HEIC files if you may need full quality later.',
+          'A damaged file, or one that is not an image, is reported with "Could not read" and its name, and the batch stops there. Remove that file from the list and convert again.',
+        ],
+      },
+
+      { h2: 'Avoid HEIC on the iPhone' },
+      { p: 'Apple\'s page also describes how to get JPG files in the first place:' },
+      {
+        ul: [
+          '**Shoot in JPG.** Open Settings, tap Camera, tap Formats, then tap Most Compatible. According to Apple, "All new photos and videos will now use JPEG or H.264 format." Choose High Efficiency to go back.',
+          '**Sharing.** When you share by AirDrop, Messages or e-mail and the receiving device does not support the newer formats, photos "might automatically be shared in a more compatible format, such as JPEG".',
+          '**Import over USB.** Importing into Photos, Image Capture or a PC may convert photos to JPEG. If you want the originals, Apple says to open Settings, tap Apps, tap Photos and choose Keep Originals.',
+          '**On a Mac.** Open the photo in Photos or Preview, choose File, then Export, and pick JPEG or PNG.',
+        ],
+      },
+      { p: '**[Open HEIC to JPG](/heic-to-jpg)**' },
+    ],
+  },
+  {
+    path: '/guides/pdf-to-word-without-uploading',
+    lang: 'en',
+    tool: 'pdf-to-word',
+    title: 'How to convert PDF to Word without uploading',
+    description:
+      'Turn a PDF into an editable .docx in your browser. What carries over (text, paragraphs, bold, sizes), what does not (tables, columns, images) and why.',
+    h1: 'How to convert a PDF to Word without uploading it',
+    name: 'Guide: convert PDF to Word without uploading',
+    published: '2026-11-08',
+    blocks: [
+      {
+        p: 'You have a PDF and need to change its text in Word: a contract to reuse, an old CV, a report someone sent without the original file. Online converters usually upload the document first. Our [PDF to Word](/pdf-to-word) tool runs in your browser, so the file stays on your device. It is also a basic converter, and this guide is honest about what that means: you get the text to edit, not a copy of the layout.',
+      },
+
+      { h2: 'Why PDF to Word is hard' },
+      {
+        p: 'Microsoft\'s help page on [opening PDFs in Word](' +
+          WORD_OPEN_PDF +
+          ') puts it plainly: "PDF is a fixed file format, which means the file stores the location of text, pictures, and vector graphics on a page, but not necessarily the relationships among them." Most PDFs, it adds, "don\'t include information about structural content elements, such as paragraphs, tables, or columns", and a table is stored "as a set of lines without any relationship to the content inside the table cells."',
+      },
+      {
+        p: 'So every converter has to guess the structure. Word itself uses "a system of complex rules" to do it, and Microsoft still lists elements that do not convert well, among them tables with cell spacing, frames, footnotes that span more than one page, endnotes and PDF comments.',
+      },
+
+      { h2: 'Convert step by step' },
+      {
+        ol: [
+          'Open [PDF to Word](/pdf-to-word) and drop the file on **Choose a PDF**. It is read in your browser, not uploaded. A password-protected PDF has to be unlocked first with [Unlock PDF](/unlock-pdf).',
+          'Click **Convert to Word**.',
+          'Click **Download**. The file keeps the original name, with `.docx` at the end.',
+          'Open it in Word, LibreOffice or another editor and compare it with the PDF before you send it on.',
+        ],
+      },
+
+      { h2: 'What carries over' },
+      {
+        ul: [
+          'The text of every page, in the order the PDF stores it.',
+          'Line and paragraph breaks. Each line of the PDF becomes its own paragraph, and a large vertical gap between lines adds space after the paragraph above it.',
+          'Font sizes, between 6 and 72 pt.',
+          'Bold, where the name of the font says it is bold.',
+          'A page break after each page.',
+        ],
+      },
+
+      { h2: 'What does not carry over' },
+      {
+        ul: [
+          '**Tables.** The text of the cells comes out as lines of text, and the grid is gone.',
+          '**Columns.** Text set in two or more columns ends up in one. Where the PDF stores lines out of reading order, they come out in that order too.',
+          '**Images.** Photos, charts, logos and drawings are left out.',
+          '**Fonts.** The original typeface is not kept; the text uses the default font of the Word file. Bold is guessed from the font name, so it can be missed.',
+          '**Other formatting.** Italics, underline, colours, alignment, indents, heading styles, lists and links are lost, and so are comments and form fields. Headers, footers and page numbers become ordinary text on each page.',
+        ],
+      },
+      {
+        p: 'One thing to plan for: because each line is a separate paragraph, edited text does not reflow. Add a few words to a line and it gets longer instead of wrapping into the next one. Joining the lines of each paragraph you want to edit is the main clean-up job after converting.',
+      },
+
+      { h2: 'Scanned PDFs need OCR first' },
+      {
+        p: 'A scan is a picture of text, so there is no text for the converter to read and the Word file comes out empty. Run the scan through [OCR](/ocr-pdf) first: it recognises Polish and English text and adds it to the PDF as an invisible layer. Click **Recognise text**, download the result and convert that file. OCR mistakes come along into Word, so compare names, numbers and amounts with the scan.',
+      },
+
+      { h2: 'When another route is better' },
+      {
+        ul: [
+          '**You only need the text.** [PDF to text](/pdf-to-text) pulls it out to copy or save as a .txt file.',
+          '**You need a small change and the same layout.** Edit the PDF itself in [Edit PDF](/edit-pdf). Existing text cannot be rewritten in place, but you can cover it with **Whiteout** and type new text on top.',
+          '**The layout matters.** Ask the sender for the original .docx. Microsoft says its own conversion in Word "works best with files that are mostly text", and that a page made mostly of charts or graphics "might show up as an image".',
+          '**You are going the other way.** [Word to PDF](/word-to-pdf) turns a .docx into a PDF.',
+        ],
+      },
+      { p: '**[Open PDF to Word](/pdf-to-word)**' },
     ],
   },
 ];
