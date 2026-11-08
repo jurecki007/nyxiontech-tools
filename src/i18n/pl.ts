@@ -54,7 +54,7 @@ export const pl: Messages = {
     star: 'Gwiazdka na GitHubie',
     starTitle: 'Kod źródłowy na GitHubie. Gwiazdka pomaga innym go znaleźć.',
     install: 'Zainstaluj aplikację',
-    installTitle: 'Zainstaluj aplikację, aby otwierać PDF-y prosto z komputera lub telefonu',
+    installTitle: 'Zainstaluj aplikację, żeby otwierać pliki PDF prosto z komputera lub telefonu',
     openedFileError: 'Nie udało się odczytać otwartego pliku.',
     sharedFilesGone: 'Udostępnione pliki nie są już dostępne. Udostępnij je ponownie.',
     madeBy: 'Autor: Nyxiontech',
@@ -118,7 +118,7 @@ export const pl: Messages = {
     metadata: { label: 'Edytuj metadane', description: 'Zobacz i zmień tytuł, autora i inne ukryte właściwości dokumentu albo je wyczyść.' },
     merge: { label: 'Połącz PDF', description: 'Połącz kilka plików PDF w jeden, w wybranej kolejności.' },
     split: { label: 'Podziel PDF', description: 'Podziel PDF na pojedyncze strony lub zakresy albo wyodrębnij wybrane strony do nowego pliku.' },
-    organize: { label: 'Uporządkuj strony', description: 'Zmieniaj kolejność stron, obracaj, duplikuj i usuwaj je oraz łącz pliki na podglądzie.' },
+    organize: { label: 'Uporządkuj strony', description: 'Zmieniaj kolejność stron, obracaj je, duplikuj i usuwaj, a także łącz pliki na podglądzie.' },
     rotate: { label: 'Obróć PDF', description: 'Obróć wszystkie strony lub tylko wybrane o 90°, 180° albo 270°.' },
     compress: { label: 'Kompresuj PDF', description: 'Zmniejsz PDF, żeby zmieścił się w limicie e-maila lub formularza.' },
     ocr: {
@@ -318,12 +318,12 @@ export const pl: Messages = {
     characters: (n) => `Liczba znaków: ${n}`,
     noText: 'Nie znaleziono tekstu',
     downloadTxt: 'Pobierz .txt',
-    scanned: 'Ten PDF nie ma warstwy tekstowej, więc to pewnie skan. Najpierw przepuść go przez „OCR: przeszukiwalny PDF”, żeby dało się odczytać tekst.',
+    scanned: 'Ten PDF nie ma warstwy tekstowej, więc najprawdopodobniej jest to skan. Najpierw przepuść go przez „OCR: przeszukiwalny PDF”, żeby dało się odczytać tekst.',
   },
 
   pdfToWord: {
     tipKept: 'Zostają tekst, akapity, pogrubienia i rozmiary czcionek; tabele, kolumny i obrazy nie.',
-    tipScans: 'Zeskanowane PDF nie mają tekstu: najpierw przepuść je przez OCR.',
+    tipScans: 'Zeskanowane pliki PDF nie mają tekstu: najpierw przepuść je przez OCR.',
     run: 'Konwertuj na Word',
   },
 
@@ -332,7 +332,7 @@ export const pl: Messages = {
     chooseHint: 'Starsze pliki .doc najpierw zapisz w Wordzie jako .docx',
     save: 'Zapisz jako PDF',
     printHint: 'W oknie drukowania wybierz drukarkę „Zapisz jako PDF” (lub „Microsoft Print to PDF”).',
-    warnings: (n) => `Części formatowania nie udało się przenieść (uwagi: ${n}), na przykład własnych stylów.`,
+    warnings: (n) => `Nie udało się przenieść części formatowania (uwagi: ${n}), na przykład własnych stylów.`,
   },
 
   protect: {
@@ -504,7 +504,7 @@ export const pl: Messages = {
   forms: {
     checked: 'Zaznaczone',
     notChecked: 'Niezaznaczone',
-    noFieldsBefore: 'Ten PDF nie ma pól do wypełnienia. Żeby i tak coś na nim wpisać, użyj narzędzia',
+    noFieldsBefore: 'Ten PDF nie ma pól do wypełnienia. Żeby i tak coś w nim wpisać, użyj narzędzia',
     noFieldsAfter: 'i dodaj tekst tam, gdzie trzeba.',
     found: (n) => `Znalezione pola: ${n}. Nazwy pól pochodzą od autora formularza.`,
     flatten: 'Zablokuj odpowiedzi (spłaszcz): pola staną się zwykłym tekstem, którego nie da się zmienić',
@@ -546,7 +546,7 @@ export const pl: Messages = {
     offlineShortDesktop: 'Offline: wszystko nadal działa',
     offlineShortWeb: 'Offline: użyte narzędzia nadal działają',
     offlineLongDesktop: 'Jesteś teraz offline, a wszystkie narzędzia nadal działają.',
-    offlineLongWeb: 'Jesteś teraz offline. Narzędzia, których już używałeś, nadal działają.',
+    offlineLongWeb: 'Jesteś teraz offline. Narzędzia użyte wcześniej nadal działają.',
     onlineDevice: 'Jesteś online. Twoje pliki i tak zostają na tym urządzeniu.',
     onlineComputer: 'Jesteś online. Twoje pliki i tak zostają na tym komputerze.',
     runsOnComputer: 'Wszystko działa na Twoim komputerze',
