@@ -222,7 +222,7 @@ Under the AGPL, a modified version that you let others use over a network must o
 
 ## Dashboard tools
 
-The sidebar on the main screen lists every tool, grouped and searchable. Each tool has its own address, such as `/merge-pdf`, and a Polish one, such as `/pl/polacz-pdf`, where the whole interface is in Polish. An EN / PL switch at the bottom of the sidebar opens the same page in the other language. In the desktop app tools use `#/tool/<id>` instead, and old `#/tool/<id>` links still work on the web.
+The sidebar on the main screen lists every tool, grouped and searchable. Each tool has its own address, such as `/merge-pdf`, and a Polish one, such as `/pl/polacz-pdf`, where the whole interface is in Polish. An EN / PL switch at the bottom of the sidebar opens the same page in the other language. The desktop app has four more interface languages (German, Spanish, French, Ukrainian): it follows the system language, and the switch lists all six. In the desktop app tools use `#/tool/<id>` instead, and old `#/tool/<id>` links still work on the web.
 
 ![Nyxiontech PDF Tools dashboard: tool sidebar on the left, file drop zone and tool grid on the right](docs/screenshot.png)
 
@@ -338,7 +338,7 @@ Search engines ignore everything after `#`, so each tool has a real page. After 
 
 Guides (`src/seo/guides.ts`, e.g. `/guides/check-pdf-redaction`) are articles about a task, each in one language, so they have no hreflang links. They are built from the same `index.html` but without the app's script and stylesheet, are listed in the sitemap, and the matching tool page links to them. Describe the tool only as the code behaves.
 
-In the browser, `src/lib/route.ts` reads the tool from the address, and in-app links switch tools with `history.pushState`, so the address bar always shows a shareable link. Pages under `/pl/` keep Polish addresses and show the Polish interface (`src/i18n`). The desktop app keeps `#/tool/<id>` routes, because its window always loads the bundled `index.html`; it follows the system language, and the EN / PL switch overrides it.
+In the browser, `src/lib/route.ts` reads the tool from the address, and in-app links switch tools with `history.pushState`, so the address bar always shows a shareable link. Pages under `/pl/` keep Polish addresses and show the Polish interface (`src/i18n`). The desktop app keeps `#/tool/<id>` routes, because its window always loads the bundled `index.html`; it follows the system language, and the switch in the sidebar overrides it.
 
 The Polish steps in `TOOL_PAGES` quote button labels (e.g. „Anonimizuj i zapisz”). When you rename a label in `src/i18n/pl.ts`, change the quote there too.
 

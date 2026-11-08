@@ -29,12 +29,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 8px 12px;
+  /* The desktop app lists six languages: the switch drops to its own line when needed. */
+  flex-wrap: wrap;
 }
-/* EN / PL: links to the same page in the other language (buttons in the desktop app). */
+/* The language switch: links to the same page in the other language (buttons in the desktop app). */
 .lang-switch {
   display: inline-flex;
   flex: none;
+  flex-wrap: wrap;
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 6px;
   overflow: hidden;

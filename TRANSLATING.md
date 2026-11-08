@@ -1,6 +1,6 @@
 # Translating Nyxiontech PDF Tools
 
-The interface is available in English and Polish. This page explains where the strings live, how the app picks a language, and how to add a new one.
+The interface is available in English, Polish, German, Spanish, French and Ukrainian. The website is English and Polish, because there the address decides the language; the desktop app has all six. This page explains where the strings live, how the app picks a language, and how to add a new one.
 
 ## Where the strings are
 
@@ -8,8 +8,9 @@ The interface is available in English and Polish. This page explains where the s
 | --- | --- |
 | `src/i18n/en.ts` | The reference dictionary: every string the interface shows, grouped by screen and tool. Its shape defines the `Messages` type. |
 | `src/i18n/pl.ts` | The Polish dictionary, typed as `Messages`. |
+| `src/i18n/de.ts`, `es.ts`, `fr.ts`, `uk.ts` | The other dictionaries, same shape. Each one's header says which form of address it uses (German, French and Ukrainian are formal, Spanish informal). |
 | `src/i18n/index.ts` | The list of languages (`MESSAGES`), how each one names itself in the switch (`LANG_NAMES`), and how the language is chosen. |
-| `src/i18n/plural.ts` | Plural forms for languages with more than two (Polish: 1 plik, 2 pliki, 5 plików). |
+| `src/i18n/plural.ts` | Plural forms for languages with more than two: `plural` for Polish (1 plik, 2 pliki, 5 plików, 21 plików) and `pluralUk` for Ukrainian, where a number ending in 1 takes the singular (21 файл). |
 
 Keys are grouped by where they appear: `shell` (sidebar), `home` (dashboard), `tools` (the name and description of every dashboard tool), one group per tool (`merge`, `split`, `redact`, ...), `editor`, `about`, `privacy`, `errors` and so on.
 
@@ -29,8 +30,8 @@ TypeScript checks every dictionary against `en.ts`: a missing key, an extra key 
 
 ## How the language is chosen
 
-- **Website:** the address decides. Pages under `/pl/` (`/pl/`, `/pl/polacz-pdf`, ...) are Polish, all others English, so a shared link always opens in the same language. The browser's language is not used. The EN / PL switch at the bottom of the sidebar is a link to the same page in the other language (the tool's other address from `TOOL_SLUGS` in `src/utilities/routes.ts`).
-- **Desktop app:** the window always loads the same file, so it uses the first of the system's preferred languages that the app has (`navigator.languages`), else English. Picking a language with the switch overrides that and is remembered.
+- **Website:** the address decides. Pages under `/pl/` (`/pl/`, `/pl/polacz-pdf`, ...) are Polish, all others English, so a shared link always opens in the same language. The browser's language is not used. The switch at the bottom of the sidebar shows only the languages that have addresses (EN and PL) and is a link to the same page in the other language (the tool's other address from `TOOL_SLUGS` in `src/utilities/routes.ts`).
+- **Desktop app:** the window always loads the same file, so it uses the first of the system's preferred languages that the app has (`navigator.languages`), else English. Picking a language with the switch overrides that and is remembered. The switch lists every language in `MESSAGES`.
 
 Components read the strings with `const t = useT()` and re-render when the language changes. Code outside components (error messages, defaults) uses `tr()`.
 
@@ -79,4 +80,4 @@ npm run test:e2e               # the full suite, including tests/e2e/i18n.spec.t
 
 For a language without web addresses yet, the development server accepts `?lang=de` (for example `http://localhost:5180/merge-pdf?lang=de`); it lasts until the tab is closed, and `?lang=` turns it off. Production builds ignore it. In the desktop app (`npm run desktop:dev`), use the switch.
 
-Check each screen at the narrow width too (about 390 px): longer words must not overflow buttons, the sidebar or the segmented controls. Add a test like the Polish ones in `tests/e2e/i18n.spec.ts`: one page in the new language, its button labels, and that the dictionary has the same keys as English.
+Check each screen at the narrow width too (about 390 px): longer words must not overflow buttons, the sidebar or the segmented controls. `tests/e2e/i18n.spec.ts` already checks every dictionary in `MESSAGES` for the keys of `en.ts` and for the style rules above, so a new language is covered as soon as it is registered. A language with web addresses also wants a page test like the Polish ones there: one page in the new language and its button labels.

@@ -1,12 +1,14 @@
 import { expect, test } from '@playwright/test';
+import { LANG_NAMES, MESSAGES, plural, pluralUk } from '../../src/i18n';
 import { en } from '../../src/i18n/en';
 import { pl } from '../../src/i18n/pl';
 import { TOOL_PAGES } from '../../src/seo/content';
 import { TOOL_IDS } from '../../src/utilities/routes';
 import { cspViolations, fixture } from './helpers';
 
-// The interface language: Polish under /pl/, English elsewhere, and the EN / PL switch
-// that opens the same page in the other language (see src/i18n and TRANSLATING.md).
+// The interface language: Polish under /pl/, English elsewhere, and the switch at the
+// bottom of the sidebar that opens the same page in the other language. The desktop app
+// has more languages, which are checked here as dictionaries (see TRANSLATING.md).
 
 /** Every string in a dictionary, with functions called on sample arguments. */
 function strings(value: unknown): string[] {
@@ -126,13 +128,27 @@ test.describe('language choice', () => {
   });
 });
 
+// Every language registered in MESSAGES, so a new dictionary is covered as soon as it is
+// added there.
+const LANGS = Object.entries(MESSAGES);
+
+const shape = (v: unknown): unknown =>
+  v && typeof v === 'object' && !Array.isArray(v) ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, shape(x)])) : typeof v;
+
 test.describe('dictionaries', () => {
-  test('every language has the same keys as English', () => {
-    const shape = (v: unknown): unknown =>
-      v && typeof v === 'object' && !Array.isArray(v) ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, shape(x)])) : typeof v;
-    // TypeScript enforces this at build time; this also catches keys of the loosely typed maps.
-    expect(shape(pl)).toEqual(shape(en));
-  });
+  for (const [lang, messages] of LANGS) {
+    test(`${lang} has the same keys as English`, () => {
+      // TypeScript enforces this at build time; this also catches keys of the loosely typed maps.
+      expect(shape(messages)).toEqual(shape(en));
+    });
+  }
+
+  for (const [lang, messages] of LANGS.filter(([lang]) => lang !== 'en')) {
+    // en.ts uses ellipses in "Working…"; the translations spell such waiting states out.
+    test(`${lang} strings use no em dashes, ellipses or arrows`, () => {
+      for (const s of strings(messages)) expect(s, s).not.toMatch(/[—…→←]| -- /);
+    });
+  }
 
   test('Polish search pages quote button labels that exist in the Polish interface', () => {
     const labels = new Set(strings(pl));
@@ -141,7 +157,24 @@ test.describe('dictionaries', () => {
     for (const label of quoted) expect(labels.has(label), label).toBe(true);
   });
 
-  test('Polish strings use no em dashes, ellipses or arrows', () => {
-    for (const s of strings(pl)) expect(s, s).not.toMatch(/[—…→←]| -- /);
+  test('every language names itself in the switch', () => {
+    for (const [lang] of LANGS) expect(LANG_NAMES[lang as keyof typeof MESSAGES].name.length, lang).toBeGreaterThan(1);
+  });
+
+  test('the Polish and Ukrainian plural rules differ where the languages do', () => {
+    const pliki = (n: number) => plural(n, 'plik', 'pliki', 'plików');
+    const fajly = (n: number) => pluralUk(n, 'файл', 'файли', 'файлів');
+    expect([1, 2, 5, 11, 12, 21, 22, 25].map(pliki)).toEqual(['plik', 'pliki', 'plików', 'plików', 'plików', 'plików', 'pliki', 'plików']);
+    // Ukrainian: a number ending in 1 (but not 11) takes the singular.
+    expect([1, 2, 5, 11, 12, 21, 22, 25].map(fajly)).toEqual([
+      'файл',
+      'файли',
+      'файлів',
+      'файлів',
+      'файлів',
+      'файл',
+      'файли',
+      'файлів',
+    ]);
   });
 });
