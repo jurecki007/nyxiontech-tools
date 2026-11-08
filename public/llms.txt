@@ -55,7 +55,10 @@ Polish pages (strony po polsku): [Narzędzia PDF](https://tools.nyxiontech.com/p
 - [How to sign a PDF without uploading it](https://tools.nyxiontech.com/guides/sign-pdf-without-uploading): drawn, typed or scanned signature in the browser; simple vs qualified signatures (eIDAS art. 25, US ESIGN Act).
 - [How to check and remove hidden PDF metadata](https://tools.nyxiontech.com/guides/remove-pdf-metadata): information dictionary and XMP, pdfinfo and exiftool checks, what Edit metadata removes and what it keeps.
 - [How to compress a PDF to send it by e-mail](https://tools.nyxiontech.com/guides/compress-pdf-for-email): e-mail size limits and base64 overhead, lossless vs image levels, what compression cannot shrink.
+- [How to convert HEIC photos to JPG without uploading them](https://tools.nyxiontech.com/guides/heic-to-jpg-without-uploading): batch conversion in the browser, quality and resize settings, EXIF removal, Apple's settings to avoid HEIC.
+- [How to convert a PDF to Word without uploading it](https://tools.nyxiontech.com/guides/pdf-to-word-without-uploading): what carries over to .docx and what does not (tables, columns, images, fonts), OCR first for scans.
 - [Anonimizacja dokumentów PDF zgodnie z RODO](https://tools.nyxiontech.com/pl/poradnik/anonimizacja-pdf-rodo) (Polish): anonymisation vs pseudonymisation, verification, checklist for CVs and contracts.
+- [Jak podpisać PDF w przeglądarce bez wysyłania pliku](https://tools.nyxiontech.com/pl/poradnik/podpis-pdf-bez-wysylania) (Polish): image signature as a simple electronic signature (eIDAS art. 25) vs podpis zaufany and podpis kwalifikowany; when Polish law requires which (Kodeks cywilny art. 78¹).
 
 ## Frequently asked questions
 
