@@ -1,5 +1,5 @@
 // Stand-alone PDF operations behind the dashboard tools. All run in the browser.
-import { degrees, EncryptedPDFError, PDFDocument, type PDFFont, type PDFPage } from 'pdf-lib';
+import { degrees, EncryptedPDFError, PDFDocument, PDFName, PDFRef, type PDFFont, type PDFPage } from 'pdf-lib';
 import { blobBytes, embedRegistryFont, hexColor, viewToPdf, visibleBox } from './export';
 import { closePdf, normalizeRotation, openPdf, renderPageToBlob } from './pdfjs';
 import { tr } from '../i18n';
@@ -281,6 +281,20 @@ export async function readMetadata(bytes: Uint8Array): Promise<Metadata> {
   };
 }
 
+/**
+ * Removes the document's XMP packet, the second place a PDF keeps the title, author and
+ * the rest of these values. A viewer may prefer it to the information dictionary, so
+ * leaving it behind would show empty fields here while the old name stayed in the file.
+ * Deleting the catalog entry is not enough: the stream object is still written out, so
+ * it has to go too. Metadata attached to single pages or images belongs to those pages
+ * and stays with them.
+ */
+function dropXmp(doc: PDFDocument) {
+  const ref = doc.catalog.get(PDFName.of('Metadata'));
+  doc.catalog.delete(PDFName.of('Metadata'));
+  if (ref instanceof PDFRef) doc.context.delete(ref);
+}
+
 export async function writeMetadata(bytes: Uint8Array, m: Metadata): Promise<Uint8Array> {
   const doc = await loadPdf(bytes);
   doc.setTitle(m.title);
@@ -289,6 +303,7 @@ export async function writeMetadata(bytes: Uint8Array, m: Metadata): Promise<Uin
   doc.setKeywords(m.keywords ? m.keywords.split(/\s*[,;]\s*/) : []);
   doc.setCreator(m.creator);
   doc.setProducer(m.producer);
+  dropXmp(doc);
   return doc.save();
 }
 

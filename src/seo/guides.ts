@@ -533,7 +533,7 @@ export const GUIDES: Guide[] = [
           '**In your PDF viewer.** Most viewers show the information dictionary under Document properties. Few show the XMP packet.',
           '**With pdfinfo.** pdfinfo, part of Poppler (`poppler-utils` on most Linux systems, `poppler` in Homebrew on a Mac), prints the information dictionary. With `-meta` it prints the XMP packet instead.',
           '**With exiftool.** `exiftool -a -G1` lists both, each entry labelled with its group, so you can see whether a value comes from the information dictionary or from XMP.',
-          '**In the tool.** Drop the file on [Edit metadata](/edit-pdf-metadata) to see the six text fields of the information dictionary. The tool does not show the dates or the XMP packet, so use pdfinfo or exiftool for those.',
+          '**In the tool.** Drop the file on [Edit metadata](/edit-pdf-metadata) to see the six text fields of the information dictionary. The tool does not show the dates or the XMP packet, so use pdfinfo or exiftool to read those. It removes the packet when you save, whether or not you could see it here.',
         ],
       },
       { pre: 'pdfinfo report.pdf\npdfinfo -meta report.pdf\nexiftool -a -G1 report.pdf' },
@@ -547,6 +547,9 @@ export const GUIDES: Guide[] = [
         ],
       },
       {
+        p: 'Saving removes the document\'s XMP packet as well, so both copies of these values go at once. That matters more than it sounds. A viewer may prefer the XMP copy to the information dictionary, so a tool that cleared only the fields would leave you looking at six empty boxes while the old author name sat in the file, waiting for the next person who ran `exiftool` on it.',
+      },
+      {
         p: 'The tool writes the whole file again instead of appending a change at the end, so the old values are not left in an earlier revision. That is not a given: the ExifTool documentation warns that its own PDF edits are reversible because "old information is never actually deleted from the file" ([ExifTool PDF tags](' +
           EXIFTOOL_PDF +
           ')).',
@@ -556,18 +559,17 @@ export const GUIDES: Guide[] = [
       {
         ul: [
           '**Creation and modification dates.** They stay as they are.',
-          '**The XMP packet.** If the file has one, it stays, with whatever author and title it holds.',
           '**Comments, form field values and data inside embedded images.**',
           '**Anything on the page.** A name in a header or footer is page text, not metadata. Remove it with [Redact PDF](/redact-pdf).',
         ],
       },
 
-      { h2: 'When the XMP packet or the dates must go too' },
+      { h2: 'When the dates or per-page metadata must go too' },
       {
         p: 'Build a new file from the pages. In [Split PDF](/split-pdf), choose **By ranges**, type `1-` under **Ranges** and click **Split PDF**. You get one file with every page, named like `report_p1-12.pdf`.',
       },
       {
-        p: 'That file is made from scratch. The old information dictionary and the XMP packet of the document are not copied, both dates are set to the moment of the split, and Creator and Producer name pdf-lib, the library the tool uses. Run the result through Edit metadata if you want those two fields empty as well. Comments and any metadata attached to single pages or images travel with the pages. Bookmarks and interactive form fields of the original are not carried over, so do this on the final version.',
+        p: 'That file is made from scratch. The old information dictionary and any document XMP packet are not copied, both dates are set to the moment of the split, and Creator and Producer name pdf-lib, the library the tool uses. Run the result through Edit metadata if you want those two fields empty as well. Comments and any metadata attached to single pages or images travel with the pages. Bookmarks and interactive form fields of the original are not carried over, so do this on the final version.',
       },
 
       { h2: 'Checklist before you share' },
@@ -1480,28 +1482,30 @@ export const GUIDES: Guide[] = [
         ],
       },
 
-      { h2: 'Co usuwa Edytuj metadane, a czego nie' },
+      { h2: 'Co usuwa Edytuj metadane' },
       {
-        p: 'Powiemy to wprost, bo to jedyna uczciwa odpowiedź. Wyczyść wszystkie sześć pól i kliknij **Zapisz metadane**, a słownik informacji faktycznie zostanie opróżniony. Sprawdziliśmy to na własnym narzędziu: przygotowaliśmy plik z tytułem „Umowa z kontrahentem", autorem „Jan Kowalski" i pakietem XMP powtarzającym te same dane, wyczyściliśmy wszystkie pola i odczytaliśmy wynik. Pola były puste, a w bajtach pliku nadal siedziały napisy „Jan Kowalski" i „Microsoft Word 2016".',
+        p: 'Wyczyść wszystkie sześć pól, kliknij **Zapisz metadane** i pobierz wynik. Znikają wtedy oba magazyny naraz: słownik informacji i pakiet XMP. Usuwanie tylko jednego nie miałoby sensu, bo czytnik może uznać kopię z XMP za ważniejszą, więc w pliku zostałoby nazwisko, mimo że narzędzie pokazuje puste pola.',
       },
       {
-        p: 'Pakiet XMP zostaje. Jeśli dokument go ma, nazwisko, tytuł i nazwa programu pozostają w pliku, mimo że narzędzie pokazuje puste pola. To samo dotyczy zresztą większości edytorów metadanych.',
+        p: 'Sprawdziliśmy to na pliku, który miał wypełnione oba magazyny: tytuł „Umowa z kontrahentem" i autora „Jan Kowalski" w słowniku informacji oraz te same dane plus „Microsoft Word 2016" w pakiecie XMP. Po wyczyszczeniu pól żadnego z tych napisów nie ma już w bajtach pliku. Pilnuje tego test, który bez tej funkcji po prostu nie przechodzi.',
       },
       {
-        p: 'Jest też druga pułapka, o której warto wiedzieć, zanim zaufa się popularnej poradzie z internetu. Program exiftool zapisuje zmiany w PDF jako przyrostową aktualizację, czyli dopisuje je na końcu pliku, nie usuwając starych danych. Jego własna dokumentacja mówi o tym otwarcie: zmiany są odwracalne poleceniem `-PDF-update:all=`, więc „exiftool alone may not be used to securely edit metadata in PDF files" ([dokumentacja exiftool](' +
+        p: 'Narzędzie zapisuje cały plik od nowa, zamiast dopisywać zmianę na jego końcu, więc wyczyszczone wartości nie zostają w poprzedniej wersji dokumentu. To nie jest oczywiste. Dokumentacja programu exiftool ostrzega, że jego własne zmiany w PDF są odwracalne poleceniem `-PDF-update:all=`, i stwierdza wprost: „exiftool alone may not be used to securely edit metadata in PDF files" ([dokumentacja exiftool](' +
           EXIFTOOL_POD +
-          ')). Plik wygląda na wyczyszczony, a poprzednia wersja danych nadal w nim jest.',
+          ')). Plik wygląda na wyczyszczony, a poprzednia wersja danych nadal w nim siedzi.',
       },
 
-      { h2: 'Jak naprawdę pozbyć się XMP' },
+      { h2: 'Czego Edytuj metadane nie usuwa' },
       {
-        p: 'Potrzebny jest plik zapisany od nowa, a nie poprawiony na końcu. Najprostszy sposób w przeglądarce to przepuścić dokument przez narzędzie, które buduje nowy plik: [Podziel PDF](/pl/podziel-pdf) albo [Połącz PDF](/pl/polacz-pdf).',
+        ul: [
+          '**Daty utworzenia i modyfikacji.** Zostają bez zmian.',
+          '**Metadane przypisane do pojedynczych stron i obrazów.** Należą do stron, a nie do dokumentu, więc wędrują razem z nimi.',
+          '**Komentarze, wartości pól formularza i dane wewnątrz osadzonych obrazów.**',
+          '**Cokolwiek na stronie.** Nazwisko w nagłówku albo stopce to treść strony, a nie metadane. Do tego służy [Anonimizuj PDF](/pl/anonimizuj-pdf).',
+        ],
       },
       {
-        p: 'Sprawdziliśmy również to. Ten sam plik z pakietem XMP, przepuszczony przez scalanie, wraca bez pakietu: napisów „Jan Kowalski" ani „Microsoft Word 2016" nie ma już nigdzie w bajtach pliku. Powstaje nowy dokument, a stary słownik informacji i stary XMP po prostu nie są do niego kopiowane. Daty ustawiają się na moment operacji, a Creator i Producer wskazują bibliotekę, z której korzysta narzędzie. Jeśli chcesz, żeby i te pola były puste, przepuść wynik jeszcze przez [Edytuj metadane](/pl/edytuj-metadane-pdf).',
-      },
-      {
-        p: 'Uwaga na koszt tej operacji: nowy dokument nie przenosi zakładek ani pól formularza. Rób to na wersji ostatecznej. Metadane przypisane do pojedynczych stron i obrazów wędrują razem ze stronami, więc żadna z tych metod nie jest pełną anonimizacją.',
+        p: 'Jeśli mają zniknąć także daty albo metadane pojedynczych stron, zbuduj plik od nowa z samych stron: w [Podziel PDF](/pl/podziel-pdf) wybierz **Zakresy**, wpisz `1-` i podziel. Powstały plik nie przenosi starego słownika informacji ani pakietu XMP, a obie daty wskazują moment operacji. Uwaga na koszt: nowy dokument nie przenosi zakładek ani pól formularza, więc rób to na wersji ostatecznej.',
       },
 
       { h2: 'Co na to polskie prawo' },

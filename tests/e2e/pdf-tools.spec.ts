@@ -1,5 +1,7 @@
+import fs from 'node:fs';
 import { expect, test } from '@playwright/test';
-import type { PDFCheckBox, PDFDropdown, PDFTextField } from 'pdf-lib';
+import { PDFName, type PDFCheckBox, type PDFDropdown, type PDFTextField } from 'pdf-lib';
+import { SECRET } from '../fixture-data';
 import { fixture, loadPdf, openTool, pdfText, runAndDownload, unzip } from './helpers';
 
 test.describe('organize', () => {
@@ -73,6 +75,33 @@ test.describe('edit', () => {
     const doc = await loadPdf((await runAndDownload(page)).bytes);
     expect(doc.getTitle()).toBe('Faktura 3/10/2026');
     expect(doc.getProducer()).toBe('nyxiontech-pdf-tools tests');
+  });
+
+  // A PDF keeps these values in two places: the information dictionary and an XMP packet.
+  // Clearing the fields used to empty only the first, so the tool showed blank fields
+  // while the old name was still in the file. Both go now. Deleting the catalog entry is
+  // not enough on its own, because the stream object is written out regardless.
+  test('clearing the fields removes the XMP packet too, and leaves the rest of the file alone', async ({ page }) => {
+    expect(fs.readFileSync(fixture('secrets.pdf')).toString('latin1')).toContain('xpacket');
+
+    await openTool(page, 'metadata');
+    await page.locator('.file-drop input').setInputFiles(fixture('secrets.pdf'));
+    await expect(page.locator('.option', { has: page.locator('.option-label', { hasText: /^Author$/ }) }).locator('input')).toHaveValue(SECRET);
+    await page.getByText('Clear all fields').click();
+    const { bytes } = await runAndDownload(page);
+
+    expect(Buffer.from(bytes).toString('latin1')).not.toContain('xpacket');
+    const doc = await loadPdf(bytes);
+    expect(doc.catalog.get(PDFName.of('Metadata'))).toBeUndefined();
+    expect(doc.getTitle() ?? '').toBe('');
+    expect(doc.getAuthor() ?? '').toBe('');
+
+    // Only the document's own properties go. Everything else this file carries the secret
+    // in stays put, because clearing properties is not redaction and must not pretend to be.
+    expect((await pdfText(bytes))[0]).toContain(SECRET);
+    expect((doc.getForm().getField('client') as PDFTextField).getText()).toBe(SECRET);
+    expect(doc.catalog.get(PDFName.of('Outlines'))).toBeDefined();
+    expect(doc.getPageCount()).toBe(2);
   });
 
   test('fill a form with Polish text, then flatten it', async ({ page }) => {
