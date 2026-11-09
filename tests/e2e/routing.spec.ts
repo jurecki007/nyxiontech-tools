@@ -154,7 +154,7 @@ test.describe('path routing in the app', () => {
   test('navigation updates the address, and Back and Forward work', async ({ page }) => {
     const csp = cspViolations(page);
     await page.goto('/');
-    await expect(page.getByRole('heading', { name: 'Dashboard' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'never upload your files', level: 1 })).toBeVisible();
     await page.locator('.nav-item', { hasText: 'Split PDF' }).click();
     await expect(page).toHaveURL(/\/split-pdf$/);
     await expect(page.getByRole('heading', { name: 'Split PDF', level: 1 })).toBeVisible();
@@ -167,7 +167,7 @@ test.describe('path routing in the app', () => {
     await expect(page.getByRole('heading', { name: 'Split PDF', level: 1 })).toBeVisible();
     await page.goBack();
     await expect(page).toHaveURL(/:\d+\/$/);
-    await expect(page.getByRole('heading', { name: 'Dashboard' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'never upload your files', level: 1 })).toBeVisible();
     await page.goForward();
     await expect(page.getByRole('heading', { name: 'Split PDF', level: 1 })).toBeVisible();
 
@@ -184,7 +184,7 @@ test.describe('path routing in the app', () => {
     await expect(page).toHaveURL(/\/merge-pdf$/);
 
     await page.goto('/#/');
-    await expect(page.getByRole('heading', { name: 'Dashboard' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'never upload your files', level: 1 })).toBeVisible();
     await expect(page).toHaveURL(/:\d+\/$/);
 
     // A hash link followed inside the running app (e.g. from Fill PDF form).
@@ -206,7 +206,7 @@ test.describe('path routing in the app', () => {
     await expect(page).toHaveURL(/\/pl\/$/);
 
     await page.goto('/pl/');
-    await expect(page.getByRole('heading', { name: 'Pulpit' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'nigdy nie wysyłają', level: 1 })).toBeVisible();
     expect(csp).toEqual([]);
   });
 

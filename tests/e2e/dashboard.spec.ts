@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 test.describe('dashboard', () => {
   test('lists every tool in the sidebar and the grid', async ({ page }) => {
     await page.goto('/#/');
-    await expect(page.getByRole('heading', { name: 'Dashboard' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'never upload your files', level: 1 })).toBeVisible();
     await expect(page.locator('.tool-card')).toHaveCount(25);
     // Sidebar: the Dashboard link plus one item per tool.
     await expect(page.locator('.nav-item')).toHaveCount(26);

@@ -75,8 +75,8 @@ export const pl: Messages = {
   },
 
   home: {
-    title: 'Pulpit',
-    subtitle: (storedIn) => `Wszystko działa ${storedIn}: bez wysyłania plików, bez kont i bez limitów.`,
+    title: 'Darmowe narzędzia PDF, które nigdy nie wysyłają twoich plików',
+    subtitle: (storedIn) => `Wszystko działa ${storedIn}: bez konta, bez limitów i bez znaków wodnych.`,
     openTitle: 'Otwórz PDF w edytorze',
     openHint: 'Upuść tu pliki albo kliknij, żeby je wybrać. Kilka plików łączy się w jeden dokument.',
     tools: 'Narzędzia',
