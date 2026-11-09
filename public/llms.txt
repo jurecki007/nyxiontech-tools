@@ -59,6 +59,7 @@ Polish pages (strony po polsku): [Narzędzia PDF](https://tools.nyxiontech.com/p
 - [How to convert a PDF to Word without uploading it](https://tools.nyxiontech.com/guides/pdf-to-word-without-uploading): what carries over to .docx and what does not (tables, columns, images, fonts), OCR first for scans.
 - [Anonimizacja dokumentów PDF zgodnie z RODO](https://tools.nyxiontech.com/pl/poradnik/anonimizacja-pdf-rodo) (Polish): anonymisation vs pseudonymisation, verification, checklist for CVs and contracts.
 - [Jak podpisać PDF w przeglądarce bez wysyłania pliku](https://tools.nyxiontech.com/pl/poradnik/podpis-pdf-bez-wysylania) (Polish): image signature as a simple electronic signature (eIDAS art. 25) vs podpis zaufany and podpis kwalifikowany; when Polish law requires which (Kodeks cywilny art. 78¹).
+- [Jak zamienić zdjęcia HEIC na JPG bez wysyłania ich na serwer](https://tools.nyxiontech.com/pl/poradnik/heic-do-jpg-bez-wysylania) (Polish): what HEIC is, batch conversion in the browser, what happens to EXIF, what the tool will not do, and how to stop an iPhone producing HEIC.
 
 ## Frequently asked questions
 

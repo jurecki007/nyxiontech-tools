@@ -42,6 +42,7 @@ const KODEKS_CYWILNY = 'https://eli.gov.pl/eli/DU/2025/1071/ogl/pol/pdf';
 const USTAWA_INFORMATYZACJA = 'https://eli.gov.pl/eli/DU/2024/1557/ogl/pol/pdf';
 const GOV_PODPIS = 'https://www.gov.pl/web/gov/podpisz-dokument-elektronicznie-wykorzystaj-podpis-zaufany';
 const APPLE_HEIF = 'https://support.apple.com/en-us/116944';
+const APPLE_HEIF_PL = 'https://support.apple.com/pl-pl/116944';
 const WORD_OPEN_PDF = 'https://support.microsoft.com/en-us/word/opening-pdfs-in-word';
 
 export const GUIDES: Guide[] = [
@@ -754,7 +755,7 @@ export const GUIDES: Guide[] = [
       {
         p: 'Apple\'s support page [Using HEIF or HEVC media on Apple devices](' +
           APPLE_HEIF +
-          ') explains that iOS 11 and macOS High Sierra introduced HEIF (High Efficiency Image File Format) for photos and HEVC for videos, and that both "offer better compression than JPEG and H.264, so they use less storage space on your devices and iCloud Photos, while preserving the same visual quality." It lists the iPhone 7 and later among the devices that capture in these formats. The tool accepts files ending in `.heic` and `.heif`.',
+          ') explains that iOS 11 and macOS High Sierra introduced HEIF (High Efficiency Image File Format) for photos and HEVC for videos, and that both "offer better compression than JPEG and H.264, so they use less storage space on your devices and iCloud Photos, while preserving the same visual quality." It lists the iPhone 7 and later among the devices that capture in these formats. Under **Add images** the tool lists the formats it accepts: JPG, PNG, WebP, GIF, BMP and HEIC.',
       },
 
       { h2: 'Convert HEIC to JPG step by step' },
@@ -879,6 +880,77 @@ export const GUIDES: Guide[] = [
         ],
       },
       { p: '**[Open PDF to Word](/pdf-to-word)**' },
+    ],
+  },
+  {
+    path: '/pl/poradnik/heic-do-jpg-bez-wysylania',
+    lang: 'pl',
+    tool: 'heic-to-jpg',
+    title: 'Jak zamienić HEIC na JPG bez wysyłania zdjęć',
+    description:
+      'Zdjęcia z iPhone’a zamienisz na JPG w przeglądarce, hurtowo, z suwakiem jakości. Co dzieje się z danymi EXIF i jakie są ograniczenia.',
+    h1: 'Jak zamienić zdjęcia HEIC na JPG bez wysyłania ich na serwer',
+    name: 'Poradnik: HEIC na JPG bez wysyłania zdjęć',
+    published: '2026-11-09',
+    blocks: [
+      {
+        p: 'Zdjęcia z iPhone’a albo iPada to zwykle pliki HEIC. Zajmują mniej miejsca niż JPG, ale wiele formularzy, systemów urzędowych i starszych komputerów ich nie przyjmuje. Większość konwerterów online każe najpierw wgrać zdjęcia, a prywatne fotografie pokazują dom, rodzinę albo sfotografowane dokumenty. Ten poradnik pokazuje, jak zamienić je na JPG w narzędziu [HEIC do JPG](/pl/heic-do-jpg), które działa w przeglądarce, i jak rozwiązać problem u źródła.',
+      },
+
+      { h2: 'Czym jest HEIC' },
+      {
+        p: 'Strona wsparcia Apple [Używanie plików multimedialnych w formacie HEIF lub HEVC na urządzeniach Apple](' +
+          APPLE_HEIF_PL +
+          ') wyjaśnia, że systemy iOS 11 i macOS High Sierra wprowadziły format HEIF (High Efficiency Image File Format) dla zdjęć oraz HEVC dla plików wideo. Według Apple „Formaty HEIF i HEVC zapewniają lepszą kompresję niż formaty JPEG i H.264, dzięki czemu pliki zajmują mniej miejsca w pamięci urządzenia oraz w usłudze Zdjęcia w iCloud przy zachowaniu takiej samej jakości obrazu”. Wśród urządzeń, które tak rejestrują zdjęcia, Apple wymienia „iPhone 7 lub iPhone 7 Plus lub nowszy”. Pod polem **Dodaj zdjęcia** narzędzie wymienia formaty, które przyjmuje: JPG, PNG, WebP, GIF, BMP i HEIC.',
+      },
+
+      { h2: 'Jak zamienić HEIC na JPG krok po kroku' },
+      {
+        ol: [
+          'Otwórz [HEIC do JPG](/pl/heic-do-jpg) i upuść zdjęcia na pole **Dodaj zdjęcia** albo kliknij je i wybierz pliki. Możesz dodać ich dowolnie dużo i dokładać kolejne później. Pliki odczytuje przeglądarka; nic nie trafia na serwer.',
+          'W sekcji **Zapisz jako** zostaw **JPG**. **WebP** daje mniejsze pliki, które otworzy każda nowoczesna przeglądarka, a **PNG** jest bezstratny, ale większy.',
+          'Ustaw suwak jakości. Zaczyna się na **Jakość 80%** i obejmuje zakres od 30% do 100%. Podpowiedź obok mówi, że 70 do 85% zwykle nie różni się wizualnie od oryginału. Przy formacie PNG ustawienie jakości nie ma zastosowania.',
+          'Żeby zmniejszyć zdjęcia, zaznacz **Zmniejsz zdjęcia większe niż** w sekcji **Wymiary** i wpisz **Maks. szerokość (px)** oraz **Maks. wysokość (px)**. Oba zaczynają się od 1920. Większe zdjęcia są skalowane tak, żeby zmieściły się w tym prostokącie z zachowaniem proporcji; mniejsze zostają bez zmian.',
+          'Kliknij **Konwertuj**. Pasek postępu pokazuje, na którym etapie jest konwersja.',
+          'Przy jednym zdjęciu kliknij **Pobierz**. Przy kilku **Pobierz wszystkie (.zip)** zapisze je w pliku `images.zip`; możesz też pobrać każde z osobna z listy. Plik zachowuje swoją nazwę, z rozszerzeniem `.jpg` zamiast `.heic`. Narzędzie pokazuje też łączny rozmiar przed konwersją i po niej.',
+        ],
+      },
+      {
+        p: 'Ten sam konwerter działa na stronie [Kompresuj i konwertuj zdjęcia](/pl/kompresuj-zdjecia), gdzie przyjmuje również JPG, PNG, WebP i GIF. Żeby wstawić zdjęcia HEIC od razu do PDF, użyj narzędzia [Zdjęcia do PDF](/pl/jpg-do-pdf).',
+      },
+
+      { h2: 'Co dzieje się ze zdjęciem i jego danymi' },
+      {
+        ul: [
+          'Każde zdjęcie HEIC dekoduje na Twoim urządzeniu biblioteka libheif, którą strona wczytuje dopiero przy konwersji. Obrót zapisany w zdjęciu jest uwzględniany, więc fotografie pionowe zostają pionowe.',
+          'JPG powstaje na nowo z odkodowanych pikseli. Żadne metadane oryginału nie są kopiowane: po konwersji narzędzie zaznacza, że **Lokalizacja i dane aparatu (EXIF) są usuwane**. Znika przy tym również data i godzina wykonania zdjęcia, więc zachowaj oryginały, jeśli będą potrzebne.',
+          'Konwersja liczy się na Twoim procesorze, więc duża partia zdjęć potrwa dłużej na starszym telefonie albo laptopie.',
+        ],
+      },
+
+      { h2: 'Czego narzędzie nie zrobi' },
+      {
+        ul: [
+          'Konwertuje tylko pierwszy obraz zapisany w pliku HEIC. Jeśli plik zawiera ich kilka, pozostałe nie zostaną przetworzone.',
+          'Nie konwertuje filmów HEVC.',
+          'Wynik to standardowy obraz 8-bitowy, więc dodatkowy zakres jasności zapisany na potrzeby ekranów HDR nie zostaje przeniesiony.',
+          'Nie ma opcji zachowania danych EXIF.',
+          'JPG i WebP są stratne: każda konwersja gubi trochę szczegółów, przy każdym ustawieniu jakości. Zachowaj pliki HEIC, jeśli możesz jeszcze potrzebować pełnej jakości.',
+          'Uszkodzony plik albo taki, który nie jest obrazem, kończy się komunikatem **Nie udało się odczytać obrazu** z nazwą pliku. Usuń go z listy i uruchom konwersję ponownie.',
+        ],
+      },
+
+      { h2: 'Jak uniknąć HEIC na iPhonie' },
+      { p: 'Ta sama strona Apple opisuje, jak od razu zapisywać zdjęcia w JPG:' },
+      {
+        ul: [
+          '**Rejestrowanie w JPG.** Apple podaje: „Otwórz Ustawienia i stuknij opcję Aparat”, a dalej „Stuknij opcję Formaty. Następnie stuknij opcję Najbardziej zgodne”. Wtedy „Wszystkie nowe zdjęcia i nagrania wideo będą od teraz rejestrowane w formacie JPEG lub H.264”. Żeby wrócić do poprzedniego ustawienia, wybierz opcję High Efficiency.',
+          '**Udostępnianie.** Przy AirDrop, Wiadomościach albo poczcie e-mail, jeśli urządzenie odbierające nie obsługuje nowszych formatów, pliki „mogą zostać automatycznie udostępnione w bardziej zgodnym formacie, takim jak JPEG lub H.264”.',
+          '**Import przez USB.** Przy imporcie do aplikacji Zdjęcia, Pobieranie obrazów albo na komputer PC pliki mogą zostać przekonwertowane do formatu JPEG. Jeśli wolisz zachować oryginały, Apple radzi wybrać kolejno opcje Ustawienia, Aplikacje, Zdjęcia, a potem stuknąć opcję Pozostaw oryginały.',
+          '**Na Macu.** Otwórz zdjęcie w aplikacji Zdjęcia albo Podgląd, wybierz kolejno opcje Plik i Eksportuj, a przed zachowaniem wybierz format JPEG albo PNG.',
+        ],
+      },
+      { p: '**[Otwórz narzędzie HEIC do JPG](/pl/heic-do-jpg)**' },
     ],
   },
 ];
