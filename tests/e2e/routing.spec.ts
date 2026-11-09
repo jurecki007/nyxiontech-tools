@@ -80,6 +80,7 @@ test.describe('static tool pages', () => {
       '/guides/sign-pdf-without-uploading',
       '/pl/poradnik/anonimizacja-bip-szkola',
       '/pl/poradnik/anonimizacja-pdf-rodo',
+      '/pl/poradnik/heic-do-jpg-bez-wysylania',
       '/pl/poradnik/ocr-i-laczenie-dokumentow-bez-chmury',
       '/pl/poradnik/podpis-pdf-bez-wysylania',
     ]);
