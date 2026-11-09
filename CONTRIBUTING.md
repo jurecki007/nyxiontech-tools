@@ -38,6 +38,8 @@ npx generate-license-file --input package.json --output notices.txt --overwrite
 
 Then update Part 1 of `public/THIRD-PARTY-NOTICES.txt` with it.
 
+`npm run build` checks the result: `scripts/check-third-party-notices.mjs` fails the build if a package in `dependencies` is listed at the wrong version or missing from Part 1. `npm run notices:fix` corrects the version numbers; a package that is absent has to be added under the block for its licence by hand, because picking that block is a judgement call.
+
 #### Regenerating the Rust crate notices
 
 If you add or update a Rust crate in `src-tauri/Cargo.toml`, regenerate Part 4 with [cargo-about](https://github.com/EmbarkStudios/cargo-about) (`cargo install cargo-about --locked --features cli`). Run it from `src-tauri/`:
@@ -47,6 +49,8 @@ cargo about generate --locked about.hbs -o ../notices-rust.txt
 ```
 
 `about.toml` lists the accepted licences and limits the scan to the Windows target; the command fails if a crate uses any other licence. Replace the body of Part 4 in `public/THIRD-PARTY-NOTICES.txt` with the output (LF line endings), then delete `notices-rust.txt`.
+
+The same build check reads Part 4 against `src-tauri/Cargo.lock`, so forgetting this step is caught without needing the Rust toolchain. It only checks that every crate listed is locked at that version, not the reverse: Part 4 covers the Windows target while `Cargo.lock` covers every platform.
 
 ## Licence of contributions
 
