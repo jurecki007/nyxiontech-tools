@@ -18,4 +18,10 @@ export const ISSUES_URL = `${REPO_URL}/issues`;
  * Leave empty to hide the link.
  */
 export const DONATE_URL = 'https://ko-fi.com/nyxiontech';
-export const SPONSORS_URL = 'https://github.com/sponsors/jurecki007';
+/**
+ * GitHub Sponsors profile, shown as a second button in About. Empty while there is no
+ * listing on the account: the /sponsors/ URL just redirects to the profile page, so the
+ * button would send someone who wants to donate nowhere. Put the URL back once the
+ * listing exists and the button returns on its own.
+ */
+export const SPONSORS_URL = '';

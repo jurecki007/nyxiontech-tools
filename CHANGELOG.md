@@ -39,6 +39,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - HEIC (iPhone) photos convert again in Images to PDF, HEIC to JPG and OCR. The old decoder needed `eval`, which the app's security policy blocks, so jobs hung on "Working…". It is replaced by heic-to's build without `eval` (LGPL-3.0, libheif inside).
 - Redact: comments and form field values that contain the searched text or a selected pattern are now removed from the pages that aren't redacted too. Before, a secret in a comment on another page stayed in the file. The counter shows how many comments will be removed.
 - Edit metadata now removes the document's XMP packet too. A PDF keeps the title, author and the rest in two places, and clearing the fields emptied only one of them, so the tool showed six empty boxes while the old author name was still in the file. Metadata attached to single pages still travels with those pages.
+- The "Sponsor on GitHub" links are gone from the README, package metadata and the About dialog. There is no sponsors listing on the account, so the URL redirected to a profile page and anyone who clicked it meaning to donate landed nowhere. Ko-fi is unaffected, and the links can come back as soon as the listing exists.
 
 ## [1.1.0] - 2026-11-03
 
