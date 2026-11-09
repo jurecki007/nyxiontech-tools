@@ -68,6 +68,7 @@ Polish pages (strony po polsku): [Narzędzia PDF](https://tools.nyxiontech.com/p
 - [Jak zmniejszyć PDF, żeby zmieścił się w e-mailu](https://tools.nyxiontech.com/pl/poradnik/kompresja-pdf-do-emaila) (Polish): attachment limits at Gmail, Outlook, WP, o2 and Interia, base64 overhead, and which compression level destroys the text layer.
 - [Jak połączyć pliki PDF bez wysyłania ich na serwer](https://tools.nyxiontech.com/pl/poradnik/polacz-pdf-bez-wysylania) (Polish): merging in the browser in the chosen order, and what a merge drops: bookmarks, form fields, signatures and metadata.
 - [Ukryte metadane w PDF: co widzi odbiorca dokumentu](https://tools.nyxiontech.com/pl/poradnik/metadane-pdf-bip-rodo) (Polish): the information dictionary and the XMP packet, how to check both, why clearing the fields is not enough, and what Polish accessibility law actually requires.
+- [Jak usunąć hasło z wyciągu bankowego, nie wysyłając go na obcy serwer](https://tools.nyxiontech.com/pl/poradnik/haslo-wyciag-bankowy) (Polish): the difference between an open password and a permissions password, removing either in the browser, why the tool cannot crack an unknown password, and what to redact before sending a statement on.
 
 ## Frequently asked questions
 
