@@ -40,6 +40,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - Redact: comments and form field values that contain the searched text or a selected pattern are now removed from the pages that aren't redacted too. Before, a secret in a comment on another page stayed in the file. The counter shows how many comments will be removed.
 - Edit metadata now removes the document's XMP packet too. A PDF keeps the title, author and the rest in two places, and clearing the fields emptied only one of them, so the tool showed six empty boxes while the old author name was still in the file. Metadata attached to single pages still travels with those pages.
 - The "Sponsor on GitHub" links are gone from the README, package metadata and the About dialog. There is no sponsors listing on the account, so the URL redirected to a profile page and anyone who clicked it meaning to donate landed nowhere. Ko-fi is unaffected, and the links can come back as soon as the listing exists.
+- The third-party notices now match what the app actually ships. They are written by hand, and they had fallen behind: the npm list named pdfjs-dist 4.10.38 where the app uses 6.4.299, four other packages were out of date, and two Tauri plugins were missing. The Rust list was short by 64 crates, 23 of them under the ISC licence, which appeared nowhere in the file at all. Both lists are regenerated, and the build now fails if they drift again.
 
 ## [1.1.0] - 2026-11-03
 
