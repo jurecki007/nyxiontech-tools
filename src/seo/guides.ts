@@ -43,7 +43,25 @@ const USTAWA_INFORMATYZACJA = 'https://eli.gov.pl/eli/DU/2024/1557/ogl/pol/pdf';
 const GOV_PODPIS = 'https://www.gov.pl/web/gov/podpisz-dokument-elektronicznie-wykorzystaj-podpis-zaufany';
 const APPLE_HEIF = 'https://support.apple.com/en-us/116944';
 const APPLE_HEIF_PL = 'https://support.apple.com/pl-pl/116944';
+const GMAIL_LIMIT_PL = 'https://support.google.com/mail/answer/6584?hl=pl';
+const OUTLOOK_LIMITS_PL = 'https://support.microsoft.com/pl-pl/outlook/sending-limits-in-outlook-com';
+const M365_LIMITS_PL = 'https://learn.microsoft.com/pl-pl/office365/servicedescriptions/exchange-online-service-description/exchange-online-limits';
+const WP_REGULAMIN = 'https://pomoc.wp.pl/regulamin';
+const O2_REGULAMIN = 'https://pomoc.o2.pl/regulamin';
+const INTERIA_PARAMETRY = 'https://pomoc.poczta.interia.pl/pocztapro/news-porownanie-parametrow-konta-bezplatnego-platnego-i-konta-w-r,nId,2642723';
 const WORD_OPEN_PDF = 'https://support.microsoft.com/en-us/word/opening-pdfs-in-word';
+const WORD_OPEN_PDF_PL = 'https://support.microsoft.com/pl-pl/word/opening-pdfs-in-word';
+const CHROME_DEVTOOLS_NETWORK = 'https://developer.chrome.com/docs/devtools/network';
+const FIREFOX_NETWORK_MONITOR = 'https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/';
+const MDN_CONNECT_SRC = 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/connect-src';
+const MDN_FORM_ACTION = 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/form-action';
+const MDN_BLOB_URL = 'https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/blob';
+const PDF_HIDDEN_DATA_STUDY = 'https://arxiv.org/abs/2103.02707';
+const EXIFTOOL_POD = 'https://exiftool.org/exiftool_pod.html';
+const USTAWA_DOSTEPNOSC = 'https://eli.gov.pl/api/acts/DU/2023/82/text/I/D20230082.pdf';
+const EN301549 = 'https://www.etsi.org/deliver/etsi_en/301500_301599/301549/02.01.02_60/en_301549v020102p.pdf';
+const GOV_DOSTEPNE_DOKUMENTY = 'https://www.gov.pl/web/dostepnosc-cyfrowa/jak-tworzyc-dostepne-dokumenty-tekstowe-w-edytorze-ms-word';
+const UODO_BIP_DECYZJA = 'https://uodo.gov.pl/pl/138/4402';
 
 export const GUIDES: Guide[] = [
   {
@@ -951,6 +969,589 @@ export const GUIDES: Guide[] = [
         ],
       },
       { p: '**[Otwórz narzędzie HEIC do JPG](/pl/heic-do-jpg)**' },
+    ],
+  },
+  {
+    path: '/pl/poradnik/pdf-do-word-bez-wysylania',
+    lang: 'pl',
+    tool: 'pdf-to-word',
+    title: 'Jak zamienić PDF na Word bez wysyłania pliku',
+    description:
+      'Zamień PDF na edytowalny plik .docx w przeglądarce. Co przechodzi do Worda, czego nie da się odzyskać i kiedy najpierw potrzebny jest OCR.',
+    h1: 'Jak zamienić PDF na plik Word bez wysyłania go na serwer',
+    name: 'Poradnik: PDF do Word bez wysyłania pliku',
+    published: '2026-11-09',
+    blocks: [
+      {
+        p: 'Umowa do poprawienia, stare CV, raport przysłany bez oryginalnego pliku: czasem trzeba wrócić do edytowalnego tekstu, a masz tylko PDF. Większość konwerterów online najpierw wgrywa dokument na swój serwer. Narzędzie [PDF do Word](/pl/pdf-do-word) działa w przeglądarce, więc plik zostaje na Twoim urządzeniu. To prosty konwerter i ten poradnik mówi wprost, co to znaczy: odzyskasz tekst do edycji, a nie kopię układu strony.',
+      },
+
+      { h2: 'Dlaczego konwersja PDF na Word jest trudna' },
+      {
+        p: 'Polska strona pomocy Microsoftu o [otwieraniu plików PDF w programie Word](' +
+          WORD_OPEN_PDF_PL +
+          ') tłumaczy to wprost. „Format pliku PDF jest formatem stałym, co oznacza, że w pliku są przechowywane informacje o położeniu tekstu, obrazów i grafik wektorowych w ramach strony”, ale niekoniecznie informacje o ich wzajemnych relacjach. Dalej: „Większość plików PDF nie zawiera informacji o strukturalnych elementach zawartości, takich jak akapity, tabele lub kolumny”, a tabelę PDF zapisuje „jako zestaw linii bez jakiegokolwiek powiązania z zawartością w jej komórkach”.',
+      },
+      {
+        p: 'Każdy konwerter musi więc zgadywać strukturę, łącznie z samym Wordem. Microsoft wymienia elementy, które konwertują się źle: tabele z odstępami między komórkami, kolory i obramowania stron, prześledzone zmiany, ramki, przypisy dolne zajmujące więcej niż jedną stronę, przypisy końcowe, zakładki, tagi i komentarze PDF.',
+      },
+
+      { h2: 'Konwersja krok po kroku' },
+      {
+        ol: [
+          'Otwórz [PDF do Word](/pl/pdf-do-word) i upuść plik na pole **Wybierz plik PDF**. Dokument jest odczytywany w przeglądarce i nie trafia na serwer. PDF zabezpieczony hasłem trzeba najpierw otworzyć w narzędziu [Odblokuj PDF](/pl/odblokuj-pdf).',
+          'Pod nazwą pliku pojawi się jego rozmiar i liczba stron, na przykład `1,4 KB · 2 strony`, a obok przycisk **Zmień plik**, gdyby to był nie ten dokument.',
+          'Kliknij **Konwertuj na Word**.',
+          'Gdy zobaczysz napis **Gotowe: 1 plik**, kliknij **Pobierz**. Plik zachowuje nazwę oryginału z końcówką `.docx`.',
+          'Otwórz go w Wordzie, LibreOffice albo innym edytorze i porównaj z PDF-em, zanim wyślesz go dalej.',
+        ],
+      },
+
+      { h2: 'Co przechodzi do Worda' },
+      {
+        ul: [
+          'Tekst każdej strony, w kolejności, w jakiej zapisał go PDF.',
+          'Podział na linie i akapity. Każda linia PDF staje się osobnym akapitem, a duży odstęp pionowy między liniami dodaje odstęp po akapicie powyżej.',
+          'Rozmiary czcionek od 6 do 72 punktów. Mniejsze i większe są przycinane do tych wartości.',
+          'Pogrubienie, o ile mówi o tym nazwa czcionki użytej w PDF.',
+          'Podział strony po każdej stronie dokumentu.',
+        ],
+      },
+
+      { h2: 'Czego nie da się odzyskać' },
+      {
+        ul: [
+          '**Tabele.** Tekst z komórek wychodzi jako kolejne linie, a siatka znika.',
+          '**Kolumny.** Tekst złożony w dwóch albo więcej kolumnach trafia do jednej. Jeśli PDF zapisał linie poza kolejnością czytania, w tej kolejności też wyjdą.',
+          '**Obrazy.** Zdjęcia, wykresy, logotypy i rysunki nie są przenoszone.',
+          '**Czcionki.** Oryginalny krój nie zostaje zachowany; tekst dostaje domyślną czcionkę pliku Word. Pogrubienie jest zgadywane z nazwy czcionki, więc bywa pominięte.',
+          '**Reszta formatowania.** Kursywa, podkreślenie, kolory, wyrównanie, wcięcia, style nagłówków, listy i odnośniki przepadają, podobnie jak komentarze i pola formularza. Nagłówki, stopki i numery stron stają się zwykłym tekstem na każdej stronie.',
+        ],
+      },
+      {
+        p: 'Jedna rzecz do zaplanowania: skoro każda linia jest osobnym akapitem, tekst po edycji nie zawija się sam. Dopisz kilka słów, a linia zrobi się dłuższa, zamiast przenieść końcówkę niżej. Połączenie linii w akapity to główna praca porządkowa po konwersji.',
+      },
+
+      { h2: 'Skany najpierw przez OCR' },
+      {
+        p: 'Skan to obraz tekstu, więc konwerter nie ma czego odczytać i plik Word wychodzi pusty. Najpierw przepuść skan przez [OCR](/pl/ocr-pdf): narzędzie rozpoznaje tekst polski i angielski i dokłada go do PDF jako niewidoczną warstwę. Pobierz wynik i dopiero ten plik zamień na Word. Błędy OCR przechodzą dalej do Worda, więc porównaj nazwiska, numery i kwoty ze skanem.',
+      },
+
+      { h2: 'Kiedy lepiej wybrać inną drogę' },
+      {
+        ul: [
+          '**Potrzebujesz tylko tekstu.** [PDF do tekstu](/pl/pdf-do-tekstu) wyciąga go do skopiowania albo zapisania jako .txt.',
+          '**Potrzebujesz drobnej zmiany przy zachowanym układzie.** Popraw sam PDF w [Edytuj PDF](/pl/edytuj-pdf). Istniejącego tekstu nie da się nadpisać w miejscu, ale można go zakryć narzędziem **Zamaluj** i wpisać nowy na wierzchu.',
+          '**Układ strony jest ważny.** Poproś nadawcę o oryginalny plik .docx. Microsoft sam pisze, że konwersja „daje najlepsze efekty w przypadku plików zawierających głównie tekst”, a strona złożona głównie z wykresów albo grafiki „może zostać wyświetlona jako obraz”.',
+          '**Idziesz w drugą stronę.** [Word do PDF](/pl/word-do-pdf) zamienia .docx na PDF.',
+        ],
+      },
+      { p: '**[Otwórz narzędzie PDF do Word](/pl/pdf-do-word)**' },
+    ],
+  },
+  {
+    path: '/pl/poradnik/kompresja-pdf-do-emaila',
+    lang: 'pl',
+    tool: 'compress',
+    title: 'Jak zmniejszyć PDF, żeby zmieścił się w e-mailu',
+    description:
+      'Limity załączników w Gmailu, Outlooku, WP, o2 i Interii, narzut kodowania i to, który poziom kompresji zabiera z PDF-a tekst. Bez wysyłania pliku.',
+    h1: 'Jak zmniejszyć plik PDF, żeby zmieścił się w e-mailu',
+    name: 'Poradnik: kompresja PDF do e-maila',
+    published: '2026-11-09',
+    blocks: [
+      {
+        p: 'Skan umowy albo komplet faktur potrafi mieć kilkadziesiąt megabajtów i serwer pocztowy odbija wiadomość. Ten poradnik pokazuje, ile naprawdę można wysłać u polskich dostawców, dlaczego deklarowany limit bywa mniejszy, niż się wydaje, i jak zmniejszyć plik narzędziem [Kompresuj PDF](/pl/kompresuj-pdf), które działa w przeglądarce i nie wysyła dokumentu na żaden serwer.',
+      },
+      {
+        p: 'Jest tu też rzecz, o której kompresory online zwykle nie uprzedzają: trzy z czterech poziomów zamieniają strony w obrazy i bezpowrotnie zabierają z dokumentu warstwę tekstu. Piszemy o tym niżej, przy wyborze poziomu.',
+      },
+
+      { h2: 'Ile naprawdę można wysłać' },
+      {
+        ul: [
+          '**Gmail:** „W przypadku osobistych kont Gmail limit wynosi 25 MB”, a na kontach służbowych i szkolnych limity ustawia administrator Google Workspace. Po przekroczeniu limitu „Gmail automatycznie usuwa załącznik i dodaje go jako link do Dysku Google w e-mailu” ([pomoc Gmaila](' +
+            GMAIL_LIMIT_PL +
+            ')).',
+          '**Outlook.com:** „Limit rozmiaru załącznika w przypadku plików wynosi 25 MB”, a dla plików z OneDrive 2 GB ([pomoc Microsoftu](' +
+            OUTLOOK_LIMITS_PL +
+            ')).',
+          '**Firmowa skrzynka Microsoft 365:** to inny produkt i inne liczby. Domyślnie 35 MB przy wysyłaniu i 36 MB przy odbieraniu, a administrator może ustawić wartość od 1 MB do 150 MB ([opis usługi Exchange Online](' +
+            M365_LIMITS_PL +
+            ')). Na koncie firmowym limit 25 MB najpewniej Cię nie dotyczy.',
+          '**WP i o2:** po 100 MB przy wysyłaniu i odbieraniu. Tej liczby nie ma w artykułach pomocy, jest w regulaminie, w punkcie 5.1: „wysyłanie i odbieranie załączników do e-mail do 100 MB” ([regulamin WP](' +
+            WP_REGULAMIN +
+            '), [regulamin o2](' +
+            O2_REGULAMIN +
+            ')).',
+          '**Interia:** maksymalna przesyłka to 100 MB, tak samo na koncie bezpłatnym i płatnym. Uwaga na drugi limit, o którym łatwo zapomnieć: dzienny transfer wynosi 1 GB na koncie bezpłatnym i płatnym, a 15 GB w PocztaPRO ([porównanie parametrów kont](' +
+            INTERIA_PARAMETRY +
+            ')).',
+        ],
+      },
+      {
+        p: 'Wniosek praktyczny jest taki, że między polskimi skrzynkami zmieścisz dużo, bo WP, o2 i Interia dają po 100 MB. Wąskim gardłem jest odbiorca na Gmailu albo Outlook.com z limitem 25 MB, a takich adresów jest najwięcej. Jeśli nie wiesz, czego używa odbiorca, przyjmij 25 MB.',
+      },
+      {
+        p: 'Celowo nie podajemy liczby dla Onetu: nie znaleźliśmy jej w oficjalnej pomocy, a wolimy pominąć wiersz niż wpisać wartość, której nie da się sprawdzić u źródła.',
+      },
+
+      { h2: 'Dlaczego 25 MB nie zawsze znaczy 25 MB' },
+      {
+        p: 'Załącznik nie jedzie pocztą jako surowe bajty. Jest kodowany base64, a standard mówi wprost, że „the encoded data are consistently only about 33 percent larger than the unencoded data” ([RFC 2045, punkt 6.8](' +
+          RFC2045_BASE64 +
+          ')). Doliczając obowiązkowe łamanie linii co 76 znaków, narzut wychodzi bliżej 37 procent. Google podaje dokładnie tę wartość, pisząc o limicie odbioru jako o limicie „po zakodowaniu, które zwiększa rozmiar o około 37%”.',
+      },
+      {
+        p: 'Tylko nie każdy limit liczony jest w tym samym momencie i tu wiele poradników się myli. Google zaznacza, że jego limity wysyłania dotyczą rozmiaru „przed kodowaniem”, więc plik ważący 25 MB mieści się w limicie wysyłania Gmaila. Limity odbioru, a także poczta Microsoftu opuszczająca jego centra danych, liczone są już po zakodowaniu. Ponieważ o przyjęciu wiadomości decyduje serwer odbiorcy, bezpieczne założenie brzmi: przy limicie 25 MB po stronie odbiorcy celuj w plik o rozmiarze do mniej więcej 18 do 20 MB.',
+      },
+
+      { h2: 'Kompresja krok po kroku' },
+      {
+        ol: [
+          'Otwórz [Kompresuj PDF](/pl/kompresuj-pdf) i upuść dokument na pole **Wybierz plik PDF**. Plik jest przetwarzany w przeglądarce i nie trafia na serwer.',
+          'W polu **Poziom** wybierz jedną z opcji: **Bezstratnie**, **Lekko**, **Zalecane** albo **Mocno**. Pod nimi wyświetla się opis skutków wybranej opcji; przeczytaj go, bo różnica między nimi jest zasadnicza.',
+          'Kliknij **Kompresuj** i pobierz wynik.',
+          'Sprawdź rozmiar pliku, a potem go otwórz i spróbuj zaznaczyć w nim dowolne słowo. Jeśli się nie da, strony zostały zamienione w obrazy.',
+        ],
+      },
+      {
+        p: 'Jeśli dokument jest już mocno upakowany, narzędzie powie o tym wprost, zamiast zwracać plik większy od oryginału.',
+      },
+
+      { h2: 'Który poziom wybrać' },
+      {
+        p: 'To najważniejsza decyzja w całym procesie, bo tylko jeden z czterech poziomów zachowuje tekst dokumentu.',
+      },
+      {
+        ul: [
+          '**Bezstratnie** „zachowuje tekst i jakość; plik jest tylko zapisywany na nowo”, a oszczędność, jak uprzedza sam opis, „jest zwykle niewielka”. To jedyny poziom, po którym w pliku nadal da się zaznaczać i wyszukiwać tekst.',
+          '**Lekko**, **Zalecane** i **Mocno** działają inaczej: „Strony są zamieniane w obrazy: duża oszczędność, ale tekstu nie da się już zaznaczać ani wyszukiwać”. Różnią się siłą kompresji obrazu, nie podejściem.',
+        ],
+      },
+      {
+        p: 'Przy skanach nie ma to znaczenia, bo skan i tak jest obrazem; tam spokojnie wybieraj mocniejszy poziom. Ale umowa, faktura albo pismo wygenerowane z Worda zawiera prawdziwy tekst i po każdym poziomie innym niż Bezstratnie przestanie być przeszukiwalne. Kontrahent nie znajdzie w nim numeru faktury, a czytnik ekranu nie odczyta go osobie niewidomej.',
+      },
+      {
+        p: 'Jeśli potrzebujesz jednocześnie małego pliku i przeszukiwalnego tekstu, zrób to dwuetapowo: skompresuj mocno, a potem przepuść wynik przez [OCR](/pl/ocr-pdf), który dołoży warstwę tekstową z powrotem.',
+      },
+
+      { h2: 'Co zrobić, gdy plik nadal jest za duży' },
+      {
+        ul: [
+          '**Podziel dokument.** [Podziel PDF](/pl/podziel-pdf) rozbije go na części, które zmieszczą się w kilku wiadomościach.',
+          '**Wyrzuć zbędne strony.** Puste strony i powtórzone załączniki potrafią zrobić różnicę; przejrzyj dokument w [Uporządkuj strony](/pl/zmien-kolejnosc-stron-pdf).',
+          '**Wyślij link zamiast pliku.** Gmail robi to sam powyżej 25 MB, a Interia proponuje Galerie Pocztowe. Przy dokumentach z danymi osobowymi sprawdź najpierw, czy wolno Ci umieścić je w usłudze chmurowej, bo to już powierzenie przetwarzania innemu podmiotowi.',
+          '**Skanuj oszczędniej.** Skan w 600 dpi w kolorze waży wielokrotnie więcej niż ten sam dokument w 300 dpi w skali szarości, a do odczytu i do OCR w zupełności wystarcza.',
+        ],
+      },
+
+      { h2: 'O czym pamiętać przy dokumentach z danymi osobowymi' },
+      {
+        p: 'Kompresja zmniejsza plik, ale niczego z niego nie usuwa w sensie prawnym. Jeśli w dokumencie są dane, których odbiorca nie powinien zobaczyć, zasłoń je wcześniej narzędziem [Anonimizuj PDF](/pl/anonimizuj-pdf), a ukryte właściwości dokumentu sprawdź w [Edytuj metadane](/pl/edytuj-metadane-pdf). Zamiana stron w obrazy usuwa warstwę tekstu, ale nie jest metodą anonimizacji i nie wolno jej tak traktować: dane nadal są widoczne na obrazie.',
+      },
+      { p: '**[Otwórz narzędzie Kompresuj PDF](/pl/kompresuj-pdf)**' },
+    ],
+  },
+  {
+    path: '/guides/does-a-pdf-tool-upload-your-files',
+    lang: 'en',
+    tool: 'redact',
+    title: 'How to check if a PDF tool uploads your files',
+    description:
+      'Every PDF site says your files are safe. Three checks in your browser, in about a minute, show whether a tool really keeps them on your machine.',
+    h1: 'How to check whether a PDF tool really uploads your files',
+    name: 'Guide: does a PDF tool upload your files?',
+    published: '2026-11-09',
+    blocks: [
+      {
+        p: 'Almost every online PDF tool promises something about your privacy. "Processed in your browser", "we delete your files after an hour", "bank-level encryption", "GDPR compliant". Those are four different claims, and only one of them can be checked by the person reading it. This guide shows how to check it, on any tool, in any modern browser, without installing anything.',
+      },
+      {
+        p: 'We build PDF tools ourselves, so read this as an invitation rather than a sales pitch: run these checks on us too. The last section says exactly what you should see when you do.',
+      },
+
+      { h2: 'The check that settles it: watch the network' },
+      {
+        p: 'A file can only leave your computer as a network request, and your browser lists every request it makes. So you do not have to trust anyone\'s description of what a page does. You can look.',
+      },
+      {
+        ol: [
+          'Open the tool\'s page, but do not choose your file yet.',
+          'Open the developer tools: `F12`, or `Ctrl` + `Shift` + `I` on Windows and Linux, or `Cmd` + `Option` + `I` on a Mac.',
+          'Go to the **Network** panel ([Chrome](' + CHROME_DEVTOOLS_NETWORK + '), [Firefox](' + FIREFOX_NETWORK_MONITOR + ')) and clear the list.',
+          'Now do the real job: choose your file and run the conversion.',
+          'Look at what appeared, and sort the list by size.',
+        ],
+      },
+      {
+        p: 'If your file was uploaded, there is a request carrying it, and it is hard to disguise. It will be a `POST` or a `PUT`, its size will be close to the size of your file, and its request payload will be the file itself. A tool that works locally produces nothing of the sort: the page, the scripts and the fonts load at the start, and then the list stays still while your 12 MB scan is converted.',
+      },
+      {
+        p: 'Size is the part to watch. A local tool may still send small requests for analytics or error reporting, and those are not your document. One request roughly the size of your file is the signal. A handful of requests a few kilobytes each is not.',
+      },
+
+      { h2: 'The stronger version: pull the plug' },
+      {
+        p: 'There is a blunter test that needs no reading of request payloads at all. Load the page, disconnect from the internet, then do the job.',
+      },
+      {
+        ol: [
+          'Open the tool and let the page finish loading.',
+          'Turn off your Wi-Fi, or tick **Offline** in the Network panel of the developer tools.',
+          'Choose your file and run the conversion.',
+        ],
+      },
+      {
+        p: 'If it still works, your file never needed a server, because at that moment there was no server to reach. If it fails or hangs, the work was happening somewhere else. This is the one check with no room for interpretation, and it takes about fifteen seconds.',
+      },
+
+      { h2: 'Read the policy the browser enforces' },
+      {
+        p: 'A site can declare where its own pages are allowed to send data, in a `Content-Security-Policy` response header. This is not a sentence in a privacy policy: the browser enforces it and blocks anything outside it. To see it, open the Network panel, click the first entry (the document itself) and look under **Response Headers**. On the command line, `curl -I https://example.com` prints the same thing.',
+      },
+      {
+        p: 'Two directives matter here. `connect-src` lists where the page\'s scripts may send data ([MDN](' + MDN_CONNECT_SRC + ')), and `form-action` lists where a form may submit ([MDN](' + MDN_FORM_ACTION + ')). A policy of `connect-src \'self\'` means scripts can only call back to the same site, which rules out the page handing your file to somebody else.',
+      },
+      {
+        p: 'One trap is worth knowing, and MDN states it plainly for `form-action`: it does not fall back to `default-src`, so "Not setting this allows anything". A missing directive is not a restriction. Read what is in the header, not what you expected to find there.',
+      },
+      {
+        p: 'Be clear about what this proves. A content security policy constrains the page running in your browser. It says nothing about what a server does with a file you did send it. It is useful evidence next to the network check, and no substitute for it.',
+      },
+
+      { h2: 'Three claims that sound like privacy and are not' },
+      {
+        ul: [
+          '**"Encrypted connection", "bank-level encryption", "SSL".** That is HTTPS, which every site has, including every site that does read your files. It means nobody intercepted the document on the way to their server. It says nothing about the server.',
+          '**"Files are deleted after an hour".** The file was uploaded, it was readable while it sat there, and you are trusting a deletion you cannot observe. For a document you hold in confidence, the hour is the problem, not the deletion.',
+          '**"GDPR compliant", "ISO 27001", "SOC 2".** These describe how an organisation handles data it holds. They are reasons to trust a company with your file, not evidence that it never receives one.',
+        ],
+      },
+      {
+        p: 'Only one claim removes the question: the file never left your computer. That is also the only one you can confirm for yourself, in a minute, with the checks above.',
+      },
+
+      { h2: 'When this matters more than usual' },
+      {
+        p: 'For a holiday photo it hardly matters. It matters when the document belongs to somebody else: a client file, a medical record, an employee contract, a CV sent to you in confidence. Uploading one of those to a third party is not a technical detail, it is a decision to let another company process personal data, with everything that follows from it. If you cannot tell where the file goes, that alone is reason to do the job locally or in an installed program.',
+      },
+
+      { h2: 'Now try it on us' },
+      {
+        p: 'Run all three checks on this site. Open [Redact PDF](/redact-pdf), or any other tool here, and watch the Network panel while you work: the page and its scripts load, and then your file produces no upload. Go offline first and the tools still run, because the code is already in your browser and the document never needs to travel.',
+      },
+      {
+        p: 'The header on every page here is `default-src \'self\'`, `connect-src \'self\' data: blob:` and `form-action \'none\'`. The `data:` and `blob:` entries deserve explaining rather than glossing over, because they are not servers. A `blob:` URL points at something held in your browser\'s own memory ([MDN](' + MDN_BLOB_URL + ')), which is how a finished file is handed to you as a download. No other site appears in that list, and `form-action \'none\'` means no form on the page can submit anywhere at all.',
+      },
+      {
+        p: 'That is the whole point of writing this down. You should not have to believe a sentence on a landing page, ours included, when the browser you already have will show you the answer.',
+      },
+      { p: '**[Open Redact PDF](/redact-pdf)**' },
+    ],
+  },
+  {
+    path: '/guides/merge-pdf-without-uploading',
+    lang: 'en',
+    tool: 'merge',
+    title: 'How to merge PDFs without uploading them',
+    description:
+      'Merge PDFs in your browser, in the order you choose. What a merge keeps, what it silently drops (bookmarks, form fields, signatures) and how to check.',
+    h1: 'How to merge PDF files without uploading them',
+    name: 'Guide: merge PDFs without uploading',
+    published: '2026-11-09',
+    blocks: [
+      {
+        p: 'Combining files is the most ordinary thing anyone does to a PDF, and the one most often done by dropping a stack of documents onto a stranger\'s server. It does not need a server. [Merge PDF](/merge-pdf) joins the files in your browser, and the documents never leave your computer.',
+      },
+      {
+        p: 'The second half of this guide is the part you will not find on most PDF sites: a merge quietly throws things away, and it is worth knowing what before you merge the only copy of something.',
+      },
+
+      { h2: 'Merging, step by step' },
+      {
+        ol: [
+          'Open [Merge PDF](/merge-pdf) and drop your files on **Add PDF files**. The hint under it, "Drop several files, then put them in order", is the whole workflow.',
+          'Add as many as you like, in as many goes as you like. Each batch is added to the list rather than replacing it, so you can drag in a few files, find another, and drop that in too.',
+          'Put them in order. Every row is numbered and has a **Move up** and a **Move down** button, and an X to drop a file you added by mistake. The number on the left is the order of the finished document.',
+          'Click **Merge 2 files** (the button counts your files, so it says 3, 4 or 12 as you add them). It stays disabled until there are at least two files, since merging one file is not a merge.',
+          'Download the result. It is named after your first file, with `_merged` on the end: `contract.pdf` and `annex.pdf` come back as `contract_merged.pdf`.',
+        ],
+      },
+      {
+        p: 'If one of the files is password-protected the tool stops and tells you so, rather than producing a damaged document. Remove the password first with [Unlock PDF](/unlock-pdf), using the password you already know, and then merge.',
+      },
+
+      { h2: 'What a merge keeps, and what it drops' },
+      {
+        p: 'A merge is not a staple. The tool builds a brand new document and copies the pages across one by one. Everything that belongs to a page travels with it, and everything that belonged to the old document as a whole is left behind.',
+      },
+      {
+        p: 'Kept, exactly as they were: the pages themselves, their text, fonts, images, vector drawing, page size and rotation. Text stays selectable and searchable, and a merge never turns pages into pictures.',
+      },
+      {
+        p: 'Not carried over:',
+      },
+      {
+        ul: [
+          '**Bookmarks.** The clickable outline in your viewer\'s sidebar. A merged 200 page report has no table of contents in the sidebar, even though each original had one.',
+          '**Form fields.** A fillable PDF comes back flat. We tested this on the tool: a text field named `invoice.number` in the source file is simply absent from the merged file.',
+          '**Title, author and the other document properties.** The merged file starts blank, and its producer is the PDF library the tool uses. Usually this is a small privacy win rather than a loss.',
+          '**Digital signatures.** A signature covers an exact range of bytes in one specific file, so any merge breaks it. This is not a limitation of this tool: it is true of every merge, everywhere, and it is the point of a signature. Under [eIDAS](' + EIDAS + ') a qualified signature is what gives a document its legal weight, so a signed document should travel as its own file, not inside a merged bundle.',
+          '**Attachments, tagged structure and page labels.** Embedded files, the accessibility tags a screen reader uses, and page numbering schemes such as roman numerals for a preface.',
+        ],
+      },
+      {
+        p: 'We checked the first three directly: we built a PDF with a form field and a title, merged it, and read the result back. The field and the title were both gone and the pages were all present. The rest live in the same place in the file structure, the document catalogue, which a newly created document starts out empty.',
+      },
+      {
+        p: 'None of this is unusual. Pick any merge tool, online or installed, and most of the same things will be missing, because most of them work the same way. The difference is whether anyone tells you.',
+      },
+
+      { h2: 'Three things worth checking before you merge' },
+      {
+        ul: [
+          '**Is any file signed?** If yes, merging destroys the signature. Send it separately.',
+          '**Is any file a form someone still has to fill in?** Merge after it is filled and flattened, not before.',
+          '**Is this the only copy?** Keep the originals until you have opened the merged file and checked it. Bookmarks and form fields cannot be recovered from the merged document.',
+        ],
+      },
+
+      { h2: 'After the merge' },
+      {
+        ul: [
+          'Too large to e-mail? [Compress PDF](/compress-pdf) will shrink it, and the [guide to e-mail size limits](/guides/compress-pdf-for-email) explains which setting keeps your text selectable.',
+          'Wrong order, or a page to remove? [Organize pages](/organize-pdf-pages) works visually on the merged file.',
+          'Want a title and author on the finished document? [Edit metadata](/edit-pdf-metadata) fills in the properties the merge left blank.',
+          'Need page numbers running across the whole bundle? [Add page numbers](/add-page-numbers-to-pdf) does that after merging, which is the right order to do it in.',
+        ],
+      },
+
+      { h2: 'Why doing it locally is worth the bother' },
+      {
+        p: 'The files people merge are rarely trivial: a contract and its annexes, a tender submission, a year of invoices for an accountant, a patient\'s records. Merging them online means handing that whole bundle to a company you have not met, which is a decision about someone else\'s data as much as your own.',
+      },
+      {
+        p: 'You do not have to take our word for where the files go. Our [guide to checking whether a PDF tool uploads your files](/guides/does-a-pdf-tool-upload-your-files) shows how to watch the network panel, and how to run this tool with your internet connection switched off. It still works, which is the only convincing answer.',
+      },
+      { p: '**[Open Merge PDF](/merge-pdf)**' },
+    ],
+  },
+  {
+    path: '/pl/poradnik/polacz-pdf-bez-wysylania',
+    lang: 'pl',
+    tool: 'merge',
+    title: 'Jak połączyć pliki PDF bez wysyłania ich na serwer',
+    description:
+      'Łączenie PDF w przeglądarce, w wybranej kolejności. Co po scaleniu zostaje, a co znika bez ostrzeżenia: zakładki, pola formularza i podpis elektroniczny.',
+    h1: 'Jak połączyć pliki PDF bez wysyłania ich na serwer',
+    name: 'Poradnik: łączenie PDF bez wysyłania',
+    published: '2026-11-09',
+    blocks: [
+      {
+        p: 'Komplet dokumentacji do przetargu, wniosek z załącznikami, faktury za cały miesiąc do księgowej, dokumentacja medyczna pacjenta. Łączenie plików PDF to najzwyklejsza czynność, jaką wykonuje się na dokumentach, i najczęściej robi się ją, wrzucając cały komplet na serwer obcej firmy. Nie trzeba. [Połącz PDF](/pl/polacz-pdf) scala pliki w przeglądarce, a dokumenty nie opuszczają Twojego komputera.',
+      },
+      {
+        p: 'Druga część tego poradnika to rzecz, o której większość serwisów PDF milczy: scalanie bezpowrotnie usuwa część zawartości dokumentu. Warto wiedzieć co, zanim połączysz jedyny egzemplarz.',
+      },
+
+      { h2: 'Łączenie krok po kroku' },
+      {
+        ol: [
+          'Otwórz [Połącz PDF](/pl/polacz-pdf) i upuść pliki na pole **Dodaj pliki PDF**. Podpowiedź pod spodem, „Upuść kilka plików, a potem ustaw ich kolejność", opisuje całą pracę.',
+          'Dodawaj tyle plików, ile chcesz, i na tyle razy, ile potrzebujesz. Każda kolejna porcja dokłada się do listy, zamiast ją zastępować, więc możesz wrzucić kilka plików, znaleźć jeszcze jeden i dorzucić go osobno.',
+          'Ustaw kolejność. Każdy wiersz ma numer oraz przyciski **Przesuń wyżej** i **Przesuń niżej**, a także X do usunięcia pliku dodanego przez pomyłkę. Numer po lewej to kolejność w gotowym dokumencie.',
+          'Kliknij **Połącz PDF**. Przycisk pozostaje nieaktywny, dopóki nie wskażesz co najmniej dwóch plików, bo scalenie jednego pliku nie jest scaleniem.',
+          'Pobierz wynik. Nazwa powstaje z nazwy pierwszego pliku z dopiskiem `_merged`: z `umowa.pdf` i `zalacznik.pdf` otrzymasz `umowa_merged.pdf`.',
+        ],
+      },
+      {
+        p: 'Jeśli któryś z plików jest zabezpieczony hasłem, narzędzie zatrzyma się i wyraźnie o tym poinformuje, zamiast zwracać uszkodzony dokument. Zdejmij hasło w [Odblokuj PDF](/pl/odblokuj-pdf), podając hasło, które znasz, a potem scalaj.',
+      },
+
+      { h2: 'Co zostaje po scaleniu, a co znika' },
+      {
+        p: 'Scalanie nie jest zszywaczem. Narzędzie tworzy zupełnie nowy dokument i przenosi do niego strony, jedna po drugiej. Wszystko, co należy do strony, wędruje razem z nią. Wszystko, co należało do starego dokumentu jako całości, zostaje w tyle.',
+      },
+      {
+        p: 'Zostaje bez zmian: same strony, ich tekst, czcionki, obrazy, grafika wektorowa, rozmiar i obrót strony. Tekst nadal da się zaznaczać i wyszukiwać, a scalanie nigdy nie zamienia stron w obrazy.',
+      },
+      {
+        p: 'Nie przenosi się:',
+      },
+      {
+        ul: [
+          '**Zakładki**, czyli klikalny spis treści w bocznym panelu czytnika. Scalona dokumentacja na 200 stron nie ma już nawigacji, choć każdy z plików źródłowych ją miał.',
+          '**Pola formularza.** Wypełnialny PDF wraca jako płaski dokument. Sprawdziliśmy to na tym narzędziu: pole tekstowe o nazwie `invoice.number` obecne w pliku źródłowym po prostu nie istnieje w pliku scalonym.',
+          '**Tytuł, autor i pozostałe właściwości dokumentu.** Scalony plik zaczyna z pustymi metadanymi, a jako producenta wpisuje bibliotekę PDF, z której korzysta narzędzie. Najczęściej jest to korzyść dla prywatności, a nie strata.',
+          '**Podpis elektroniczny.** Podpis obejmuje dokładny zakres bajtów jednego konkretnego pliku, więc każde scalenie go unieważnia. To nie jest ograniczenie tego narzędzia: tak działa każde scalanie i na tym właśnie polega sens podpisu. Zgodnie z [rozporządzeniem eIDAS](' + EIDAS_PL + ') to podpis kwalifikowany nadaje dokumentowi moc prawną, więc dokument podpisany powinien jechać jako osobny plik, a nie w środku scalonej paczki. Więcej w poradniku o [podpisywaniu PDF bez wysyłania pliku](/pl/poradnik/podpis-pdf-bez-wysylania).',
+          '**Załączniki, struktura dostępności i etykiety stron.** Pliki osadzone w dokumencie, znaczniki, z których korzysta czytnik ekranu, oraz nietypowa numeracja, na przykład cyfry rzymskie we wstępie.',
+        ],
+      },
+      {
+        p: 'Pierwsze trzy punkty sprawdziliśmy wprost: złożyliśmy PDF z polem formularza i tytułem, scaliliśmy go i odczytaliśmy wynik. Pola i tytułu już nie było, wszystkie strony były na miejscu. Reszta mieszka w tym samym miejscu struktury pliku, w katalogu dokumentu, który nowo utworzony dokument ma pusty.',
+      },
+      {
+        p: 'Nie ma w tym nic nadzwyczajnego. Weź dowolne narzędzie do scalania, w przeglądarce albo zainstalowane, a najczęściej zabraknie dokładnie tego samego, bo większość działa tak samo. Różnica polega na tym, czy ktoś Ci o tym powie.',
+      },
+
+      { h2: 'Trzy rzeczy do sprawdzenia przed scaleniem' },
+      {
+        ul: [
+          '**Czy któryś plik jest podpisany?** Jeśli tak, scalenie zniszczy podpis. Wyślij go osobno.',
+          '**Czy któryś plik to formularz, który ktoś ma dopiero wypełnić?** Scalaj po wypełnieniu i spłaszczeniu, nie przed.',
+          '**Czy to jedyny egzemplarz?** Zachowaj oryginały, dopóki nie otworzysz scalonego pliku i go nie obejrzysz. Zakładek ani pól formularza nie da się odzyskać ze scalonego dokumentu.',
+        ],
+      },
+
+      { h2: 'Co dalej ze scalonym plikiem' },
+      {
+        ul: [
+          'Za duży na e-mail? [Kompresuj PDF](/pl/kompresuj-pdf) go zmniejszy, a poradnik o [limitach załączników](/pl/poradnik/kompresja-pdf-do-emaila) tłumaczy, który poziom zachowuje tekst możliwy do zaznaczenia.',
+          'Zła kolejność albo zbędna strona? [Uporządkuj strony](/pl/zmien-kolejnosc-stron-pdf) pozwala poprawić to na podglądzie.',
+          'Chcesz uzupełnić tytuł i autora? [Edytuj metadane](/pl/edytuj-metadane-pdf) wypełni właściwości, które scalanie zostawiło puste.',
+          'Potrzebna numeracja przez całą paczkę? [Numeracja stron](/pl/numeracja-stron-pdf) zrobi to po scaleniu, i to jest właściwa kolejność działań.',
+        ],
+      },
+
+      { h2: 'Dlaczego warto robić to lokalnie' },
+      {
+        p: 'Pliki, które ludzie scalają, rzadko bywają błahe: umowa z aneksami, oferta przetargowa, roczny komplet faktur, dokumentacja pacjenta. Scalanie ich w serwisie online oznacza przekazanie całej paczki firmie, której nie znasz, a to decyzja dotycząca cudzych danych w nie mniejszym stopniu niż własnych.',
+      },
+      {
+        p: 'Nie musisz wierzyć nam na słowo. Otwórz narzędzie, odłącz internet i scal pliki mimo to. Zadziała, bo kod jest już w Twojej przeglądarce, a dokument nie ma dokąd jechać.',
+      },
+      { p: '**[Otwórz narzędzie Połącz PDF](/pl/polacz-pdf)**' },
+    ],
+  },
+  {
+    path: '/pl/poradnik/metadane-pdf-bip-rodo',
+    lang: 'pl',
+    tool: 'metadata',
+    title: 'Ukryte metadane w PDF: co widzi odbiorca dokumentu',
+    description:
+      'Autor, program i system operacyjny zapisane w pliku. Jak je sprawdzić, dlaczego wyczyszczenie pól to za mało i co mówi o tym polskie prawo.',
+    h1: 'Ukryte metadane w PDF: co zdradza dokument, który publikujesz',
+    name: 'Poradnik: metadane PDF w BIP i RODO',
+    published: '2026-11-09',
+    blocks: [
+      {
+        p: 'Na stronie dokumentu widać to, co miało być widoczne. Sam plik mówi więcej: kto go napisał, w jakim programie, na jakim systemie, kiedy powstał i kiedy był ostatnio zapisywany. Czasem także jak nazywała się wcześniejsza wersja. Jeśli publikujesz dokumenty w BIP, wysyłasz pisma w imieniu urzędu albo kancelarii, warto wiedzieć, co dokładnie wychodzi razem z plikiem.',
+      },
+
+      { h2: 'Skala problemu: liczby, nie przeczucia' },
+      {
+        p: 'Najlepszym opublikowanym badaniem tego zjawiska jest praca Supriyi Adhatarao i Cédrica Lauradoux „Exploitation and Sanitization of Hidden Data in PDF Files" ([arXiv](' +
+          PDF_HIDDEN_DATA_STUDY +
+          ')). Autorzy przeanalizowali 39 664 pliki PDF opublikowane przez 75 agencji bezpieczeństwa z 47 krajów, czyli instytucje, po których można by się spodziewać ostrożności.',
+      },
+      {
+        ul: [
+          '**33 procent** plików ujawniało tożsamość osoby, która utworzyła dokument.',
+          '**76 procent** zdradzało program użyty do wytworzenia pliku PDF.',
+          '**42 procent** pozwalało ustalić system operacyjny, bo nazwy programów bywają specyficzne dla systemu.',
+          'Dla porównania: tylko **4 procent** dokumentów zawierało nazwisko autora w widocznej treści. Metadane ujawniały tożsamość mniej więcej osiem razy częściej niż sam tekst dokumentu.',
+          '**13 procent** plików nie miało w ogóle obiektu z metadanymi, a mimo to coś ujawniało, bo dane potrafią siedzieć także w innych miejscach pliku.',
+        ],
+      },
+      {
+        p: 'Ostatni punkt jest najważniejszy dla osoby, która chce „wyczyścić plik i mieć spokój". Metadane w PDF nie mieszkają w jednym miejscu.',
+      },
+
+      { h2: 'Gdzie siedzą metadane' },
+      {
+        p: 'Dokument PDF ma dwa osobne magazyny na metadane dokumentu. Starszy to słownik informacji o dokumencie, z polami Title, Author, Subject, Keywords, Creator (program, w którym powstał oryginał), Producer (oprogramowanie, które zapisało PDF), CreationDate i ModDate. Nowszy to strumień XMP, czyli pakiet XML zaszyty w pliku. Norma PDF 2.0 uznaje strumienie metadanych za metodę zalecaną i dopuszcza je także na fragmentach dokumentu, nie tylko na całości ([punkt 14.3](' +
+          PDF2_METADATA +
+          ')).',
+      },
+      {
+        p: 'Oba magazyny zwykle trzymają te same wartości, bo programy zapisują je równolegle. To właśnie dlatego wyczyszczenie jednego nie załatwia sprawy: drugi zostaje nietknięty, z tym samym nazwiskiem w środku.',
+      },
+
+      { h2: 'Jak sprawdzić, co jest w pliku' },
+      {
+        ul: [
+          '**W czytniku PDF.** Właściwości dokumentu pokażą słownik informacji. Pakietu XMP prawie żaden czytnik nie pokazuje.',
+          '**Narzędziem pdfinfo** (pakiet Poppler). Tu jest pułapka: `pdfinfo dokument.pdf` wypisuje słownik informacji, a `pdfinfo -meta dokument.pdf` wypisuje pakiet XMP, i tych opcji nie da się połączyć w jednym wywołaniu. Trzeba wykonać obie komendy. Kto uruchomi tylko pierwszą, nigdy nie zobaczy XMP.',
+          '**Narzędziem exiftool.** `exiftool -a -G1 dokument.pdf` wypisuje jedno i drugie, oznaczając każdy wpis grupą, więc od razu widać, czy wartość pochodzi ze słownika informacji, czy z XMP ([nazwy znaczników PDF](' +
+            EXIFTOOL_PDF +
+            ')).',
+          '**W narzędziu na tej stronie.** Upuść plik na [Edytuj metadane](/pl/edytuj-metadane-pdf), żeby zobaczyć sześć pól tekstowych ze słownika informacji. Narzędzie nie pokazuje dat ani pakietu XMP, więc do nich użyj pdfinfo albo exiftool.',
+        ],
+      },
+
+      { h2: 'Co usuwa Edytuj metadane, a czego nie' },
+      {
+        p: 'Powiemy to wprost, bo to jedyna uczciwa odpowiedź. Wyczyść wszystkie sześć pól i kliknij **Zapisz metadane**, a słownik informacji faktycznie zostanie opróżniony. Sprawdziliśmy to na własnym narzędziu: przygotowaliśmy plik z tytułem „Umowa z kontrahentem", autorem „Jan Kowalski" i pakietem XMP powtarzającym te same dane, wyczyściliśmy wszystkie pola i odczytaliśmy wynik. Pola były puste, a w bajtach pliku nadal siedziały napisy „Jan Kowalski" i „Microsoft Word 2016".',
+      },
+      {
+        p: 'Pakiet XMP zostaje. Jeśli dokument go ma, nazwisko, tytuł i nazwa programu pozostają w pliku, mimo że narzędzie pokazuje puste pola. To samo dotyczy zresztą większości edytorów metadanych.',
+      },
+      {
+        p: 'Jest też druga pułapka, o której warto wiedzieć, zanim zaufa się popularnej poradzie z internetu. Program exiftool zapisuje zmiany w PDF jako przyrostową aktualizację, czyli dopisuje je na końcu pliku, nie usuwając starych danych. Jego własna dokumentacja mówi o tym otwarcie: zmiany są odwracalne poleceniem `-PDF-update:all=`, więc „exiftool alone may not be used to securely edit metadata in PDF files" ([dokumentacja exiftool](' +
+          EXIFTOOL_POD +
+          ')). Plik wygląda na wyczyszczony, a poprzednia wersja danych nadal w nim jest.',
+      },
+
+      { h2: 'Jak naprawdę pozbyć się XMP' },
+      {
+        p: 'Potrzebny jest plik zapisany od nowa, a nie poprawiony na końcu. Najprostszy sposób w przeglądarce to przepuścić dokument przez narzędzie, które buduje nowy plik: [Podziel PDF](/pl/podziel-pdf) albo [Połącz PDF](/pl/polacz-pdf).',
+      },
+      {
+        p: 'Sprawdziliśmy również to. Ten sam plik z pakietem XMP, przepuszczony przez scalanie, wraca bez pakietu: napisów „Jan Kowalski" ani „Microsoft Word 2016" nie ma już nigdzie w bajtach pliku. Powstaje nowy dokument, a stary słownik informacji i stary XMP po prostu nie są do niego kopiowane. Daty ustawiają się na moment operacji, a Creator i Producer wskazują bibliotekę, z której korzysta narzędzie. Jeśli chcesz, żeby i te pola były puste, przepuść wynik jeszcze przez [Edytuj metadane](/pl/edytuj-metadane-pdf).',
+      },
+      {
+        p: 'Uwaga na koszt tej operacji: nowy dokument nie przenosi zakładek ani pól formularza. Rób to na wersji ostatecznej. Metadane przypisane do pojedynczych stron i obrazów wędrują razem ze stronami, więc żadna z tych metod nie jest pełną anonimizacją.',
+      },
+
+      { h2: 'Co na to polskie prawo' },
+      {
+        p: 'Tu trzeba uważać, bo w tej sprawie łatwo napisać więcej, niż wynika z przepisów. Ustawa z 4 kwietnia 2019 r. o dostępności cyfrowej stron internetowych i aplikacji mobilnych podmiotów publicznych (tekst jednolity [Dz.U. 2023 poz. 82](' +
+          USTAWA_DOSTEPNOSC +
+          ')) wymaga w załączniku spełnienia kryterium 2.4.2 „Tytuły stron" na poziomie A, a przez odesłanie do punktu 10 normy EN 301 549, czyli do dokumentów niebędących stronami internetowymi, obejmuje tym także publikowane pliki PDF.',
+      },
+      {
+        p: 'Sama norma EN 301 549 w punkcie 10.2.4.2 wymaga, by „Documents have titles that describe topic or purpose", ale w uwadze dodaje, że wystarczającym tytułem jest nazwa dokumentu, jeśli opisuje temat lub przeznaczenie ([tekst normy](' +
+          EN301549 +
+          ')). Innymi słowy: prawo wymaga tytułu, a opisowa nazwa pliku ten wymóg spełnia. Nie ma w polskim prawie przepisu, który nakazywałby wypełnić pole Title w metadanych PDF, i nie warto twierdzić inaczej.',
+      },
+      {
+        p: 'Jest za to oficjalna rządowa instrukcja, która mówi autorom dokładnie to samo co ten poradnik, tylko od drugiej strony. Poradnik gov.pl o tworzeniu dostępnych dokumentów w programie Word stwierdza: „Przed opublikowaniem lub eksportowaniem dokumentu sprawdź i uzupełnij metadane dokumentu, w tym jego tytuł" ([gov.pl](' +
+          GOV_DOSTEPNE_DOKUMENTY +
+          ')). To jest właśnie moment, w którym nieuważnie wpisany autor zostaje zapieczętowany w pliku na zawsze.',
+      },
+      {
+        p: 'Warto też pamiętać, że BIP nie ma furtki. Nawet podmiot, który powołuje się na nadmierne koszty zapewnienia dostępności, musi zapewnić dostępność cyfrową strony podmiotowej Biuletynu Informacji Publicznej. Z drugiej strony dokumenty tekstowe opublikowane przed 23 września 2018 r. są spod ustawy wyłączone, chyba że ich zawartość jest niezbędna do realizacji bieżących zadań podmiotu.',
+      },
+
+      { h2: 'A RODO?' },
+      {
+        p: 'Powiemy to uczciwie: nie znaleźliśmy decyzji ani wytycznych Prezesa UODO, które dotyczyłyby wprost metadanych plików. Szukaliśmy i nie ma. Kto twierdzi inaczej, powinien podać sygnaturę.',
+      },
+      {
+        p: 'Najbliższa sprawa dotyczy nie metadanych, lecz opublikowania w BIP niewłaściwego pliku. W maju 2026 r. UODO poinformował o postępowaniu wobec Burmistrza Miasta i Gminy Myślenice, który opublikował niezanonimizowaną petycję z imionami, nazwiskami, adresami zamieszkania i wzorami podpisów 749 osób; plik był dostępny przez kilkanaście dni, a kara wyniosła 7 700 zł ([komunikat UODO](' +
+          UODO_BIP_DECYZJA +
+          ')). Istotny szczegół: spór dotyczył obowiązku zgłoszenia naruszenia, a nie samej publikacji.',
+      },
+      {
+        p: 'Wniosek dla osoby publikującej dokumenty jest prosty i nie wymaga nowych przepisów. Jeśli w pliku są dane osobowe, których odbiorca nie powinien zobaczyć, to bez znaczenia, czy są na stronie, czy we właściwościach dokumentu. Metadane po prostu trudniej zauważyć przed publikacją niż po.',
+      },
+
+      { h2: 'Lista kontrolna przed publikacją' },
+      {
+        ol: [
+          'Sprawdź plik dwiema komendami: `pdfinfo plik.pdf` i `pdfinfo -meta plik.pdf`, albo jedną: `exiftool -a -G1 plik.pdf`.',
+          'Jeśli jest pakiet XMP z danymi, przepuść dokument przez [Podziel PDF](/pl/podziel-pdf) albo [Połącz PDF](/pl/polacz-pdf), żeby powstał nowy plik bez niego.',
+          'Wyczyść pozostałe pola w [Edytuj metadane](/pl/edytuj-metadane-pdf) i uzupełnij sensowny tytuł, bo tytuł jest wymagany, a puste pole też bywa problemem.',
+          'Sprawdź nazwę pliku. `petycja_wersja_bez_anonimizacji.pdf` mówi wszystko, zanim ktokolwiek go otworzy.',
+          'Jeśli dokument zawiera dane do zasłonięcia na samych stronach, użyj [Anonimizuj PDF](/pl/anonimizuj-pdf) i sprawdź wynik zgodnie z poradnikiem o [anonimizacji zgodnej z RODO](/pl/poradnik/anonimizacja-pdf-rodo).',
+          'Na koniec przeczytaj plik jeszcze raz obiema komendami. Sprawdza się wynik, nie intencję.',
+        ],
+      },
+      {
+        p: 'Wszystkie narzędzia na tej stronie działają w przeglądarce, więc dokument, który sprawdzasz pod kątem wycieku danych, nie wyjeżdża przy okazji na cudzy serwer.',
+      },
+      { p: '**[Otwórz narzędzie Edytuj metadane](/pl/edytuj-metadane-pdf)**' },
     ],
   },
 ];
