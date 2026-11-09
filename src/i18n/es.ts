@@ -76,8 +76,8 @@ export const es: Messages = {
   },
 
   home: {
-    title: 'Panel',
-    subtitle: (storedIn) => `Todo funciona ${storedIn}: sin subir archivos, sin cuentas y sin límites.`,
+    title: 'Herramientas PDF gratuitas que nunca suben tus archivos',
+    subtitle: (storedIn) => `Todo funciona ${storedIn}: sin cuenta, sin límites y sin marcas de agua.`,
     openTitle: 'Abrir un PDF en el editor',
     openHint: 'Suelta aquí los archivos o haz clic para elegirlos. Varios archivos se unen en un solo documento.',
     tools: 'Herramientas',

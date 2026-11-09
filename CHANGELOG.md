@@ -26,6 +26,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 ### Changed
 
 - Editor: Highlight, Whiteout and Box stay active after drawing, so several areas can be marked in a row. Esc or V switches back to Select.
+- The home page opens with what the tools do rather than the word "Dashboard", in every interface language. The sidebar item is still "Dashboard".
 
 ### Fixed
 - Redact: a box could start too far right after narrow letters (such as "il"), leaving the start of an e-mail address or number readable. Boxes are now placed from measured character widths and never come out narrower than the text.

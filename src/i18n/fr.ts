@@ -79,8 +79,8 @@ export const fr: Messages = {
   },
 
   home: {
-    title: 'Tableau de bord',
-    subtitle: (storedIn) => `Tout fonctionne ${storedIn} : aucun envoi de fichier, aucun compte, aucune limite.`,
+    title: 'Des outils PDF gratuits qui n’envoient jamais vos fichiers',
+    subtitle: (storedIn) => `Tout fonctionne ${storedIn} : aucun compte, aucune limite, aucun filigrane.`,
     openTitle: 'Ouvrir un PDF dans l’éditeur',
     openHint: 'Déposez des fichiers ici ou cliquez pour les choisir. Plusieurs fichiers sont réunis en un seul document.',
     tools: 'Outils',

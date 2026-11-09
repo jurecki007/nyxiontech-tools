@@ -6,3 +6,6 @@ test-results
 playwright-report
 tests/.fixtures
 *.tsbuildinfo
+
+# Launch and promotion working notes: local only, not part of the published app.
+marketing

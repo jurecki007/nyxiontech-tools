@@ -82,8 +82,8 @@ export const en = {
   },
 
   home: {
-    title: 'Dashboard',
-    subtitle: (storedIn: string) => `Everything runs ${storedIn}: no uploads, no accounts, no limits.`,
+    title: 'Free PDF tools that never upload your files',
+    subtitle: (storedIn: string) => `Everything runs ${storedIn}: no account, no limits, no watermarks.`,
     openTitle: 'Open PDF in the editor',
     openHint: 'Drop files here or click to choose. Several files are merged into one document.',
     tools: 'Tools',

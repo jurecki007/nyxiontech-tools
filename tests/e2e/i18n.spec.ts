@@ -76,7 +76,7 @@ test.describe('Polish interface', () => {
     await page.locator('.nav-brand').click();
     await sw.getByRole('link', { name: 'Polski' }).click();
     await expect(page).toHaveURL(/\/pl\/$/);
-    await expect(page.getByRole('heading', { name: 'Pulpit' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'nigdy nie wysyłają', level: 1 })).toBeVisible();
     await expect(page.locator('.tool-card', { hasText: 'Anonimizuj PDF' })).toHaveAttribute('href', '/pl/anonimizuj-pdf');
 
     // All of this without reloading the page.

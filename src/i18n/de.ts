@@ -76,8 +76,8 @@ export const de: Messages = {
   },
 
   home: {
-    title: 'Übersicht',
-    subtitle: (storedIn) => `Alles läuft ${storedIn}: keine Uploads, keine Konten, keine Limits.`,
+    title: 'Kostenlose PDF-Tools, die Ihre Dateien nie hochladen',
+    subtitle: (storedIn) => `Alles läuft ${storedIn}: kein Konto, keine Limits, keine Wasserzeichen.`,
     openTitle: 'PDF im Editor öffnen',
     openHint: 'Dateien hier ablegen oder klicken, um sie zu wählen. Mehrere Dateien werden zu einem Dokument zusammengefügt.',
     tools: 'Werkzeuge',
