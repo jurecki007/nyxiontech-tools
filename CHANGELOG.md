@@ -22,6 +22,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - `vite preview` sends the same Cache-Control as nginx for `/assets/` and `/vendor/`, so tests see what browsers cache in production.
 - The web app can be installed (Chrome, Edge): an "Install app" link appears in the sidebar when the browser offers it. Once installed, PDFs and images can be opened with it from the operating system, or shared to it from other apps. A small service worker receives shared files and hands them to the page; it caches nothing and sends nothing anywhere.
 - Each tool links to its guide, where one exists, in the language of the page. The guides were there before but only search engines could find them.
+- Polish guide on removing the password from a bank statement PDF (/pl/poradnik/haslo-wyciag-bankowy). It explains the difference between a password that stops the file opening and one that only blocks printing or copying, since Unlock handles both and which one you have decides whether you type anything into the password box. It also says plainly that the tool cannot open a file whose password you do not know, and what to redact before passing a statement on.
 
 ### Changed
 

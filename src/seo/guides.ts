@@ -974,6 +974,73 @@ export const GUIDES: Guide[] = [
     ],
   },
   {
+    path: '/pl/poradnik/haslo-wyciag-bankowy',
+    lang: 'pl',
+    tool: 'unlock',
+    title: 'Jak usunąć hasło z wyciągu bankowego PDF',
+    description:
+      'Banki wysyłają wyciągi zaszyfrowane hasłem. Usuniesz je w przeglądarce, bez wysyłania pliku na serwer. Co zrobić, gdy blokada dotyczy tylko druku.',
+    h1: 'Jak usunąć hasło z wyciągu bankowego, nie wysyłając go na obcy serwer',
+    name: 'Poradnik: hasło z wyciągu bankowego',
+    published: '2026-11-09',
+    blocks: [
+      {
+        p: 'Polskie banki często dostarczają wyciągi i potwierdzenia operacji jako pliki PDF zaszyfrowane hasłem. To dobra praktyka w chwili wysyłki, bo plik jedzie e-mailem. Problem zaczyna się później: zaszyfrowanego PDF nie przyjmie część programów księgowych, nie da się go scalić z innymi dokumentami ani wygodnie przeszukać, a przy każdym otwarciu trzeba wpisywać hasło. Ten poradnik pokazuje, jak zdjąć je narzędziem [Odblokuj PDF](/pl/odblokuj-pdf), które działa w przeglądarce.',
+      },
+      {
+        p: 'Jest powód, żeby akurat przy tym pliku uważać na konwertery online. Wyciąg bankowy pokazuje numer rachunku, saldo, adres i każdą transakcję z nazwami odbiorców. To jeden z najbardziej wrażliwych dokumentów, jakie masz, a typowe narzędzie „odblokuj PDF” zaczyna od tego, że każe wgrać go na swój serwer i podać do niego hasło.',
+      },
+
+      { h2: 'W PDF są dwa różne zamki' },
+      {
+        p: 'Zanim cokolwiek zrobisz, ustal, który z nich blokuje Twój plik. To decyduje o tym, co wpiszesz w narzędziu.',
+      },
+      {
+        ul: [
+          '**Hasło otwarcia.** Plik jest zaszyfrowany i bez hasła nie otworzy się w ogóle. Tak zwykle wygląda wyciąg przysłany e-mailem. Hasło znasz, bo bank podaje jego schemat w umowie albo w treści wiadomości: bywa to fragment numeru PESEL, data urodzenia albo numer klienta.',
+          '**Hasło uprawnień.** Plik otwiera się normalnie, ale czytnik blokuje drukowanie, kopiowanie tekstu albo komentowanie. Tak bywają zabezpieczone potwierdzenia przelewów i dokumenty z urzędów. Hasła do otwarcia nie ma, bo nie jest potrzebne.',
+        ],
+      },
+      {
+        p: 'Narzędzie obsługuje oba przypadki. Pod polem **Hasło** widnieje podpowiedź: „Zostaw puste dla plików, które otwierają się bez hasła, ale blokują drukowanie lub kopiowanie”.',
+      },
+
+      { h2: 'Jak usunąć hasło krok po kroku' },
+      {
+        ol: [
+          'Otwórz [Odblokuj PDF](/pl/odblokuj-pdf) i dodaj plik. Odczytuje go przeglądarka na Twoim urządzeniu; nic nie jest wysyłane.',
+          'Jeśli plik wymaga hasła do otwarcia, wpisz je w pole **Hasło**. Jeśli otwiera się sam, a zablokowane jest tylko drukowanie albo kopiowanie, zostaw to pole puste.',
+          'Kliknij **Odblokuj PDF**.',
+          'Pobierz wynik. To ta sama treść bez szyfrowania: otworzy się w każdym czytniku i w każdym programie, bez pytania o hasło.',
+        ],
+      },
+      {
+        p: 'Gdy hasło się nie zgadza, narzędzie pokazuje komunikat „Nieprawidłowe hasło albo nie udało się odszyfrować tego pliku PDF”. Najczęstsza przyczyna to spacja wklejona razem z hasłem albo inny schemat, niż zapamiętałeś.',
+      },
+
+      { h2: 'Czego to narzędzie nie zrobi' },
+      {
+        p: 'Nie łamie haseł. Opis narzędzia mówi wprost: usuwa hasło „z pliku PDF, który możesz otworzyć”. Jeśli nie znasz hasła otwarcia, jedyna droga prowadzi przez bank albo nadawcę dokumentu. Tak ma być: gdyby dowolna strona internetowa potrafiła zdjąć szyfrowanie z cudzego wyciągu, szyfrowanie nie miałoby sensu.',
+      },
+
+      { h2: 'Co zrobić z odblokowanym plikiem dalej' },
+      {
+        ul: [
+          'Wysyłasz wyciąg jako dowód dochodu wynajmującemu albo księgowej? Zwykle nie potrzebują wszystkich danych. Numer rachunku i pozycje niezwiązane ze sprawą usuń w narzędziu [Anonimizuj PDF](/pl/anonimizuj-pdf). Zaczernienie usuwa tekst, a nie tylko go zakrywa.',
+          'Kilka miesięcy wyciągów złóż w jeden plik narzędziem [Połącz PDF](/pl/polacz-pdf). Scalanie wymaga, żeby żaden plik nie był już zaszyfrowany, dlatego hasło zdejmuje się najpierw.',
+          'Jeśli załącznik jest za duży na e-mail, zmniejsz go w narzędziu [Kompresuj PDF](/pl/kompresuj-pdf).',
+          'Chcesz zachować ochronę, ale ze swoim hasłem? Dodaj je ponownie w narzędziu [Zabezpiecz PDF hasłem](/pl/zabezpiecz-pdf-haslem), które szyfruje algorytmem AES-256.',
+        ],
+      },
+
+      { h2: 'Jak sprawdzić, że plik naprawdę nigdzie nie pojechał' },
+      {
+        p: 'Nie musisz wierzyć na słowo. Otwórz panel **Sieć** w narzędziach deweloperskich przeglądarki, wykonaj operację na pliku i popatrz, czy pojawi się jakiekolwiek żądanie wysyłające dane. Nie pojawi się: strona ma politykę bezpieczeństwa treści, która ogranicza połączenia do własnego serwera i blokuje wysyłanie formularzy. Przy wyciągu bankowym to jedyna gwarancja, która cokolwiek znaczy.',
+      },
+      { p: '**[Otwórz narzędzie Odblokuj PDF](/pl/odblokuj-pdf)**' },
+    ],
+  },
+  {
     path: '/pl/poradnik/pdf-do-word-bez-wysylania',
     lang: 'pl',
     tool: 'pdf-to-word',

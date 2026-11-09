@@ -82,6 +82,7 @@ test.describe('static tool pages', () => {
       '/guides/sign-pdf-without-uploading',
       '/pl/poradnik/anonimizacja-bip-szkola',
       '/pl/poradnik/anonimizacja-pdf-rodo',
+      '/pl/poradnik/haslo-wyciag-bankowy',
       '/pl/poradnik/heic-do-jpg-bez-wysylania',
       '/pl/poradnik/kompresja-pdf-do-emaila',
       '/pl/poradnik/metadane-pdf-bip-rodo',
