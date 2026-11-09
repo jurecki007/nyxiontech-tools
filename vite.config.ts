@@ -4,6 +4,7 @@ import type { IncomingMessage, ServerResponse } from 'node:http';
 import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import { buildPages, notFoundPage, sitemap, toolLinks } from './src/seo/pages.ts';
+import { GUIDES } from './src/seo/guides.ts';
 
 const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8')) as { version: string };
 
@@ -142,7 +143,12 @@ function cleanUrls(dir: string, req: IncomingMessage, res: ServerResponse, next:
 
 export default defineConfig({
   plugins: [react(), versionFile(), previewCacheHeaders(), seoPages()],
-  define: { __APP_VERSION__: JSON.stringify(pkg.version), __CSP_CONNECT_SRC__: JSON.stringify(connectSrc) },
+  define: {
+    __APP_VERSION__: JSON.stringify(pkg.version),
+    __CSP_CONNECT_SRC__: JSON.stringify(connectSrc),
+    // Just what a link needs. The articles themselves stay out of the app bundle.
+    __GUIDES__: JSON.stringify(GUIDES.map(({ tool, lang, path, name }) => ({ tool, lang, path, name }))),
+  },
   server: { port: 5180 },
   preview: { headers: securityHeaders },
   // pdf.js, the embedded fonts and the on-demand HEIC decoder (~3.2 MB, libheif
