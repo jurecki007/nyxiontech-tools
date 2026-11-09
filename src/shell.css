@@ -379,6 +379,22 @@
   height: 46px;
   border-radius: 12px;
 }
+.tool-page-guides {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  font-size: 14px;
+}
+.tool-page-guides a {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+.tool-page-guides a svg {
+  flex-shrink: 0;
+  /* Centred on the first line, so a long title that wraps keeps the icon beside it. */
+  margin-top: 2px;
+}
 .file-drop {
   display: flex;
   align-items: center;

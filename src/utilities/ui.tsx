@@ -1,13 +1,19 @@
 // Building blocks shared by the dashboard tools.
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
-import { ArrowDown, ArrowUp, Download, FileArchive, FilePenLine, Upload, X } from 'lucide-react';
+import { ArrowDown, ArrowUp, BookOpen, Download, FileArchive, FilePenLine, Upload, X } from 'lucide-react';
 import { downloadBlob, formatBytes, zipFiles } from '../lib/zip';
 import { pageCountOf } from '../lib/pdfTools';
 import type { Utility, UtilityContext } from './types';
 import { useT } from '../i18n';
+import { useRoute } from '../lib/route';
+import { isDesktop } from '../lib/desktop';
 
 export function ToolPage({ utility, children }: { utility: Utility; children: ReactNode }) {
   const text = useT().tools[utility.id];
+  // The guide for this tool, in the language of the address, as on the crawlable page. The
+  // desktop app works offline and has no guide pages, so it shows none.
+  const { lang } = useRoute();
+  const guides = isDesktop ? [] : __GUIDES__.filter((g) => g.tool === utility.id && g.lang === lang);
   return (
     <div className="tool-page">
       <header className="tool-page-head">
@@ -20,6 +26,15 @@ export function ToolPage({ utility, children }: { utility: Utility; children: Re
         </div>
       </header>
       {children}
+      {guides.length > 0 && (
+        <nav className="tool-page-guides">
+          {guides.map((g) => (
+            <a key={g.path} href={g.path}>
+              <BookOpen size={15} /> {g.name}
+            </a>
+          ))}
+        </nav>
+      )}
     </div>
   );
 }
