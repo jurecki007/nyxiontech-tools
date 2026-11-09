@@ -116,9 +116,11 @@ test.describe('static tool pages', () => {
     expect(csp).toEqual([]);
   });
 
-  test('llms.txt links every tool page', async ({ request }) => {
+  // llms.txt is written by hand, so nothing but this test stops a new page being left out of it.
+  test('llms.txt links every tool page and every guide', async ({ request }) => {
     const text = await (await request.get('/llms.txt')).text();
     for (const id of TOOL_IDS) for (const lang of LANGS) expect(text).toContain(`(${SITE}${toolPath(id, lang)})`);
+    for (const g of GUIDES) expect(text, g.path).toContain(`(${SITE}${g.path})`);
   });
 
   test('unknown addresses are a real 404; a trailing slash redirects to the page', async ({ request }) => {
