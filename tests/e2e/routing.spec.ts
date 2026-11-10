@@ -92,9 +92,11 @@ test.describe('static tool pages', () => {
       '/pl/poradnik/podziel-skan-na-dokumenty',
       '/pl/poradnik/polacz-pdf-bez-wysylania',
       '/pl/poradnik/porownaj-wersje-umowy-pdf',
+      '/pl/poradnik/skopiuj-tekst-z-pdf',
       '/pl/poradnik/wypelnij-formularz-pdf',
       '/pl/poradnik/zabezpiecz-pdf-przed-wyslaniem',
       '/pl/poradnik/zdjecia-dokumentow-do-pdf',
+      '/pl/poradnik/zmniejsz-zdjecie-i-usun-exif',
       '/pl/poradnik/znak-wodny-na-skanie-dowodu',
     ]);
     // A guide exists in one language only: no alternates.
