@@ -65,6 +65,7 @@ const UODO_BIP_DECYZJA = 'https://uodo.gov.pl/pl/138/4402';
 const RODO_PL = 'https://eur-lex.europa.eu/legal-content/PL/TXT/HTML/?uri=CELEX:32016R0679';
 const UODO_SKAN_DOWODU = 'https://uodo.gov.pl/pl/138/3854';
 const PDF2_TOUNICODE = 'https://pdf-issues.pdfa.org/32000-2-2020/clause09.html';
+const PDF2_ENCRYPTION = 'https://pdf-issues.pdfa.org/32000-2-2020/clause07.html#H7.6';
 const MDN_CREATE_IMAGE_BITMAP = 'https://developer.mozilla.org/en-US/docs/Web/API/Window/createImageBitmap';
 
 export const GUIDES: Guide[] = [
@@ -2456,6 +2457,147 @@ export const GUIDES: Guide[] = [
         ],
       },
       { p: '**[Open Images to PDF](/image-to-pdf)**' },
+    ],
+  },
+  {
+    path: '/guides/remove-pdf-password',
+    lang: 'en',
+    tool: 'unlock',
+    title: 'How to remove a password from a PDF you can open',
+    description:
+      'A PDF carries two different locks, and which one you have decides what you do. The steps for both, and what no tool can do.',
+    h1: 'How to remove a password from a PDF',
+    name: 'Guide: remove a PDF password',
+    published: '2026-11-10',
+    blocks: [
+      {
+        p: 'Statements, payslips and insurance documents often arrive encrypted, and typing the password every time you open one wears thin. Removing it is a two minute job. The reason most advice on it does not work is that a PDF can carry two entirely different locks, they are undone in different ways, and the guides rarely say which one they are talking about. Work out which you have and the rest follows.',
+      },
+
+      { h2: 'Which of the two locks you have' },
+      {
+        p: 'The standard security handler in the PDF specification defines both ([ISO 32000-2, clause 7.6](' +
+          PDF2_ENCRYPTION +
+          ')), and every reader treats them differently:',
+      },
+      {
+        ul: [
+          '**An open password.** The file will not open at all. Your reader asks before it shows you a single page, because the contents are encrypted and there is nothing to display until they are decrypted. This is the one banks use.',
+          '**A permissions password.** The file opens and you can read it, but printing, copying text or editing is refused. The document is still encrypted; what differs is that the password protecting it is empty, and a second one governs what you may do with it.',
+        ],
+      },
+      { p: 'You can tell them apart without any tool at all: if it opens, it is the second kind.' },
+
+      { h2: 'If it asks for a password before it opens' },
+      {
+        ol: [
+          'Open [Unlock PDF](/unlock-pdf) and add the file. Note that it does not show you a preview or a page count first. It cannot: until the password arrives there is nothing readable in there to count.',
+          'Type the password into **Password**.',
+          'Click **Unlock PDF**. Back comes `yourfile_unlocked.pdf`, the same document with the encryption removed, which opens anywhere without a prompt.',
+        ],
+      },
+      {
+        p: 'Get the password wrong and you will see "Wrong password, or this PDF could not be decrypted." That message covers both halves on purpose, because from the outside a mistyped password and a file using an encryption scheme the tool cannot read look identical.',
+      },
+
+      { h2: 'If it opens but blocks printing or copying' },
+      {
+        p: 'This is the case other guides skip, and the step is not one you would guess: leave **Password** empty and click **Unlock PDF** anyway. The hint under the field says so, "Leave empty for files that open without a password but block printing or copying." There is no password for you to type, because the one that applies is the owner password, and the document was never going to ask you for it. The file is decrypted with the empty password it already has and saved without encryption, restrictions included.',
+      },
+
+      { h2: 'What this does not do' },
+      {
+        ul: [
+          'It does not guess, crack or recover a password. If you do not know it, nothing here helps, and that is encryption doing its job rather than a gap in the tool.',
+          'A copy-protection flag on an unencrypted PDF is a third thing again, and it needs no unlocking. A flag is a request, not a lock: the text sits in the file exactly as in any other PDF, and whether a program honours it is that program\'s decision. [PDF to text](/pdf-to-text) will read such a file straight away.',
+          'Certificate based encryption, where the key lives in a digital ID rather than in a password, is not supported.',
+          'Nothing else about the document changes. Pages, text, form fields and document properties come through as they were, which includes [metadata you might not want to pass on](/guides/remove-pdf-metadata).',
+        ],
+      },
+
+      { h2: 'Why this is the wrong file to upload' },
+      {
+        p: 'A document someone thought worth encrypting is the last one to hand to a stranger\'s server, and the usual online unlockers ask for the document and the password together. A bank statement carries the account number, the balance, the address and every counterparty you paid that month. Nothing is uploaded here: the file is read, decrypted and handed back inside the browser tab, and that is checkable rather than promised. Open the network panel before you start and watch that no request leaves, which is what [how to check if a PDF tool uploads your files](/guides/does-a-pdf-tool-upload-your-files) walks through.',
+      },
+      {
+        p: 'Going the other way, [how to password-protect a PDF](/guides/password-protect-pdf) covers setting a password and what the permissions really allow.',
+      },
+      { p: '**[Open Unlock PDF](/unlock-pdf)**' },
+    ],
+  },
+  {
+    path: '/guides/password-protect-pdf',
+    lang: 'en',
+    tool: 'protect',
+    title: 'How to password-protect a PDF without uploading it',
+    description:
+      'Encrypt a PDF with AES-256 in the browser, and find out what the permission checkboxes really stop. The owner password matters more than it looks.',
+    h1: 'How to password-protect a PDF',
+    name: 'Guide: password-protect a PDF',
+    published: '2026-11-10',
+    blocks: [
+      {
+        p: 'Send a contract, a scan of an ID or a set of payslips by e-mail and the file ends up sitting in a mailbox you do not control, usually for years. A password on the document itself is the one protection that travels with it. Setting one takes a minute. Working out what the three permission checkboxes actually prevent takes a little longer and is worth it, because two of them promise rather less than they appear to.',
+      },
+
+      { h2: 'Two passwords, not one' },
+      {
+        p: 'The standard security handler defines a pair, and they do different jobs ([ISO 32000-2, clause 7.6](' +
+          PDF2_ENCRYPTION +
+          ')):',
+      },
+      {
+        ul: [
+          '**The password** decrypts the file. Without it the document does not open. This is the one you give the recipient.',
+          '**The owner password** governs the permissions, and anyone holding it can lift them. It is optional here, and leaving it empty has a consequence worth knowing.',
+        ],
+      },
+      {
+        p: 'Leave **Owner password** blank and one is generated at random and never shown, to you or to anyone else. That is deliberate: were the two the same, everyone you sent the file to could remove the restrictions you had just set. The cost is that you cannot change those permissions later either. If that matters, set one and keep it.',
+      },
+
+      { h2: 'The steps' },
+      {
+        ol: [
+          'Open [Protect PDF](/protect-pdf) and add the file.',
+          'Type the password into **Password**, then again into **Repeat**. Until the two match you will see "The passwords do not match." and the button stays disabled.',
+          'Set **Permissions**. **Allow printing** starts ticked. **Allow copying text and images** and **Allow editing and annotating** start unticked.',
+          'Fill in **Owner password** if you want to be able to change those permissions later, or leave it blank.',
+          'Click **Protect PDF**. You get `yourfile_protected.pdf`, encrypted with AES-256.',
+        ],
+      },
+      {
+        p: 'The password cannot be recovered afterwards, by you or by us, and the tool says so where you will see it: "Keep the password somewhere safe: it cannot be recovered." Put it somewhere before you send the file rather than after.',
+      },
+
+      { h2: 'What the permissions really do' },
+      {
+        p: 'Here the honest answer is less impressive than the interface implies, and the hint under the checkboxes gives it: "Honoured by Adobe Reader, browsers and most viewers; some tools ignore them." Permissions are instructions to the reader, not locks on the data. A program that ignores them is not breaking anything, and some do.',
+      },
+      {
+        ul: [
+          'Two permissions are granted whatever you tick: filling in form fields, and access for assistive technology such as screen readers. Switching off copying and then finding a screen reader still reads the document aloud is the design working as intended.',
+          '**Allow editing and annotating** covers three things at once: editing the content, adding comments, and reordering or extracting pages.',
+          'When printing is allowed, it is allowed at full resolution. There is no print-at-draft-quality setting.',
+          'The encryption is the part that genuinely holds. The restrictions are a convention between well behaved programs; the password is mathematics.',
+        ],
+      },
+
+      { h2: 'Where it will refuse, and what it will not fix' },
+      {
+        ul: [
+          'An already encrypted file cannot be re-protected in one go. You will see "This PDF is already password-protected. Unlock it first." Send it through [Unlock PDF](/unlock-pdf) first, as [how to remove a password from a PDF](/guides/remove-pdf-password) describes.',
+          'A password protects the file, not the message. Sending the password in the same e-mail as the attachment protects nobody. Use a different channel, a text message or a phone call.',
+          'Encrypting a document does not clean out what is already inside it. Author names, the software that produced it and earlier revision traces all travel along, encrypted but intact: see [how to check and remove hidden PDF metadata](/guides/remove-pdf-metadata).',
+          'If the document contains data that the recipient should not see at all, a password is the wrong instrument. Take it out with [Redact PDF](/redact-pdf) instead, because a password you have handed over protects nothing.',
+        ],
+      },
+
+      { h2: 'Nothing leaves the tab' },
+      {
+        p: 'Encrypting a document on someone else\'s server means handing them the document and the password together, which undoes the exercise before it starts. This runs entirely in your browser: the file is read locally, encrypted locally and handed back as a download. There is no server to receive it, and you can watch the network panel stay empty while it works, as [how to check if a PDF tool uploads your files](/guides/does-a-pdf-tool-upload-your-files) explains.',
+      },
+      { p: '**[Open Protect PDF](/protect-pdf)**' },
     ],
   },
 ];
