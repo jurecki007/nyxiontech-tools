@@ -341,6 +341,18 @@ In the browser, `src/lib/route.ts` reads the tool from the address, and in-app l
 
 The Polish steps in `TOOL_PAGES` quote button labels (e.g. „Anonimizuj i zapisz”). When you rename a label in `src/i18n/pl.ts`, change the quote there too.
 
+### Social cards
+
+Every page has its own 1200x630 card for the preview that chats, posts and search results show (`og:image`, `twitter:image`). `scripts/build-og-images.mjs` draws them with Playwright and writes them to `public/og/`, named after the page (`/pl/poradnik/skopiuj-tekst-z-pdf` becomes `pl-poradnik-skopiuj-tekst-z-pdf.png`); the English home page keeps the hand-made `public/og-image.png`.
+
+The cards are generated from the built pages in `dist/`, not from the source, so a card cannot claim something its page does not say: the headline is the page's own `<h1>` and the line under it the first sentence of its meta description. After each render the script lifts the line clamp to check that nothing was cut off, and fails naming the page rather than shipping a card ending mid-word. Fonts are read from `node_modules`, so the same page gives the same bytes on any machine, and regenerating only rewrites the cards whose page text changed.
+
+```bash
+npm run build && npm run og:build   # after changing a title, a description or adding a page
+```
+
+The results are committed, so the normal build only copies them and needs neither Playwright nor a browser. `tests/e2e/routing.spec.ts` fails if a page points at a card that is not there, if two pages share one, or if a card is not a 1200x630 PNG.
+
 ## Adding an editor tool
 
 1. Create a module in `src/tools/`. It exports either:
