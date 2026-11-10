@@ -92,6 +92,8 @@ test.describe('static tool pages', () => {
       '/pl/poradnik/podziel-skan-na-dokumenty',
       '/pl/poradnik/polacz-pdf-bez-wysylania',
       '/pl/poradnik/zabezpiecz-pdf-przed-wyslaniem',
+      '/pl/poradnik/zdjecia-dokumentow-do-pdf',
+      '/pl/poradnik/znak-wodny-na-skanie-dowodu',
     ]);
     // A guide exists in one language only: no alternates.
     for (const g of GUIDES) expect(xml).toContain(`<url>\n    <loc>${SITE}${g.path}</loc>\n  </url>`);

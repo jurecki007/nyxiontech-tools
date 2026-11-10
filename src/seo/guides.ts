@@ -63,6 +63,7 @@ const EN301549 = 'https://www.etsi.org/deliver/etsi_en/301500_301599/301549/02.0
 const GOV_DOSTEPNE_DOKUMENTY = 'https://www.gov.pl/web/dostepnosc-cyfrowa/jak-tworzyc-dostepne-dokumenty-tekstowe-w-edytorze-ms-word';
 const UODO_BIP_DECYZJA = 'https://uodo.gov.pl/pl/138/4402';
 const RODO_PL = 'https://eur-lex.europa.eu/legal-content/PL/TXT/HTML/?uri=CELEX:32016R0679';
+const UODO_SKAN_DOWODU = 'https://uodo.gov.pl/pl/138/3854';
 
 export const GUIDES: Guide[] = [
   {
@@ -1792,6 +1793,179 @@ export const GUIDES: Guide[] = [
         ],
       },
       { p: '**[Otwórz narzędzie Podziel PDF](/pl/podziel-pdf)**' },
+    ],
+  },
+
+  {
+    path: '/pl/poradnik/zdjecia-dokumentow-do-pdf',
+    lang: 'pl',
+    tool: 'images-to-pdf',
+    title: 'Jak zrobić jeden PDF ze zdjęć dokumentów',
+    description:
+      'Zdjęcia z telefonu w jednym pliku PDF, w dobrej kolejności i z poprawnym obrotem. Bez aplikacji z uprawnieniami i bez wysyłania ich na serwer.',
+    h1: 'Jak zrobić jeden PDF ze zdjęć dokumentów zrobionych telefonem',
+    name: 'Poradnik: zdjęcia dokumentów do PDF',
+    published: '2026-11-10',
+    blocks: [
+      {
+        p: 'Prośba brzmi zwykle tak samo: „proszę przesłać skan w jednym pliku PDF”. Skanera nie ma, więc robisz zdjęcia telefonem i zostajesz z czterema plikami JPG, których nikt nie chce przyjąć.',
+      },
+      {
+        p: 'Same telefony to potrafią i warto o tym wiedzieć. W Androidzie zaznaczasz zdjęcia w galerii i przez `Drukuj` wybierasz zapis do PDF, w iPhonie wrzucasz je do notatki i wybierasz utworzenie PDF-a. Problemem są aplikacje, które wyskakują w wynikach wyszukiwania: konwerter, który prosi o dostęp do całej galerii, dostaje przy okazji wszystkie zdjęcia, nie tylko te dwa dokumenty.',
+      },
+
+      { h2: 'Co robi to narzędzie' },
+      {
+        ul: [
+          'Jedno zdjęcie na jedną stronę, w kolejności z listy. Listę można przeciągać, więc kolejność ustawiasz sam, a nie według nazw plików.',
+          'Przyjmuje JPG, PNG, WebP, GIF i HEIC prosto z iPhone’a, bez wcześniejszej konwersji.',
+          'Wszystko dzieje się w przeglądarce. Zdjęcia nie są nigdzie wysyłane.',
+        ],
+      },
+
+      { h2: 'Ustawienia, które coś zmieniają' },
+      {
+        ul: [
+          '`Rozmiar strony`: `A4` (ustawienie domyślne), `Letter` albo `Jak zdjęcie`. Przy A4 i Letter zdjęcie jest skalowane tak, żeby zmieściło się w marginesach, i wyśrodkowane, z zachowaniem proporcji. `Jak zdjęcie` robi stronę dokładnie takiej wielkości jak zdjęcie, więc nic nie jest skalowane.',
+          '`Orientacja`: `Automatycznie`, `Pionowo`, `Poziomo`. Automat wybiera poziomą stronę wtedy, gdy zdjęcie jest szersze niż wyższe. Ustawienie pokazuje się tylko dla A4 i Letter, bo przy `Jak zdjęcie` nie ma czego obracać.',
+          '`Margines`: `Brak`, `Mały` albo `Duży`, czyli zero, około 7 mm i około 18 mm. Do dokumentu do wydruku `Mały` jest rozsądny, bo drukarki i tak nie drukują do samej krawędzi.',
+        ],
+      },
+      {
+        p: 'Zdjęcia są zapisywane w PDF jako JPEG w wysokiej jakości, a pliki PNG zostają PNG, więc zrzuty ekranu i grafiki z ostrymi krawędziami nie rozmywają się.',
+      },
+
+      { h2: 'Obrócone zdjęcia, czyli najczęstszy problem' },
+      {
+        p: 'Zdjęcie z telefonu bywa zapisane bokiem, a informacja o tym, jak je obrócić, siedzi w znaczniku EXIF. Galeria go respektuje, czytniki PDF nie. Stąd dokumenty, które w telefonie wyglądały dobrze, a po konwersji leżą na boku.',
+      },
+      {
+        p: 'To narzędzie przekodowuje każde zdjęcie przed włożeniem go do PDF-a i przy okazji stosuje obrót z EXIF. Na stronie ląduje to, co widziałeś w galerii. Jeśli któreś zdjęcie i tak wymaga obrotu, poprawisz je potem w [Obróć PDF](/pl/obroc-pdf).',
+      },
+
+      { h2: 'Krok po kroku' },
+      {
+        ol: [
+          'Otwórz [Zdjęcia do PDF](/pl/jpg-do-pdf) i dodaj pliki przyciskiem `Dodaj zdjęcia`.',
+          'Ustaw kolejność, przeciągając pozycje na liście. To ważniejsze, niż się wydaje: umowa ze stronami w losowej kolejności wraca do poprawki.',
+          'Wybierz `Rozmiar strony`, `Orientację` i `Margines`.',
+          'Kliknij `Utwórz PDF`.',
+          'Pobierz wynik. Plik nazywa się jak pierwsze zdjęcie, a przy kilku zdjęciach dostaje końcówkę `_and_more`.',
+        ],
+      },
+
+      { h2: 'Co dalej' },
+      {
+        ul: [
+          'Żeby dokument dało się przeszukiwać, przepuść go przez [OCR PDF](/pl/ocr-pdf). Zdjęcie tekstu to dla komputera obrazek, dopóki ktoś nie rozpozna liter.',
+          'Jeśli plik jest za duży na załącznik, zmniejsz go w [Kompresuj PDF](/pl/kompresuj-pdf); szczegóły opisuje poradnik o [kompresji PDF do maila](/pl/poradnik/kompresja-pdf-do-emaila).',
+          'Jeśli to zdjęcie dokumentu tożsamości, zanim je wyślesz, przeczytaj poradnik o [znaku wodnym na skanie dowodu](/pl/poradnik/znak-wodny-na-skanie-dowodu).',
+          'Jeśli ktoś wymaga od ciebie plików JPG, a masz HEIC, zamienisz je w [HEIC do JPG](/pl/heic-do-jpg).',
+        ],
+      },
+
+      { h2: 'Jak sprawdzić, że zdjęcia nigdzie nie wyjechały' },
+      {
+        ol: [
+          'Otwórz [Zdjęcia do PDF](/pl/jpg-do-pdf) i naciśnij `F12`.',
+          'Na karcie `Network` wyczyść listę żądań.',
+          'Dodaj zdjęcia i kliknij `Utwórz PDF`.',
+          'Na liście nie będzie ani jednego twojego zdjęcia. Możesz też rozłączyć sieć i powtórzyć wszystko: raz otwarta strona działa dalej.',
+        ],
+      },
+      { p: '**[Otwórz narzędzie Zdjęcia do PDF](/pl/jpg-do-pdf)**' },
+    ],
+  },
+
+  {
+    path: '/pl/poradnik/znak-wodny-na-skanie-dowodu',
+    lang: 'pl',
+    tool: 'watermark',
+    title: 'Jak oznaczyć skan dowodu osobistego znakiem wodnym',
+    description:
+      'Zanim wyślesz skan dowodu, nanieś napis z celem i datą. Zrobisz to w przeglądarce, bez wgrywania dokumentu tożsamości na cudzy serwer.',
+    h1: 'Jak oznaczyć skan dowodu osobistego, zanim go komuś wyślesz',
+    name: 'Poradnik: znak wodny na skanie dowodu',
+    published: '2026-11-10',
+    blocks: [
+      {
+        p: 'Bank, biuro nieruchomości, wypożyczalnia albo platforma sprzedażowa prosi o skan dowodu osobistego. Porady, które znajdziesz na ten temat, są zgodne co do dwóch rzeczy: nanieś na kopię napis mówiący, komu i po co ją dajesz, oraz zakryj dane, których odbiorca nie potrzebuje. Obie rady są dobre. Żadna nie mówi, jak to zrobić, nie wysyłając wcześniej skanu dowodu do przypadkowej usługi w internecie.',
+      },
+
+      { h2: 'Najpierw pytanie, czy w ogóle wysyłać' },
+      {
+        p: 'Nie każdy, kto prosi o kopię dowodu, ma do tego podstawę. W sierpniu 2025 r. Prezes UODO nałożył na ING Bank Śląski karę 18 416 400 zł za skanowanie dokumentów tożsamości bez wcześniejszej analizy celowości ([komunikat UODO](' +
+          UODO_SKAN_DOWODU +
+          '), sygnatura DKN.5112.6.2020). Bank skanował dowody także wtedy, gdy nie miało to związku z obowiązkami z ustawy o przeciwdziałaniu praniu pieniędzy, na przykład przy reklamacji dotyczącej bankomatu. Urząd uznał to za naruszenie art. 5 ust. 1 lit. a, b i c oraz art. 6 ust. 1 RODO.',
+      },
+      {
+        p: 'Wniosek praktyczny jest taki: pytanie o podstawę prawną to nie czepialstwo. Jeśli odbiorca nie potrafi jej wskazać, prawdopodobnie kopia nie jest mu potrzebna. Dopiero gdy wysłać trzeba, warto ograniczyć to, co wysyłasz.',
+      },
+
+      { h2: 'Co jest na dowodzie' },
+      {
+        p: 'W uzasadnieniu tej samej decyzji UODO wymienił zakres danych, które trafiają razem ze skanem: imię i nazwisko, numer PESEL, wizerunek, datę urodzenia, imiona rodziców, nazwisko rodowe oraz serię i numer dokumentu. Urząd zwrócił uwagę, że PESEL razem z imieniem i nazwiskiem jednoznacznie identyfikuje osobę, co pozwala przypisać jej skutki naruszenia, takie jak kradzież tożsamości albo wyłudzenie pożyczki.',
+      },
+
+      { h2: 'Napis, który coś znaczy' },
+      {
+        p: 'Samo słowo „KOPIA” niczego nie dowodzi, bo pasuje do każdego celu. Napis ma odpowiadać na trzy pytania: dla kogo, po co i kiedy. Na przykład: `Kopia wyłącznie dla [nazwa firmy], do weryfikacji tożsamości, 10.11.2026`. Gdy taki plik pojawi się gdzie indziej, od razu widać, skąd wyciekł.',
+      },
+
+      { h2: 'Jak to zrobić' },
+      {
+        ol: [
+          'Jeśli masz zdjęcie albo JPG, zrób z niego najpierw PDF w [Zdjęcia do PDF](/pl/jpg-do-pdf). Opisuje to [osobny poradnik](/pl/poradnik/zdjecia-dokumentow-do-pdf).',
+          'Otwórz [Znak wodny](/pl/znak-wodny-pdf) i wskaż plik.',
+          'W pole `Tekst` wpisz własny napis. Gotowe podpowiedzi (`KOPIA`, `COPY`, `DRAFT`, `CONFIDENTIAL`, `ORYGINAŁ`, `PAID`) są do innych zastosowań.',
+          'Zmniejsz `Rozmiar`. Domyślne 72 punkty są pod jedno krótkie słowo, a całe zdanie przy tej wielkości nie zmieści się na stronie.',
+          'Podnieś `Krycie %`. Domyślne 18 procent jest celowo ledwo widoczne, żeby nie zasłaniać treści umowy. Tutaj napis ma być czytelny, więc ustaw więcej, ale na tyle, żeby dane pod spodem dało się jeszcze odczytać. Odrzucony skan trzeba wysyłać drugi raz.',
+          'W `Układ` zostaw `Ukośnie` i wybierz `Powtarzany` zamiast `Raz, na środku`. Powtórzonego napisu nie da się wyciąć kadrowaniem.',
+          'Kliknij `Dodaj znak wodny`. Plik wyjściowy ma nazwę oryginału z końcówką `_watermarked`.',
+        ],
+      },
+      {
+        p: 'Polskie znaki w napisie działają. Narzędzie osadza w pliku jeden z krojów dołączonych do aplikacji, a wszystkie obsługują polskie diakrytyki. Czternaście standardowych krojów PDF ich nie obsługuje i stąd biorą się znaki zapytania w miejscu „ł” i „ę” w innych narzędziach.',
+      },
+
+      { h2: 'Zakryj to, czego odbiorca nie potrzebuje' },
+      {
+        p: 'Tu trzeba uważać, bo łatwo zrobić coś, co tylko wygląda na zakryte. [Anonimizuj PDF](/pl/anonimizuj-pdf) usuwa tekst, a skan dowodu tekstu nie zawiera: to obrazek. Czarny prostokąt narysowany na obrazku leży nad nim, a piksele pod spodem zostają w pliku i da się je wydobyć.',
+      },
+      {
+        ol: [
+          'Na liście wyników kliknij `Otwórz w edytorze`.',
+          'Wybierz `Korektor`, ustaw `Kolor korektora` na czarny i zamaluj to, czego odbiorca nie potrzebuje, zwykle numer PESEL oraz serię i numer dokumentu.',
+          'Zapisz plik, a potem otwórz [Kompresuj PDF](/pl/kompresuj-pdf) i wybierz `Poziom` inny niż `Bezstratnie`, na przykład `Zalecane`. Panel tłumaczy, co się wtedy dzieje: „Strony są zamieniane w obrazy: duża oszczędność, ale tekstu nie da się już zaznaczać ani wyszukiwać. Najlepsze do skanów.”',
+          'Ten krok jest tu najważniejszy. Strona zostaje przerysowana do nowego obrazu razem z zamalowaniem, więc pikseli spod spodu już w pliku nie ma. Przy okazji w obraz wtapia się też znak wodny i nie da się go po prostu usunąć.',
+        ],
+      },
+      {
+        p: 'Dlatego kompresję rób na końcu, po znaku wodnym i po zamalowaniu. Potem otwórz wynik i sprawdź go oczami: czy zakryte miejsca są naprawdę zakryte i czy reszta jest czytelna. Więcej o sprawdzaniu zaczernień jest w poradniku o [anonimizacji zgodnej z RODO](/pl/poradnik/anonimizacja-pdf-rodo).',
+      },
+
+      { h2: 'Czego znak wodny nie zrobi' },
+      {
+        ul: [
+          'Nie powstrzyma kogoś, kto chce wyłudzić kredyt. Utrudnia i zostawia ślad, ale nie blokuje.',
+          'Nie daje nikomu prawa do żądania kopii twojego dowodu. To osobna sprawa, opisana wyżej.',
+          'Nie zastąpi zasłonięcia danych. Napis leży na wierzchu, a PESEL pod nim nadal jest czytelny.',
+        ],
+      },
+      {
+        p: 'Jeśli plik ma iść mailem, warto go dodatkowo zaszyfrować hasłem, a hasło przekazać innym kanałem. Opisuje to poradnik o [zabezpieczaniu PDF przed wysłaniem](/pl/poradnik/zabezpiecz-pdf-przed-wyslaniem).',
+      },
+
+      { h2: 'Jak sprawdzić, że skan nie został wysłany' },
+      {
+        ol: [
+          'Otwórz [Znak wodny](/pl/znak-wodny-pdf) i naciśnij `F12`.',
+          'Na karcie `Network` wyczyść listę żądań.',
+          'Wskaż plik, ustaw napis i kliknij `Dodaj znak wodny`.',
+          'Twojego pliku na liście nie będzie. Przy dokumencie tożsamości warto zrobić mocniejszy test: rozłącz sieć i powtórz całą operację. Strona działa dalej, bo nie ma z kim rozmawiać.',
+        ],
+      },
+      { p: '**[Otwórz narzędzie Znak wodny](/pl/znak-wodny-pdf)**' },
     ],
   },
 ];
