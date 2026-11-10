@@ -1,6 +1,7 @@
 import { expect, test, type APIRequestContext } from '@playwright/test';
 import { HOME_PL, TOOL_PAGES } from '../../src/seo/content';
 import { GUIDES } from '../../src/seo/guides';
+import { ogImage } from '../../src/seo/pages';
 import { homePath, TOOL_IDS, toolPath, type Lang } from '../../src/utilities/routes';
 import { cspViolations } from './helpers';
 
@@ -136,6 +137,36 @@ test.describe('static tool pages', () => {
     const text = await (await request.get('/llms.txt')).text();
     for (const id of TOOL_IDS) for (const lang of LANGS) expect(text).toContain(`(${SITE}${toolPath(id, lang)})`);
     for (const g of GUIDES) expect(text, g.path).toContain(`(${SITE}${g.path})`);
+  });
+
+  // The cards in public/og/ are drawn by scripts/build-og-images.mjs and committed, so the
+  // normal build never opens a browser. Nothing but this test stops a new page pointing at
+  // a card nobody generated, or every page falling back to the one site-wide card.
+  test('every page has its own social card and the file is really there', async ({ request }) => {
+    const paths = [homePath('en'), homePath('pl'), ...TOOL_IDS.flatMap((id) => LANGS.map((l) => toolPath(id, l))), ...GUIDES.map((g) => g.path)];
+    const cards = new Set<string>();
+    for (const path of paths) {
+      const html = await raw(request, path);
+      const card = ogImage(path);
+      expect(first(html, /<meta property="og:image" content="([^"]*)"/), path).toBe(card);
+      expect(first(html, /<meta name="twitter:image" content="([^"]*)"/), path).toBe(card);
+      expect(first(html, /<meta property="og:image:alt" content="([^"]*)"/), path).not.toBe('');
+      // Every card is drawn at the size the base tags in index.html promise.
+      expect(first(html, /<meta property="og:image:width" content="([^"]*)"/), path).toBe('1200');
+      expect(first(html, /<meta property="og:image:height" content="([^"]*)"/), path).toBe('630');
+      cards.add(card);
+    }
+    expect(cards.size, 'one card per page, not one card for the whole site').toBe(paths.length);
+
+    for (const card of cards) {
+      const res = await request.get(card.replace(SITE, ''));
+      expect(res.status(), card).toBe(200);
+      const body = await res.body();
+      // A real PNG, not a 404 page served with an image name.
+      expect(body.subarray(0, 8).toString('hex'), card).toBe('89504e470d0a1a0a');
+      expect(body.readUInt32BE(16), card).toBe(1200);
+      expect(body.readUInt32BE(20), card).toBe(630);
+    }
   });
 
   test('unknown addresses are a real 404; a trailing slash redirects to the page', async ({ request }) => {

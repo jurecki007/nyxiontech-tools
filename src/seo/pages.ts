@@ -19,6 +19,14 @@ export const MAX_DESCRIPTION = 155;
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const url = (path: string) => SITE + path;
 
+/**
+ * The social card a page shows when its address is pasted into a chat or a post.
+ * Every page has its own, generated from this name by `scripts/build-og-images.mjs`
+ * and committed to `public/og/`. The English home page keeps the hand-made card.
+ */
+const ogImageName = (path: string) => path.replace(/^\/|\/$/g, '').replace(/\//g, '-') || 'home';
+export const ogImage = (path: string) => (path === '/' ? `${SITE}/og-image.png` : `${SITE}/og/${ogImageName(path)}.png`);
+
 /** hreflang links for a page that exists in both languages. */
 function alternates(en: string, pl: string) {
   return [
@@ -70,9 +78,11 @@ function render(template: string, h: Head): string {
     ['property="og:title"', h.title],
     ['property="og:description"', h.description],
     ['property="og:url"', url(h.path)],
+    ['property="og:image"', ogImage(h.path)],
     ['property="og:image:alt"', h.title],
     ['name="twitter:title"', h.title],
     ['name="twitter:description"', h.description],
+    ['name="twitter:image"', ogImage(h.path)],
   ]) {
     html = swap(html, new RegExp(`<meta ${attr} content="[^"]*" />`), `<meta ${attr} content="${esc(value)}" />`, attr);
   }

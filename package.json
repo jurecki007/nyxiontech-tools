@@ -40,7 +40,8 @@
     "desktop:dev": "tauri dev",
     "desktop:build": "tauri build",
     "desktop:build:offline": "node scripts/build-desktop-offline.mjs",
-    "test:desktop": "playwright test -c playwright.desktop.config.ts"
+    "test:desktop": "playwright test -c playwright.desktop.config.ts",
+    "og:build": "node scripts/build-og-images.mjs"
   },
   "dependencies": {
     "@cantoo/pdf-lib": "2.11.1",
