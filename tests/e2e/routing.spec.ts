@@ -74,6 +74,7 @@ test.describe('static tool pages', () => {
     for (const id of TOOL_IDS) expect(xml).toContain(`<xhtml:link rel="alternate" hreflang="pl" href="${SITE}${toolPath(id, 'pl')}" />`);
     expect(GUIDES.map((g) => g.path).sort()).toEqual([
       '/guides/check-pdf-redaction',
+      '/guides/compare-two-pdfs',
       '/guides/compress-pdf-for-email',
       '/guides/does-a-pdf-tool-upload-your-files',
       '/guides/heic-to-jpg-without-uploading',
@@ -85,6 +86,7 @@ test.describe('static tool pages', () => {
       '/guides/remove-pdf-metadata',
       '/guides/remove-pdf-password',
       '/guides/sign-pdf-without-uploading',
+      '/guides/split-pdf-without-uploading',
       '/pl/poradnik/anonimizacja-bip-szkola',
       '/pl/poradnik/anonimizacja-pdf-rodo',
       '/pl/poradnik/haslo-wyciag-bankowy',
