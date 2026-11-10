@@ -353,6 +353,18 @@ npm run build && npm run og:build   # after changing a title, a description or a
 
 The results are committed, so the normal build only copies them and needs neither Playwright nor a browser. `tests/e2e/routing.spec.ts` fails if a page points at a card that is not there, if two pages share one, or if a card is not a 1200x630 PNG.
 
+### Telling search engines about a new page
+
+New pages wait for the next crawl unless something tells the engines they exist. `scripts/submit-indexnow.mjs` submits them to IndexNow, which Bing, Yandex, Seznam and Naver read, using the key file in `public/` (named after the key it contains, which is how IndexNow checks the submitter controls the domain).
+
+```bash
+npm run indexnow -- --since <git-ref> --dry-run
+```
+
+That works out which guides were added since that commit, adds the tool page each one is about, because that page gained a link to it, and prints the list. Drop `--dry-run` to submit it, or pass whole addresses to submit specific pages. Either way it fetches every address first and sends nothing unless all of them answer 200: the paths come from the source tree, which is a step ahead of the deploy, so the easy mistake is submitting a page that is not published yet. Run it after the deploy is live, not after the merge.
+
+Acceptance means queued for consideration, not indexed. Google does not take part in IndexNow; its sitemap submission is a separate job in Search Console.
+
 ## Adding an editor tool
 
 1. Create a module in `src/tools/`. It exports either:
