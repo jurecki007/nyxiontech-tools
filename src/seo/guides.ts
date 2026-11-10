@@ -62,6 +62,7 @@ const USTAWA_DOSTEPNOSC = 'https://eli.gov.pl/api/acts/DU/2023/82/text/I/D202300
 const EN301549 = 'https://www.etsi.org/deliver/etsi_en/301500_301599/301549/02.01.02_60/en_301549v020102p.pdf';
 const GOV_DOSTEPNE_DOKUMENTY = 'https://www.gov.pl/web/dostepnosc-cyfrowa/jak-tworzyc-dostepne-dokumenty-tekstowe-w-edytorze-ms-word';
 const UODO_BIP_DECYZJA = 'https://uodo.gov.pl/pl/138/4402';
+const RODO_PL = 'https://eur-lex.europa.eu/legal-content/PL/TXT/HTML/?uri=CELEX:32016R0679';
 
 export const GUIDES: Guide[] = [
   {
@@ -1623,6 +1624,174 @@ export const GUIDES: Guide[] = [
         p: 'Wszystkie narzędzia na tej stronie działają w przeglądarce, więc dokument, który sprawdzasz pod kątem wycieku danych, nie wyjeżdża przy okazji na cudzy serwer.',
       },
       { p: '**[Otwórz narzędzie Edytuj metadane](/pl/edytuj-metadane-pdf)**' },
+    ],
+  },
+
+  {
+    path: '/pl/poradnik/zabezpiecz-pdf-przed-wyslaniem',
+    lang: 'pl',
+    tool: 'protect',
+    title: 'Jak zabezpieczyć PDF hasłem przed wysłaniem',
+    description:
+      'Dane osobowe w załączniku wymagają zabezpieczenia. Zaszyfruj PDF hasłem w przeglądarce, bez wysyłania pliku, i przekaż hasło innym kanałem.',
+    h1: 'Jak zabezpieczyć PDF hasłem, zanim wyślesz go z danymi osobowymi',
+    name: 'Poradnik: zabezpieczanie PDF przed wysłaniem',
+    published: '2026-11-10',
+    blocks: [
+      {
+        p: 'Masz wysłać umowę, zaświadczenie albo listę pracowników. W pliku są imiona, nazwiska, adresy, numery PESEL. Poczta elektroniczna nie jest kanałem szyfrowanym od końca do końca, a załącznik zostaje w skrzynce nadawcy, w skrzynce odbiorcy i na serwerach po drodze. Zaszyfrowanie samego pliku jest najprostszym zabezpieczeniem, które nie zależy od tego, jak odbiorca ma skonfigurowaną pocztę.',
+      },
+      {
+        p: 'RODO wymienia szyfrowanie wprost. Artykuł 32 ust. 1 lit. a) podaje „pseudonimizację i szyfrowanie danych osobowych” jako przykład środka technicznego odpowiedniego do ryzyka ([tekst rozporządzenia](' +
+          RODO_PL +
+          ')). Rozporządzenie nie nakazuje konkretnej metody, więc hasło na pliku nie jest obowiązkiem samym w sobie. Jest natomiast środkiem, który łatwo zastosować i łatwo wykazać.',
+      },
+
+      { h2: 'Paradoks narzędzi online' },
+      {
+        p: 'Większość narzędzi, które znajdziesz pod hasłem „zabezpiecz PDF hasłem”, to usługi serwerowe. Żeby zabezpieczyć plik z danymi osobowymi, trzeba im najpierw ten plik wysłać w postaci niezabezpieczonej. Dokument, który miał nie opuszczać organizacji, trafia do zewnętrznego podmiotu, zanim w ogóle dostanie hasło.',
+      },
+      {
+        p: 'Narzędzie na tej stronie działa inaczej: szyfruje przeglądarka na twoim komputerze. Plik nie jest nigdzie wysyłany, a niżej jest instrukcja, jak to sprawdzić samemu.',
+      },
+
+      { h2: 'Dwa hasła, dwa różne skutki' },
+      { p: 'PDF zna dwa hasła i warto wiedzieć, które z nich zakładasz.' },
+      {
+        ul: [
+          '**Hasło użytkownika** jest tym, o które program pyta przy otwarciu. Bez niego nikt nie zobaczy treści. Pole `Hasło` w panelu to właśnie ono.',
+          '**Hasło właściciela** nie blokuje otwarcia, pozwala natomiast zmienić uprawnienia. Pole `Hasło właściciela` jest opcjonalne, a panel dodaje: „Opcjonalne. Pozwala później zmienić uprawnienia. Jeśli zostawisz je puste, zostanie użyte losowe.” Losowe jest tu celowe: gdyby oba hasła były takie same, każdy, kto otwiera plik, mógłby po prostu zdjąć ograniczenia.',
+        ],
+      },
+
+      { h2: 'Co dokładnie robi narzędzie' },
+      {
+        ol: [
+          'Otwórz [Zabezpiecz PDF](/pl/zabezpiecz-pdf-haslem) i wskaż plik.',
+          'Wpisz hasło w pole `Hasło` i to samo w `Powtórz hasło`. Przy różnicy pojawi się komunikat `Hasła nie są takie same.` i nic się nie wykona.',
+          'W sekcji `Uprawnienia` zdecyduj, co wolno odbiorcy: `Zezwalaj na drukowanie`, `Zezwalaj na kopiowanie tekstu i obrazów`, `Zezwalaj na edycję i dodawanie adnotacji`.',
+          'Jeśli chcesz, ustaw własne `Hasło właściciela`.',
+          'Kliknij `Zabezpiecz PDF` i zapisz wynik.',
+        ],
+      },
+      {
+        p: 'Wynik jest zaszyfrowany algorytmem AES-256 w wariancie, który norma ISO 32000-2 oznacza jako `/V 5`, `/R 6`, `/AESV3`. Szyfrowane są i strumienie stron, i łańcuchy tekstowe, czyli także pola takie jak tytuł czy autor dokumentu. Testy tego projektu sprawdzają to niezależnie od samego narzędzia, przeliczając wpisy `/U` i `/O` algorytmem 2.B z normy.',
+      },
+
+      { h2: 'Czego uprawnienia nie załatwią' },
+      {
+        p: 'Uprawnienia to flagi w pliku, a nie bariera techniczna. Panel mówi o tym wprost: „Respektują je Adobe Reader, przeglądarki i większość czytników; niektóre programy je ignorują.” Wyłączone drukowanie utrudnia życie osobie, która nie szuka obejścia, ale nie jest ochroną przed kimś, kto go szuka. Ochroną jest hasło do otwarcia, bo bez niego nie ma czego czytać.',
+      },
+      {
+        p: 'Dwie rzeczy zostają dozwolone niezależnie od twoich wyborów: wypełnianie formularzy i dostęp dla technologii wspomagających. To drugie jest celowe. Blokada kopiowania tekstu odcięłaby od dokumentu osoby korzystające z czytników ekranu, a nie taki jest sens zakładania hasła.',
+      },
+
+      { h2: 'Hasło przekazuje się innym kanałem' },
+      {
+        p: 'Hasło w tej samej wiadomości, w której jest załącznik, nie zabezpiecza niczego. Kto przeczyta wiadomość, ma jedno i drugie. Przekaż je osobno: telefonicznie, SMS-em, komunikatorem, przy odbiorze dokumentu. Jeśli regularnie wysyłasz pliki do tej samej osoby, ustalcie hasło raz, osobnym kanałem, zamiast dopisywać je do każdego maila.',
+      },
+      {
+        p: 'Panel ostrzega też: „Zapisz hasło w bezpiecznym miejscu: nie da się go odzyskać.” To nie jest formułka. Szyfrowania AES-256 nie da się cofnąć bez hasła, a narzędzie [Odblokuj PDF](/pl/odblokuj-pdf) otwiera wyłącznie pliki, których hasło znasz. Nie łamie nieznanych haseł i nie ma takiej funkcji. Po stronie odbiorcy przydaje się [poradnik o usuwaniu hasła z wyciągu](/pl/poradnik/haslo-wyciag-bankowy), bo opisuje tę samą sprawę od drugiej strony.',
+      },
+
+      { h2: 'Jak sprawdzić, że plik nigdzie nie wyjechał' },
+      {
+        ol: [
+          'Otwórz [Zabezpiecz PDF](/pl/zabezpiecz-pdf-haslem) i naciśnij `F12`, żeby włączyć narzędzia deweloperskie przeglądarki.',
+          'Przejdź na kartę `Network` i wyczyść listę żądań.',
+          'Wskaż plik, ustaw hasło i kliknij `Zabezpiecz PDF`.',
+          'Popatrz na listę. Mogą się na niej pojawić pliki samej aplikacji, jeśli czegoś jeszcze brakowało w pamięci przeglądarki. Twojego PDF-a na niej nie będzie, bo nigdy nie jest wysyłany.',
+        ],
+      },
+      {
+        p: 'Możesz pójść dalej: rozłącz sieć i powtórz operację. Raz otwarta strona działa nadal, bo całe przetwarzanie dzieje się lokalnie.',
+      },
+
+      { h2: 'Zanim założysz hasło, sprawdź, co jest w pliku' },
+      {
+        p: 'Hasło chroni dokument w drodze do odbiorcy. Nie usuwa z niego niczego. Jeśli w pliku są dane, których ten konkretny odbiorca widzieć nie powinien, najpierw zasłoń je w [Anonimizuj PDF](/pl/anonimizuj-pdf), a dopiero potem zakładaj hasło. Warto też zajrzeć do poradników o [anonimizacji zgodnej z RODO](/pl/poradnik/anonimizacja-pdf-rodo) i o tym, co zostaje w [metadanych](/pl/poradnik/metadane-pdf-bip-rodo).',
+      },
+      {
+        p: 'Jeśli plik jest za duży na załącznik, zmniejsz go przed zaszyfrowaniem, nie po. Zaszyfrowanego dokumentu narzędzia nie przerobią bez hasła. Jak to zrobić, opisuje poradnik o [kompresji PDF do maila](/pl/poradnik/kompresja-pdf-do-emaila).',
+      },
+      { p: '**[Otwórz narzędzie Zabezpiecz PDF](/pl/zabezpiecz-pdf-haslem)**' },
+    ],
+  },
+
+  {
+    path: '/pl/poradnik/podziel-skan-na-dokumenty',
+    lang: 'pl',
+    tool: 'split',
+    title: 'Jak podzielić skan PDF na osobne dokumenty',
+    description:
+      'Skan z podajnika to jeden plik z wieloma dokumentami. Podziel go w przeglądarce, bez instalowania programu i bez wysyłania pliku na serwer.',
+    h1: 'Jak podzielić zbiorczy skan na osobne dokumenty, nie wysyłając go nikomu',
+    name: 'Poradnik: dzielenie skanu na dokumenty',
+    published: '2026-11-10',
+    blocks: [
+      {
+        p: 'Podajnik w drukarce wielofunkcyjnej skanuje wszystko, co w nim położysz, do jednego pliku. Po zeskanowaniu teczki masz więc jeden PDF na pięćdziesiąt stron, w którym siedzi kilkanaście osobnych dokumentów: umowa, aneks, dwa zaświadczenia, faktura. Żeby cokolwiek z nimi zrobić, trzeba je najpierw rozdzielić.',
+      },
+      {
+        p: 'Wyszukiwarka odpowiada na to pytanie radą, żeby zainstalować program na komputer, bo w skanie mogą być dane wrażliwe i lepiej nie wysyłać go do internetu. Co do ryzyka rada jest słuszna. Wniosek jest nieaktualny: dzielenie PDF-a nie wymaga ani serwera, ani instalacji, bo przeglądarka robi to sama.',
+      },
+
+      { h2: 'Trzy tryby, trzy różne sytuacje' },
+      { p: 'Panel ma pole `Tryb` z trzema wariantami. Wybór zależy od tego, co wiesz o skanie.' },
+      {
+        ul: [
+          '`Każda strona`: z każdej strony powstaje osobny plik. Dobre do stosu dokumentów jednostronicowych, na przykład paragonów albo zaświadczeń.',
+          '`Według zakresów`: w polu `Zakresy` podajesz zakresy, a każdy z nich staje się osobnym plikiem. Panel podpowiada format: „1-3, 4-6, 7-”. Sama liczba, na przykład `4`, oznacza jedną stronę. Zakres bez liczby po dywizie, na przykład `7-`, biegnie do końca dokumentu.',
+          '`Wyodrębnij strony`: w polu `Strony` podajesz strony i wszystkie trafiają do jednego nowego pliku, na przykład „1, 3-5, 9”. To tryb na wyciągnięcie jednego dokumentu z grubego skanu, bez rozbijania całości.',
+        ],
+      },
+
+      { h2: 'Jak rozdzielić teczkę w praktyce' },
+      {
+        ol: [
+          'Otwórz [Podziel PDF](/pl/podziel-pdf) i wskaż skan.',
+          'Przejrzyj strony i zapisz, na której zaczyna się każdy dokument. To jedyna część, której żadne narzędzie nie zrobi za ciebie, bo tylko ty wiesz, że strona 7 to już inna umowa.',
+          'Ustaw `Tryb` na `Według zakresów` i wpisz granice w kolejności, na przykład `1-3, 4, 5-9, 10-`. Rozdzielać można przecinkiem albo średnikiem.',
+          'Kliknij `Podziel PDF`.',
+          'Pobierz wyniki pojedynczo albo wszystkie razem przyciskiem `Pobierz wszystkie (.zip)`.',
+        ],
+      },
+      {
+        p: 'Nazwy plików powstają same i zawierają numery stron: ze `skan.pdf` wychodzi `skan_p1-3.pdf`, `skan_p4.pdf`, `skan_p5-9.pdf` i tak dalej. W trybie `Wyodrębnij strony` plik nazywa się `skan_extract.pdf`. Numery w nazwach ułatwiają potem sprawdzenie, czy nic nie wypadło.',
+      },
+
+      { h2: 'Czego narzędzie nie zrobi' },
+      {
+        ul: [
+          'Nie rozpozna samo, gdzie kończy się jeden dokument, a zaczyna następny. Nie szuka pustych stron, kodów ani nagłówków. Granice podajesz ty.',
+          'Nie przerobi skanu na tekst. Strony pozostają obrazami, tak jak w pliku wejściowym.',
+          'Nie otworzy pliku zabezpieczonego hasłem. Taki skan trzeba najpierw otworzyć w [Odblokuj PDF](/pl/odblokuj-pdf), mając hasło.',
+        ],
+      },
+      {
+        p: 'Jest jeszcze jedna rzecz warta uwagi: suma rozmiarów części bywa większa niż plik wejściowy. Każdy nowy dokument dostaje własną kopię czcionek i obrazów, które wcześniej były wspólne dla całego skanu. Jeśli części mają iść mailem, pomoże [Kompresuj PDF](/pl/kompresuj-pdf), a szczegóły opisuje poradnik o [kompresji PDF do maila](/pl/poradnik/kompresja-pdf-do-emaila).',
+      },
+
+      { h2: 'Co robić z częściami dalej' },
+      {
+        ul: [
+          'Żeby dokumenty dały się wyszukiwać, przepuść je przez [OCR PDF](/pl/ocr-pdf). Rozpoznawanie też działa lokalnie, co opisuje poradnik o [OCR i łączeniu dokumentów bez chmury](/pl/poradnik/ocr-i-laczenie-dokumentow-bez-chmury).',
+          'Jeśli podajnik pomieszał kolejność albo obrócił strony, poprawisz to w [Zmień kolejność stron](/pl/zmien-kolejnosc-stron-pdf) i [Obróć PDF](/pl/obroc-pdf).',
+          'Części, które powinny być jednym dokumentem, złożysz w [Połącz PDF](/pl/polacz-pdf).',
+          'Przed wysłaniem dokumentu z danymi osobowymi zajrzyj do poradnika o [zabezpieczaniu PDF hasłem](/pl/poradnik/zabezpiecz-pdf-przed-wyslaniem).',
+        ],
+      },
+
+      { h2: 'Jak sprawdzić, że skan nie został nigdzie wysłany' },
+      {
+        ol: [
+          'Otwórz [Podziel PDF](/pl/podziel-pdf) i naciśnij `F12`.',
+          'Na karcie `Network` wyczyść listę żądań.',
+          'Wskaż skan, ustaw zakresy i kliknij `Podziel PDF`.',
+          'Na liście nie będzie twojego pliku. Jeśli chcesz mocniejszego dowodu, rozłącz sieć i powtórz operację: raz otwarta strona działa dalej.',
+        ],
+      },
+      { p: '**[Otwórz narzędzie Podziel PDF](/pl/podziel-pdf)**' },
     ],
   },
 ];

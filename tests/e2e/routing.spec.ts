@@ -89,7 +89,9 @@ test.describe('static tool pages', () => {
       '/pl/poradnik/ocr-i-laczenie-dokumentow-bez-chmury',
       '/pl/poradnik/pdf-do-word-bez-wysylania',
       '/pl/poradnik/podpis-pdf-bez-wysylania',
+      '/pl/poradnik/podziel-skan-na-dokumenty',
       '/pl/poradnik/polacz-pdf-bez-wysylania',
+      '/pl/poradnik/zabezpiecz-pdf-przed-wyslaniem',
     ]);
     // A guide exists in one language only: no alternates.
     for (const g of GUIDES) expect(xml).toContain(`<url>\n    <loc>${SITE}${g.path}</loc>\n  </url>`);
