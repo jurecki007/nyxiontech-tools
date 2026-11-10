@@ -2121,6 +2121,165 @@ export const GUIDES: Guide[] = [
       { p: '**[Otwórz narzędzie Porównaj PDF](/pl/porownaj-pdf)**' },
     ],
   },
+
+  {
+    path: '/pl/poradnik/skopiuj-tekst-z-pdf',
+    lang: 'pl',
+    tool: 'pdf-to-text',
+    title: 'Jak skopiować tekst z PDF, który się nie kopiuje',
+    description:
+      'Trzy różne przyczyny i trzy różne rozwiązania: skan bez warstwy tekstu, blokada kopiowania i uszkodzone kodowanie znaków. Wszystko w przeglądarce.',
+    h1: 'Jak skopiować tekst z PDF, z którego nie da się go zaznaczyć',
+    name: 'Poradnik: kopiowanie tekstu z PDF',
+    published: '2026-11-10',
+    blocks: [
+      {
+        p: 'Są dwa typowe objawy. Albo zaznaczenie w ogóle nie łapie liter, albo łapie, ale po wklejeniu zamiast zdania widać ciąg przypadkowych znaków. Porady w internecie od razu podsuwają rozwiązanie: wrzuć plik na Dysk Google albo wydrukuj go do nowego PDF-a. Czasem działa. Problem w tym, że najpierw trzeba wiedzieć, który przypadek się ma, bo każdy wymaga czego innego.',
+      },
+
+      { h2: 'Najszybszy test' },
+      {
+        p: 'Otwórz [PDF do tekstu](/pl/pdf-do-tekstu), wskaż plik i kliknij `Wyciągnij tekst`. Jeśli w pliku jest warstwa tekstowa, dostaniesz treść i licznik `Liczba znaków`, a tekst możesz skopiować albo zapisać przyciskiem `Pobierz .txt`. Jeśli warstwy nie ma, narzędzie napisze: „Ten PDF nie ma warstwy tekstowej, więc najprawdopodobniej jest to skan. Najpierw przepuść go przez „OCR: przeszukiwalny PDF”, żeby dało się odczytać tekst.”',
+      },
+      {
+        p: 'Ten jeden klik rozdziela przypadki. Jeśli tekst wyszedł poprawnie, sprawa jest załatwiona, nawet jeśli w czytniku kopiowanie było zablokowane. Jeśli wyszedł jako krzaczki, masz przypadek trzeci. Jeśli nie wyszedł wcale, masz skan.',
+      },
+
+      { h2: 'Przypadek 1: to skan' },
+      {
+        p: 'Strona jest obrazkiem, więc nie ma czego zaznaczać. Potrzebne jest rozpoznawanie tekstu. Otwórz [OCR PDF](/pl/ocr-pdf), ustaw `Język` na `Polski + angielski` albo `Polski` i uruchom `Rozpoznaj tekst`. Rozpoznawanie działa na twoim komputerze, bez wysyłania pliku.',
+      },
+      {
+        p: 'Wynik możesz wziąć na dwa sposoby: przyciskiem `Kopiuj rozpoznany tekst`, albo zapisując nowy PDF, który wygląda tak samo, ale ma już warstwę tekstową i da się go przeszukiwać. Szczegóły, łącznie z tym, jak długo to trwa i co zrobić z drobnym drukiem, opisuje poradnik o [OCR i łączeniu dokumentów bez chmury](/pl/poradnik/ocr-i-laczenie-dokumentow-bez-chmury).',
+      },
+
+      { h2: 'Przypadek 2: autor zablokował kopiowanie' },
+      {
+        p: 'To ustawienie nie szyfruje treści. W pliku siedzi flaga z informacją, czego autor sobie nie życzy, a czytniki respektują ją dobrowolnie. Dlatego wyciąganie tekstu czyta zawartość strony wprost i blokada nie ma na nie wpływu: `Wyciągnij tekst` zwróci treść mimo wszystko.',
+      },
+      {
+        p: 'Jeśli wolisz zaznaczać i kopiować w swoim zwykłym czytniku, zdejmij flagę w [Odblokuj PDF](/pl/odblokuj-pdf), zostawiając pole hasła puste. Różnicę między hasłem do otwarcia a hasłem od uprawnień tłumaczy poradnik o [usuwaniu hasła z wyciągu bankowego](/pl/poradnik/haslo-wyciag-bankowy).',
+      },
+      {
+        p: 'Jedna uwaga, która nie wynika z techniki. To, że dane da się odczytać, nie przesądza, co wolno z nimi zrobić. Ograniczenie w pliku to nie to samo co prawa do treści, a zdjęcie flagi nie jest zgodą autora.',
+      },
+
+      { h2: 'Przypadek 3: krzaczki zamiast liter' },
+      {
+        p: 'PDF przechowuje kody znaków i osobną mapę, która mówi, jakiej literze odpowiada dany kod. Gdy tej mapy brakuje albo jest błędna, zaznaczanie działa, ale wklejony tekst to zestaw przypadkowych symboli. Polskie diakrytyki zwykle psują się pierwsze. Z zewnątrz nie da się tej mapy naprawić, bo informacji o właściwych literach po prostu w pliku nie ma.',
+      },
+      {
+        p: 'Wyjście jest jedno: potraktować stronę jak obrazek i odczytać litery na nowo. W [OCR PDF](/pl/ocr-pdf) odznacz opcję `Pomiń strony, które już mają tekst`, bo domyślnie jest włączona, a te strony tekst mają, tylko bezużyteczny. Potem weź wynik przyciskiem `Kopiuj rozpoznany tekst`.',
+      },
+
+      { h2: 'Przypadek 4: plik pyta o hasło przy otwarciu' },
+      {
+        p: 'Wtedy nie ma czego wyciągać, dopóki nie znasz hasła. [Odblokuj PDF](/pl/odblokuj-pdf) usuwa hasło z plików, które potrafisz otworzyć, i nie łamie haseł nieznanych. Takiej funkcji w tym narzędziu nie ma i nie będzie.',
+      },
+
+      { h2: 'Co wyciągnięty tekst traci' },
+      {
+        ul: [
+          'Układ. Tekst wychodzi w kolejności, w jakiej jest zapisany w pliku, a nie w tej, w jakiej go czytasz. Przy dwóch kolumnach wiersze potrafią się przeplatać.',
+          'Tabele. Zostają same wartości, bez podziału na komórki.',
+          'Obrazy i formatowanie. To zwykły tekst, więc pogrubienia ani wielkości liter w nim nie ma.',
+        ],
+      },
+      {
+        p: 'Jeśli zależy ci na akapitach i pogrubieniach, lepszym narzędziem jest [PDF do Word](/pl/pdf-do-word), opisany w poradniku o [zamianie PDF na Worda](/pl/poradnik/pdf-do-word-bez-wysylania).',
+      },
+
+      { h2: 'Jak sprawdzić, że plik nigdzie nie wyjechał' },
+      {
+        ol: [
+          'Otwórz [PDF do tekstu](/pl/pdf-do-tekstu) i naciśnij `F12`.',
+          'Na karcie `Network` wyczyść listę żądań.',
+          'Wskaż plik i kliknij `Wyciągnij tekst`.',
+          'Twojego PDF-a na liście nie będzie. Rozłączenie sieci też niczego nie psuje, bo wyciąganie tekstu dzieje się w przeglądarce.',
+        ],
+      },
+      { p: '**[Otwórz narzędzie PDF do tekstu](/pl/pdf-do-tekstu)**' },
+    ],
+  },
+
+  {
+    path: '/pl/poradnik/zmniejsz-zdjecie-i-usun-exif',
+    lang: 'pl',
+    tool: 'image-converter',
+    title: 'Jak zmniejszyć zdjęcie i usunąć z niego EXIF',
+    description:
+      'Zdjęcie z telefonu niesie datę, model aparatu i współrzędne GPS. Zmniejsz je w przeglądarce, a dane znikną, bo plik powstaje od nowa.',
+    h1: 'Jak zmniejszyć zdjęcie przed wysłaniem i usunąć z niego lokalizację',
+    name: 'Poradnik: zmniejszanie zdjęć i EXIF',
+    published: '2026-11-10',
+    blocks: [
+      {
+        p: 'Formularz przyjmuje załącznik do pewnego rozmiaru, zdjęcie z telefonu ma cztery megabajty i trzeba je zmniejszyć. Szukasz narzędzia, wgrywasz plik i sprawa załatwiona. Tyle że wgrany plik zawiera więcej niż obrazek.',
+      },
+
+      { h2: 'Co siedzi w zdjęciu z telefonu' },
+      {
+        p: 'Razem z pikselami zapisywany jest blok EXIF: data i godzina, marka i model telefonu, parametry zdjęcia, a jeśli lokalizacja była włączona, także współrzędne z dokładnością do kilku metrów. Bywa tam również miniatura podglądu. Przy zdjęciu mieszkania na wynajem albo przedmiotu na sprzedaż te współrzędne to po prostu twój adres.',
+      },
+
+      { h2: 'Dlaczego nie ma przycisku „usuń EXIF”' },
+      {
+        p: 'Bo nie ma czego usuwać. Narzędzie rozkłada zdjęcie na piksele i zapisuje je jako zupełnie nowy plik. W nowym pliku są piksele i nic poza nimi: żadnych współrzędnych, modelu telefonu ani daty. Po każdej operacji panel pisze to wprost: „Lokalizacja i dane aparatu (EXIF) są usuwane.”',
+      },
+      {
+        p: 'Jedna rzecz z EXIF jest przenoszona celowo: obrót. Telefon często zapisuje zdjęcie bokiem i dokłada znacznik mówiący, jak je obrócić. Znacznik jest stosowany przy odczycie, więc nowy plik ma zdjęcie już ustawione prawidłowo, mimo że samego znacznika w nim nie ma.',
+      },
+
+      { h2: 'Jak zmniejszyć' },
+      {
+        ol: [
+          'Otwórz [Kompresuj i konwertuj zdjęcia](/pl/kompresuj-zdjecia) i dodaj pliki. Można wiele naraz: JPG, PNG, WebP, GIF, BMP i HEIC z iPhone’a.',
+          'W `Zapisz jako` wybierz `JPG` do zdjęć, `WebP` gdy zależy ci na najmniejszym pliku, a `PNG` tylko wtedy, gdy potrzebujesz bezstratności albo przezroczystości.',
+          'Ustaw `Jakość`. Domyślnie jest 80, a panel podpowiada: „70–85% zwykle nie różni się wizualnie od oryginału.” Przy `PNG` suwaka nie ma, bo ten format niczego nie traci.',
+          'W `Wymiary` zaznacz `Zmniejsz zdjęcia większe niż` i podaj `Maks. szerokość (px)` oraz `Maks. wysokość (px)`. Domyślnie 1920, co w zupełności wystarcza do załącznika i do ekranu.',
+          'Kliknij `Konwertuj` i przeczytaj podsumowanie: pokazuje rozmiar przed i po oraz o ile procent mniej.',
+        ],
+      },
+
+      { h2: 'Jak trafić w limit formularza' },
+      {
+        p: 'Przycisku „zrób dokładnie 500 kB” tu nie ma. Jest za to rozmiar wyniku podany po każdej próbie, więc zwykle wystarcza jedna poprawka. Dobry punkt wyjścia dla zdjęcia dokumentu: `JPG`, jakość 75, wymiary włączone, 1600 na 1600. To mieści się zazwyczaj grubo poniżej pół megabajta i pozostaje czytelne.',
+      },
+      {
+        p: 'Jeśli nadal za dużo, kolejność obniżania zależy od tego, co jest na zdjęciu. Przy zdjęciu dokumentu najpierw schodź z jakością, bo to rozdzielczość decyduje o czytelności drobnego druku. Przy zwykłym zdjęciu odwrotnie: najpierw zmniejszaj wymiary, bo artefakty kompresji widać szybciej niż brakujące piksele.',
+      },
+
+      { h2: 'Kilka rzeczy, które warto wiedzieć' },
+      {
+        ul: [
+          'Przezroczysty PNG zapisany jako JPG dostaje białe tło, bo JPG nie zna przezroczystości.',
+          'Stratna kompresja działa za każdym razem od nowa. Zapisywanie tego samego JPG po raz czwarty coraz niżej psuje go za każdym razem. Lepiej wrócić do oryginału i zrobić to raz, z właściwymi ustawieniami.',
+          'Pliki wychodzą z tą samą nazwą i nowym rozszerzeniem. Przy kilku plikach pobierzesz je jedną paczką przyciskiem `Pobierz wszystkie (.zip)`.',
+          'Jeśli plik `PNG` jest za duży, suwaka jakości nie będzie: zmniejsz wymiary albo zapisz jako `JPG` lub `WebP`.',
+        ],
+      },
+
+      { h2: 'Gdy to zdjęcie dokumentu' },
+      {
+        ul: [
+          'Jeśli odbiorca prosi o jeden plik PDF, zobacz poradnik o [zdjęciach dokumentów w PDF](/pl/poradnik/zdjecia-dokumentow-do-pdf).',
+          'Jeśli to zdjęcie dowodu osobistego, przeczytaj najpierw poradnik o [znaku wodnym na skanie dowodu](/pl/poradnik/znak-wodny-na-skanie-dowodu).',
+          'Jeśli masz plik HEIC, a ktoś wymaga JPG, poradzi sobie z tym [HEIC do JPG](/pl/heic-do-jpg), opisany w [osobnym poradniku](/pl/poradnik/heic-do-jpg-bez-wysylania).',
+        ],
+      },
+
+      { h2: 'Jak sprawdzić, że zdjęcia nigdzie nie wyjechały' },
+      {
+        ol: [
+          'Otwórz [Kompresuj i konwertuj zdjęcia](/pl/kompresuj-zdjecia) i naciśnij `F12`.',
+          'Na karcie `Network` wyczyść listę żądań.',
+          'Dodaj zdjęcia i kliknij `Konwertuj`.',
+          'Na liście nie będzie żadnego z nich. Możesz też rozłączyć sieć i powtórzyć całość, bo przeliczanie dzieje się w przeglądarce.',
+        ],
+      },
+      { p: '**[Otwórz narzędzie Kompresuj i konwertuj zdjęcia](/pl/kompresuj-zdjecia)**' },
+    ],
+  },
 ];
 
 /** The guides about a tool, in one language (for the link on the tool's page). */
