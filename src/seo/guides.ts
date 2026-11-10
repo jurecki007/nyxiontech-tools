@@ -64,6 +64,8 @@ const GOV_DOSTEPNE_DOKUMENTY = 'https://www.gov.pl/web/dostepnosc-cyfrowa/jak-tw
 const UODO_BIP_DECYZJA = 'https://uodo.gov.pl/pl/138/4402';
 const RODO_PL = 'https://eur-lex.europa.eu/legal-content/PL/TXT/HTML/?uri=CELEX:32016R0679';
 const UODO_SKAN_DOWODU = 'https://uodo.gov.pl/pl/138/3854';
+const PDF2_TOUNICODE = 'https://pdf-issues.pdfa.org/32000-2-2020/clause09.html';
+const MDN_CREATE_IMAGE_BITMAP = 'https://developer.mozilla.org/en-US/docs/Web/API/Window/createImageBitmap';
 
 export const GUIDES: Guide[] = [
   {
@@ -2278,6 +2280,182 @@ export const GUIDES: Guide[] = [
         ],
       },
       { p: '**[Otwórz narzędzie Kompresuj i konwertuj zdjęcia](/pl/kompresuj-zdjecia)**' },
+    ],
+  },
+  {
+    path: '/guides/pdf-text-pastes-as-gibberish',
+    lang: 'en',
+    tool: 'pdf-to-text',
+    title: 'Why PDF text pastes as gibberish, and how to fix it',
+    description:
+      'The page reads fine but the paste is nonsense. How to tell the four causes apart, why converting to Word does not help, and the setting that decides it.',
+    h1: 'Why text copied from a PDF pastes as gibberish',
+    name: 'Guide: PDF text pastes as gibberish',
+    published: '2026-11-10',
+    blocks: [
+      {
+        p: 'The page reads perfectly on screen. You select a paragraph, copy it, paste it into an e-mail, and out comes a run of boxes, accented capitals and punctuation that spells nothing. Your eyes and your clipboard are both working. The letters you can see and the characters the file hands out are simply two different things, and only one of them is broken. This guide shows how to tell which of four problems you have in a single click, why most of the advice you will find does not work, and the one setting that decides whether the real fix does anything at all.',
+      },
+
+      { h2: 'Tell the four cases apart first' },
+      {
+        p: 'Open [PDF to text](/pdf-to-text), drop the file on it and click **Extract text**. What comes back names the problem:',
+      },
+      {
+        ul: [
+          '**Readable text.** The PDF is fine. Whatever mangled your paste was the program you pasted into, or a selection that caught a different part of the page. Copy it from here instead and you are done.',
+          '**"No text found".** There is no text in the file at all. It is a scan or a photograph, so the page is pixels and nothing else. The tool says as much and points you at OCR. The fix below is yours.',
+          '**The same gibberish.** The file does have a text layer, but the part of it that records which letter each code stands for is missing or wrong. This is the case the rest of this guide is about.',
+          '**The file will not open.** It needs a password before anything can read it, and no tool gets past that without the password. [Unlock PDF](/unlock-pdf) removes a password from a file you can already open; it does not guess one.',
+        ],
+      },
+      {
+        p: 'Keep that last one separate from a different thing people call by the same name. A PDF can carry a flag saying that copying is not permitted. A flag is not encryption: the text sits in the file exactly as it does in any other PDF, and whether a program respects the flag is a decision that program makes. So if your paste is gibberish rather than blocked, copy protection is not the reason.',
+      },
+
+      { h2: 'Why the page looks right and the copy does not' },
+      {
+        p: 'A PDF does not store letters. It stores a font and a list of codes, and for every code the font holds a drawing. Code 36 might draw an "a". Nothing in that arrangement has to record that code 36 means the letter a, because drawing the shape never required knowing what it was.',
+      },
+      {
+        p: 'Copying does require knowing. For that, a font can carry a second table, the ToUnicode CMap, which the PDF specification describes as "A stream containing a CMap file that maps character codes to Unicode values" ([ISO 32000-2, clause 9](' +
+          PDF2_TOUNICODE +
+          ')). When that table is missing, partial or wrong, the display is untouched, because the display never consulted it. Copying, searching and screen readers are the only things that break, which is exactly the pattern you are seeing.',
+      },
+      {
+        p: 'It usually comes from subset fonts, where whatever produced the file renumbered the codes to suit itself and then wrote no correct table, or from a document that has been through a converter that rebuilt its fonts along the way. Older typesetting output, exports from accounting and banking systems and files that have been converted more than once are the common offenders.',
+      },
+
+      { h2: 'Why the usual advice does not fix it' },
+      {
+        ul: [
+          '**Convert the PDF to Word.** The converter reads the same text layer through the same broken table and writes the same gibberish into the .docx. Our [PDF to Word](/pdf-to-word) is no exception, and nor is Word\'s own PDF import. It only seems to work when the converter quietly gives up on the text layer and recognises the pixels instead, which is the real fix wearing a disguise.',
+          '**Change the font in Acrobat.** Editing the text changes what gets drawn on the page. It does not write the missing table, and it wants a paid licence before you can even try.',
+          '**Open it in another reader.** Every reader reads the same entry in the same file. One will occasionally guess the letters from the names the font gives its glyphs and so appear to fix it, which is why this works for one person and not the next. A guess that sometimes lands is not a fix.',
+          '**Print it to a new PDF, then run OCR.** This one genuinely works, and it is worth seeing why: printing throws the text layer away and leaves pixels behind, and OCR then builds a correct layer from those pixels. The steps below do the same thing without the detour.',
+        ],
+      },
+
+      { h2: 'The fix: read the pixels, not the text layer' },
+      {
+        p: 'Optical character recognition looks at the page as a picture and works the letters out from their shapes, so the broken table never enters into it. One setting decides whether it happens at all.',
+      },
+      {
+        ol: [
+          'Open [OCR: searchable PDF](/ocr-pdf) and add the file.',
+          'Untick **Skip pages that already contain text**. It is ticked by default, and on this file it is the whole problem. The tool counts the characters on each page and skips any page carrying more than twenty of them. Your pages are full of characters. They are the wrong characters, but a count cannot tell, so every page is skipped and nothing happens. You will see it say so, naming the pages: "Skipped 12 page(s) that already had text".',
+          'Set **Language** to match the document. The choices are **Polish + English**, which is the default, **Polish**, and **English**. Recognition leans heavily on what words look like in a given language, so the wrong setting costs real accuracy.',
+          'Leave **Quality** on **Accurate** unless the print is small, where **Small print** is worth the wait. The settings render the page at 200, 300 and 400 dots per inch before reading it, so each step up is slower.',
+          'Click **Recognise text**. It runs on your own processor, so a long document takes minutes rather than seconds, and the progress line names the page it is on.',
+          'Click **Copy recognised text**. That is the text the recogniser produced, and it is the one you came for.',
+        ],
+      },
+      {
+        p: 'Do not copy out of the PDF it hands back. That file is your original with a new invisible text layer drawn over it, so the broken layer is still underneath, and anything extracting text from it gets both at once: the gibberish and the good text, interleaved. **Copy recognised text** gives you only what was recognised. This is the step almost every other guide leaves out, and it is why people report that OCR "did not work".',
+      },
+
+      { h2: 'When you need a clean file, not just the text' },
+      {
+        p: 'If you have to pass on a PDF that other people can search and copy from, get rid of the broken layer before recognising anything:',
+      },
+      {
+        ol: [
+          'Open [Compress PDF](/compress-pdf) and pick any **Level** except **Lossless**. Those levels turn each page into an image, which is normally the cost and is here the point: the broken text layer goes with it. **Lossless** only repacks the file and would leave the layer exactly where it is.',
+          'Run the result through [OCR: searchable PDF](/ocr-pdf). With no text left on the pages, the skip setting no longer changes anything, although there is no harm in leaving it unticked.',
+        ],
+      },
+      {
+        p: 'There is a price. The pages become pictures, so the text is only ever as sharp as the rendering, and the file may come out larger or smaller depending on what was in it. For a document you only need to read from, copying the recognised text is simpler and gives up nothing.',
+      },
+
+      { h2: 'What recognition will not do' },
+      {
+        ul: [
+          'It reads English and Polish. No other language is offered, and running one of them as English gives poor results.',
+          'Columns, tables and forms come back as lines of text in reading order, which is often not the order you wanted them in.',
+          'Handwriting is not recognised.',
+          'Faint print, scanning noise and tight line spacing all cost accuracy. Proofread anything that matters, digits most of all: a misread amount or account number looks perfectly plausible.',
+          'Everything runs in your browser, so nothing is uploaded and nothing is stored, and a long document is limited by your own machine rather than by a queue.',
+        ],
+      },
+      {
+        p: '**[Open PDF to text](/pdf-to-text)** to find out which case you have, then **[OCR: searchable PDF](/ocr-pdf)** to fix it.',
+      },
+    ],
+  },
+  {
+    path: '/guides/photos-sideways-in-pdf',
+    lang: 'en',
+    tool: 'images-to-pdf',
+    title: 'Why phone photos come out sideways in a PDF',
+    description:
+      'Your photos look upright on the phone and sideways in the PDF. What the orientation tag is, why rotating pages is the wrong fix, and how to avoid it.',
+    h1: 'Why phone photos come out sideways in a PDF, and how to stop it',
+    name: 'Guide: photos come out sideways in a PDF',
+    published: '2026-11-10',
+    blocks: [
+      {
+        p: 'You photograph six pages of a contract, feed them to something that makes a PDF, and three of them are lying on their side. The photos are upright everywhere else: in the camera roll, in the file manager, on the phone that took them. The usual answer is to rotate the pages afterwards, and it is the wrong one. Here is what actually happened, and how to get a PDF that comes out the right way up the first time.',
+      },
+
+      { h2: 'The photo is not sideways. It carries a note saying which way up it is.' },
+      {
+        p: 'The camera sensor is fixed in the body of the phone. It cannot turn when you turn the phone, so it always hands over its pixels the same way round, and the phone writes a small value alongside them saying how far the picture should be turned before anyone looks at it. That is the orientation tag: one of eight values, covering the four right angles and their mirror images.',
+      },
+      {
+        p: 'Programs that read the tag show the photo upright. Programs that ignore it show you the sensor\'s version, on its side. Both are looking at the same file, and neither is malfunctioning. That is why a photo can be upright in your gallery and sideways the moment it lands somewhere else, and why the problem appears to come and go for no reason.',
+      },
+
+      { h2: 'Why a PDF makes it permanent' },
+      {
+        p: 'A PDF page has no orientation tag. When a tool puts your photo into a PDF it either applies the rotation on the way in or it does not, and whichever it chose is now what everybody sees. No note is left behind for the reader to honour or ignore. The photo was ambiguous; the PDF is not.',
+      },
+      {
+        p: 'That is also why rotating the pages afterwards is a poor repair. It does fix how the page looks, because a PDF page can carry its own rotation. But you are doing it a page at a time across a mixed batch, each page keeps the proportions it was handed, so you end up with a document of inconsistent page shapes, and you will be doing it again next time. [Rotate PDF](/rotate-pdf) is there for when you need it, which should be seldom.',
+      },
+
+      { h2: 'Make the PDF with the rotation already applied' },
+      {
+        p: '[Images to PDF](/image-to-pdf) reads the orientation tag as it decodes each photo, so the problem never arises. The browser function it uses to decode an image takes an option for precisely this, which MDN documents as orienting the image according to its EXIF orientation metadata where present ([createImageBitmap](' +
+          MDN_CREATE_IMAGE_BITMAP +
+          ')), and that is the setting the tool asks for.',
+      },
+      {
+        ol: [
+          'Open [Images to PDF](/image-to-pdf) and drop the photos on **Add images**. They become pages in the order of the list, one image per page, so get the order right before you build it.',
+          'Choose **Page size**. **A4** and **Letter** give every page the same size and fit each photo inside it. **Same as image** makes each page exactly as big as its photo plus the margin, which keeps the photos at full size but leaves you with a PDF of mixed page shapes.',
+          'With **A4** or **Letter**, choose **Orientation**. **Auto** turns the page sideways whenever the photo is wider than it is tall, judged after the rotation has been applied, which is what you want for a mixed batch of pages and receipts. **Portrait** and **Landscape** force the issue. With **Same as image** there is nothing to decide and the option is not shown.',
+          'Choose **Margin**: **None**, **Small** or **Large**, which are 0, 20 and 50 points, or roughly 0, 7 and 18 millimetres.',
+          'Click **Create PDF**. The file takes its name from the first photo, with `_and_more` added when there is more than one.',
+        ],
+      },
+
+      { h2: 'What the tool does to each photo' },
+      {
+        ul: [
+          'The photo is decoded with its orientation already applied, so the picture the tool is holding is the right way up before anything else happens.',
+          'It is then drawn into a fresh image and encoded again. PNG files stay PNG; everything else, iPhone HEIC included, becomes JPEG at 90% quality. There is no quality setting on this page.',
+          'Because the picture is written out fresh, the rotation now lives in the pixels themselves and there is no tag left for anything to ignore. The EXIF block does not survive the trip either, so the location, the camera model and the date the photo was taken do not travel into the PDF. Keep your originals if you need any of that.',
+          'Sizes assume 96 pixels to the inch, so a photo 1920 pixels wide is 1440 points, about 508 millimetres, before it is scaled to fit the page you chose.',
+        ],
+      },
+
+      { h2: 'A PDF that is already sideways' },
+      {
+        p: 'If the file exists and you still have the photos, rebuild it. That takes less time than repairing it and the pages come out consistent. If the photos are gone, [Rotate PDF](/rotate-pdf) turns pages by 90, 180 or 270 degrees and lets you pick which ones rather than turning the lot. To make the result searchable afterwards, run it through [OCR: searchable PDF](/ocr-pdf), which will also take the photographs directly and build the PDF itself.',
+      },
+
+      { h2: 'Limits' },
+      {
+        ul: [
+          'One image per page. There is no option to put two photos on a sheet.',
+          'JPEG encoding is lossy. At 90% a photographed page looks the same, but it is not the original bit for bit.',
+          'A batch of full resolution phone photos makes a heavy PDF. Send them through [Compress & convert images](/image-converter) first if the file has to go by e-mail, or [Compress PDF](/compress-pdf) afterwards.',
+          'It all runs in your browser, so nothing is uploaded, and a large batch on an old phone will take its time.',
+          'The tool does not straighten a photo taken at an angle, crop the page out of the table it is lying on, or even out the lighting. For something that has to look scanned, photograph it square on in flat light.',
+        ],
+      },
+      { p: '**[Open Images to PDF](/image-to-pdf)**' },
     ],
   },
 ];
