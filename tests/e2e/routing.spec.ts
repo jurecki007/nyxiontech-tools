@@ -91,6 +91,8 @@ test.describe('static tool pages', () => {
       '/pl/poradnik/podpis-pdf-bez-wysylania',
       '/pl/poradnik/podziel-skan-na-dokumenty',
       '/pl/poradnik/polacz-pdf-bez-wysylania',
+      '/pl/poradnik/porownaj-wersje-umowy-pdf',
+      '/pl/poradnik/wypelnij-formularz-pdf',
       '/pl/poradnik/zabezpiecz-pdf-przed-wyslaniem',
       '/pl/poradnik/zdjecia-dokumentow-do-pdf',
       '/pl/poradnik/znak-wodny-na-skanie-dowodu',

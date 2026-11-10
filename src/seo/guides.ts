@@ -1968,6 +1968,159 @@ export const GUIDES: Guide[] = [
       { p: '**[Otwórz narzędzie Znak wodny](/pl/znak-wodny-pdf)**' },
     ],
   },
+
+  {
+    path: '/pl/poradnik/wypelnij-formularz-pdf',
+    lang: 'pl',
+    tool: 'fill-form',
+    title: 'Jak wypełnić formularz PDF z polskimi znakami',
+    description:
+      'Wnioski i formularze często gubią ą, ę i ł po wpisaniu. Wypełnij je w przeglądarce, z osadzoną czcionką i bez wysyłania pliku na serwer.',
+    h1: 'Jak wypełnić formularz PDF, żeby polskie znaki nie zniknęły',
+    name: 'Poradnik: wypełnianie formularzy PDF',
+    published: '2026-11-10',
+    blocks: [
+      {
+        p: 'Pobierasz wniosek ze strony urzędu, otwierasz go i zaczyna się jedna z dwóch historii. Albo pola są, ale po wpisaniu „Łukasz” w rubryce widać „ukasz”, albo pól nie ma wcale i nie da się kliknąć nigdzie. Porady na ten temat kończą się radą, żeby wydrukować formularz, wypełnić długopisem i zeskanować.',
+      },
+
+      { h2: 'Najpierw sprawdź, co masz' },
+      {
+        p: 'Dwa zupełnie różne pliki nazywa się tak samo. Pierwszy ma prawdziwe pola formularza, czyli wbudowaną strukturę, w którą wpisuje się dane. Drugi to zwykła strona, często skan, z narysowanymi kratkami. Pierwszemu służy inne narzędzie niż drugiemu i warto wiedzieć, który masz, zanim zaczniesz walczyć.',
+      },
+      {
+        p: 'Otwórz [Wypełnij formularz PDF](/pl/wypelnij-formularz-pdf) i wskaż plik. Jeśli pola są, zobaczysz ich listę i informację, ile ich znaleziono, razem z uwagą, że nazwy pól pochodzą od autora formularza. Jeśli pól nie ma, narzędzie napisze to wprost i odeśle cię do [Edytuj PDF](/pl/edytuj-pdf).',
+      },
+
+      { h2: 'Dlaczego znikają polskie znaki' },
+      {
+        p: 'Każde pole formularza niesie informację, jakim krojem ma być wypisane. Wiele formularzy wskazuje jeden z czternastu standardowych krojów PDF, na przykład Helveticę. One nie mają znaków ą, ć, ę, ł, ń, ó, ś, ź ani ż. Program wpisuje to, co potrafi, a reszta wypada albo zmienia się w kwadraty. To nie wina twojej klawiatury ani układu znaków.',
+      },
+      {
+        p: 'To narzędzie po wpisaniu wartości rysuje wygląd wszystkich pól na nowo krojem Arimo, dołączonym do aplikacji i osadzanym w pliku. Arimo ma polskie znaki i metryki Arialu, więc rozmiary zostają zbliżone do oryginału. Warto wiedzieć o skutku ubocznym: tekst, który był w polach wcześniej, też zostaje przerysowany tym krojem, więc litery mogą wyglądać trochę inaczej niż w pliku od urzędu.',
+      },
+
+      { h2: 'Jak wypełnić' },
+      {
+        ol: [
+          'Otwórz [Wypełnij formularz PDF](/pl/wypelnij-formularz-pdf) i wskaż plik.',
+          'Przejrzyj listę pól. Pola, które autor ustawił jako tylko do odczytu, są widoczne, ale nie da się ich zmienić. To nie jest usterka, tylko ustawienie formularza.',
+          'Wpisz wartości. Pola wyboru mają stany `Zaznaczone` i `Niezaznaczone`, a listy rozwijane pokazują warianty przewidziane przez autora.',
+          'Zdecyduj o spłaszczeniu, czyli o opcji `Zablokuj odpowiedzi (spłaszcz): pola staną się zwykłym tekstem, którego nie da się zmienić`.',
+          'Kliknij `Zapisz wypełniony formularz`. Plik wyjściowy ma nazwę oryginału z końcówką `_filled`.',
+        ],
+      },
+      {
+        p: 'Jeszcze jedno, co widać dopiero przy dłuższych odpowiedziach. Pola wielowierszowe często mają ustawiony rozmiar automatyczny albo po prostu za duży, i tekst wychodzi poza ramkę. Narzędzie mierzy wysokość pola i zmniejsza pismo tak, żeby wiersze się zmieściły, w granicach od 6 do 12 punktów.',
+      },
+
+      { h2: 'Spłaszczać czy nie' },
+      {
+        p: 'Spłaszczenie zamienia pola w zwykłą treść strony. Odpowiedzi nie da się wtedy przypadkiem zmienić, a żaden czytnik nie narysuje ich po swojemu własnym krojem. Dla pliku, który wysyłasz, to zwykle właściwy wybór. Zostaw formularz niespłaszczony, jeśli zamierzasz jeszcze coś poprawić, bo tym narzędziem nie cofniesz spłaszczenia.',
+      },
+
+      { h2: 'Gdy formularz nie ma żadnych pól' },
+      {
+        p: 'Tak wygląda większość skanów i formularzy wyeksportowanych jako zwykłe strony. Użyj wtedy [Edytuj PDF](/pl/edytuj-pdf) i narzędzia `Tekst`: klikasz tam, gdzie ma się zacząć napis, i piszesz. Jeśli dokument ma być potem przeszukiwalny, przepuść go najpierw przez [OCR PDF](/pl/ocr-pdf).',
+      },
+      {
+        p: 'Drukowanie i skanowanie też działa, ale kosztuje drukarkę, skaner i czytelność wyniku. Przy formularzu, który i tak wysyłasz mailem, trudno znaleźć powód, żeby przepuszczać go przez papier.',
+      },
+
+      { h2: 'Zanim wyślesz' },
+      {
+        ul: [
+          'Jeśli wniosek wymaga podpisu, zobacz poradnik o [podpisywaniu PDF bez wysyłania pliku](/pl/poradnik/podpis-pdf-bez-wysylania). Opisuje, kiedy wystarczy podpis obrazkiem, a kiedy potrzeba podpisu zaufanego albo kwalifikowanego.',
+          'Jeśli w formularzu są dane osobowe, a idzie mailem, rozważ hasło na pliku: poradnik o [zabezpieczaniu PDF przed wysłaniem](/pl/poradnik/zabezpiecz-pdf-przed-wyslaniem).',
+          'Jeśli trzeba dołączyć zdjęcia dokumentów, zrób z nich jeden plik według poradnika o [zdjęciach dokumentów w PDF](/pl/poradnik/zdjecia-dokumentow-do-pdf).',
+        ],
+      },
+
+      { h2: 'Jak sprawdzić, że wniosek nigdzie nie wyjechał' },
+      {
+        ol: [
+          'Otwórz [Wypełnij formularz PDF](/pl/wypelnij-formularz-pdf) i naciśnij `F12`.',
+          'Na karcie `Network` wyczyść listę żądań.',
+          'Wskaż plik, wpisz cokolwiek i kliknij `Zapisz wypełniony formularz`.',
+          'Twojego wniosku na liście nie będzie. Możesz też rozłączyć sieć i powtórzyć całość: strona działa dalej.',
+        ],
+      },
+      { p: '**[Otwórz narzędzie Wypełnij formularz PDF](/pl/wypelnij-formularz-pdf)**' },
+    ],
+  },
+
+  {
+    path: '/pl/poradnik/porownaj-wersje-umowy-pdf',
+    lang: 'pl',
+    tool: 'compare',
+    title: 'Jak porównać dwie wersje umowy w PDF',
+    description:
+      'Druga strona odesłała umowę po poprawkach. Znajdź każdą zmianę w przeglądarce, bez wysyłania obu wersji dokumentu do cudzej usługi.',
+    h1: 'Jak znaleźć zmiany między dwiema wersjami umowy w PDF',
+    name: 'Poradnik: porównywanie wersji umowy',
+    published: '2026-11-10',
+    blocks: [
+      {
+        p: 'Wysłałeś umowę, wróciła „po drobnych poprawkach”. Całą robotą jest teraz ustalenie, co dokładnie zmieniono, bo akurat przy umowach drobna poprawka potrafi dotyczyć terminu płatności albo kary umownej.',
+      },
+      {
+        p: 'Odpowiedź Adobe na to pytanie brzmi: Acrobat Pro, czyli produkt płatny. Darmowe odpowiedzi mają wszystkie ten sam kształt: wgraj oba pliki. Oba, czyli obie wersje umowy, do usługi, o której wiesz tyle, że ma ładną stronę.',
+      },
+
+      { h2: 'Dwie warstwy porównania' },
+      { p: 'Narzędzie porównuje dwie rzeczy naraz, bo żadna z nich osobno nie wystarcza.' },
+      {
+        ul: [
+          '`Zmiany w tekście`: porównanie wierszy. Z obu plików wyciągany jest tekst, odstępy są normalizowane, puste wiersze pomijane, a wiersze dopasowywane metodą najdłuższego wspólnego podciągu. Dzięki temu akapit, który tylko przesunął się na stronie, nie jest zgłaszany jako napisany od nowa.',
+          '`Zmiany wizualne`: obie wersje strony są renderowane w tej samej szerokości i porównywane piksel po pikselu. Tam, gdzie oryginał był ciemniejszy, pojawia się czerwień, czyli coś zniknęło. Tam, gdzie ciemniejsza jest nowa wersja, zieleń, czyli coś doszło. Reszta strony jest wyblakła, żeby znaki rzucały się w oczy.',
+        ],
+      },
+      {
+        p: 'Jedno bez drugiego zawodzi. Porównanie tekstu nie zauważy rzeczy, które tekstem nie są: innego cieniowania komórki w tabeli, przesuniętego miejsca na podpis, zmienionego logo ani liczby wklejonej jako obrazek. Porównanie pikseli zauważy wszystko, co widać, ale nie powie ci, jak teraz brzmi zdanie.',
+      },
+
+      { h2: 'Jak to zrobić' },
+      {
+        ol: [
+          'Otwórz [Porównaj PDF](/pl/porownaj-pdf).',
+          'Wskaż starszy plik jako `Oryginał`, a nowszy jako `Zmieniony`. Kolejność ma znaczenie, bo od niej zależy, co jest dodane, a co usunięte.',
+          'Kliknij `Porównaj`.',
+          'Przeczytaj podsumowanie: ile wierszy się zmieniło i ile stron wygląda inaczej spośród wszystkich.',
+          'Przełączaj się między `Zmiany w tekście` a `Zmiany wizualne`. Strony bez różnic są oznaczone, więc wiesz, których nie musisz oglądać.',
+        ],
+      },
+      {
+        p: 'Jeśli pliki są identyczne, zobaczysz komunikat `Nie znaleziono różnic.` i to jest pełna odpowiedź, a nie brak wyniku.',
+      },
+
+      { h2: 'Co liczy się jako zmiana' },
+      {
+        p: 'Piksele uznaje się za różne, gdy ich jasność rozjeżdża się o więcej niż 40 na 255 poziomów, czyli o około 15 procent. Strona trafia do zmienionych od ośmiu takich pikseli. Dla skali: jedna przerobiona cyfra to około pięćdziesięciu pikseli, więc zmieniona kwota w tabeli nie ma szans się prześlizgnąć. Strony, które istnieją tylko w jednym z plików, są pokazywane w całości i opisane jako obecne tylko tam.',
+      },
+
+      { h2: 'Czego się spodziewać, a czego nie' },
+      {
+        ul: [
+          'Dwa osobne skany tej samej strony zaświecą się na czerwono i zielono niemal wszędzie. Porównanie pikseli nie wybacza przesunięcia o milimetr ani innego skanera. Porównuj pliki powstałe z tego samego źródła.',
+          'Dwa skany nie mają warstwy tekstowej, więc `Zmiany w tekście` będą puste. Przepuść oba przez [OCR PDF](/pl/ocr-pdf), pamiętając, że własne pomyłki rozpoznawania pokażą się potem jako różnice.',
+          'Dokument wyeksportowany ponownie innym programem potrafi pokazać zmiany wizualne przy identycznym tekście, bo podmieniono kroje pisma.',
+          'Przy bardzo długich dokumentach, powyżej mniej więcej czterech milionów par wierszy, narzędzie przechodzi na tańsze porównanie, żeby strona pozostała responsywna. Dodane i usunięte wiersze nadal znajdzie, ale przeniesiony akapit potraktuje wtedy jako niezmieniony.',
+        ],
+      },
+      {
+        p: 'Porównanie niczego nie zapisuje w plikach. Jeśli chcesz zachować dowód na to, co zmieniono, zrób zrzut ekranu z zakładki `Zmiany wizualne` albo zachowaj obie wersje w oryginale.',
+      },
+
+      { h2: 'Dlaczego to ma znaczenie akurat przy umowach' },
+      {
+        p: 'Projekt umowy przed podpisem zawiera zwykle dane obu stron, kwoty i warunki, czyli dokładnie to, czego nie chce się wysyłać na cudzy serwer tylko po to, żeby sprawdzić jedną datę. Tutaj oba pliki są czytane przez przeglądarkę na twoim komputerze. Możesz to sprawdzić: otwórz [Porównaj PDF](/pl/porownaj-pdf), naciśnij `F12`, wyczyść listę na karcie `Network`, wskaż oba pliki i kliknij `Porównaj`. Żadnego z nich na liście nie będzie. Po otwarciu strony możesz nawet rozłączyć sieć.',
+      },
+      {
+        p: 'Gdy już wiesz, co się zmieniło, a umowa idzie dalej mailem, przyda się poradnik o [zabezpieczaniu PDF przed wysłaniem](/pl/poradnik/zabezpiecz-pdf-przed-wyslaniem).',
+      },
+      { p: '**[Otwórz narzędzie Porównaj PDF](/pl/porownaj-pdf)**' },
+    ],
+  },
 ];
 
 /** The guides about a tool, in one language (for the link on the tool's page). */
