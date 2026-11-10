@@ -2,9 +2,15 @@
 // are considered without waiting for the next crawl. Run it after a guide merges and
 // the deploy is live.
 //
+//   node scripts/submit-indexnow.mjs --sitemap           # every page in the live sitemap
 //   node scripts/submit-indexnow.mjs --since <git-ref>   # guides added since that ref, and their tool pages
 //   node scripts/submit-indexnow.mjs https://tools.nyxiontech.com/guides/some-page
 //   npm run indexnow -- --since 2b2d918 --dry-run
+//
+// Use --sitemap for a first submission of the whole site, or after a change that touched
+// many pages. It reads the deployed sitemap rather than the source tree, so it can only
+// ever name pages that are actually published. The other two modes read the source and
+// can run before a deploy, which is why they need the liveness check below.
 //
 // Pass single pages as whole addresses. Git Bash on Windows rewrites an argument that
 // starts with a slash into a Windows path, so "/guides/x" arrives as "C:/Program
@@ -29,6 +35,7 @@ const AGENT = 'Mozilla/5.0 (compatible; nyxiontech-indexnow)';
 
 const args = process.argv.slice(2);
 const dryRun = args.includes('--dry-run');
+const sitemapMode = args.includes('--sitemap');
 const sinceAt = args.indexOf('--since');
 const since = sinceAt === -1 ? null : args[sinceAt + 1];
 // Without --since there is no value to skip, and skipping index 0 would eat a page.
@@ -61,6 +68,29 @@ function readKey() {
 }
 
 /**
+ * Every address in the live sitemap. Unlike the other two modes this reads the deployed
+ * file, not the source tree: the sitemap lists only what has actually shipped, so a
+ * whole-site submission cannot name a page that does not exist yet.
+ */
+async function fromSitemap() {
+  const url = `${SITE}/sitemap.xml`;
+  let xml;
+  try {
+    const res = await fetch(url, { headers: { 'user-agent': AGENT } });
+    if (res.status !== 200) fail(`${url} answered ${res.status}, so there is no sitemap to read.`);
+    xml = await res.text();
+  } catch (e) {
+    fail(`Could not fetch ${url}: ${e.message}`);
+  }
+  const locs = [...xml.matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map((m) => m[1]);
+  if (!locs.length) fail(`${url} parsed to no <loc> entries. Has the sitemap format changed?`);
+  // A sitemap naming another host would make us vouch for pages we do not control.
+  const foreign = locs.filter((u) => u !== SITE && !u.startsWith(`${SITE}/`));
+  if (foreign.length) fail(`${url} lists addresses outside ${SITE}:\n  ${foreign.join('\n  ')}`);
+  return [...new Set(locs.map((u) => new URL(u).pathname))].sort();
+}
+
+/**
  * The guides added since a git ref, and the tool page each one is about, because that
  * page gained a link to it. Paths come from the source rather than the sitemap so this
  * can run before a deploy; the check below is what stops anything unpublished going out.
@@ -87,8 +117,12 @@ function addedSince(ref) {
   return [...added, ...tools].sort();
 }
 
-const paths = since ? addedSince(since) : explicit;
-if (!paths.length) fail('Nothing to submit. Pass paths starting with "/", or --since <git-ref>.');
+// Combining modes would quietly submit one of them and ignore the rest.
+const modes = [sitemapMode, Boolean(since), explicit.length > 0].filter(Boolean);
+if (modes.length > 1) fail('Pick one: --sitemap, --since <git-ref>, or a list of addresses.');
+
+const paths = sitemapMode ? await fromSitemap() : since ? addedSince(since) : explicit;
+if (!paths.length) fail('Nothing to submit. Pass --sitemap, --since <git-ref>, or paths starting with "/".');
 
 const urls = paths.map((p) => SITE + p);
 console.log(`${urls.length} URL(s) to submit:`);
