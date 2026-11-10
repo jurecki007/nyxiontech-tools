@@ -6,6 +6,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 ## [Unreleased]
 
 ### Added
+- Two English guides: comparing two PDFs (how the text diff and the pixel diff differ, what the red and green mean, and the page shift that makes every page look rewritten) and splitting a PDF (ranges against extract, the open-ended `7-` range, and what a split drops).
 - Every tool has its own address, such as tools.nyxiontech.com/merge-pdf or /compress-pdf, that can be bookmarked and shared, and a page search engines can find (title, description, how-to and questions for that tool). Old `#/tool/…` links still work and switch to the new address. The desktop app is unchanged.
 - Polish pages for every tool, such as /pl/polacz-pdf or /pl/kompresuj-pdf, and a Polish home page at /pl/. They open the same app.
 - Polish interface: under /pl/ every button, message and dialog is in Polish, and an EN / PL switch at the bottom of the sidebar opens the same page in the other language. The Windows app follows the system language and remembers a choice made with the switch. Translators can add a language: see TRANSLATING.md.

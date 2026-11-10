@@ -2600,6 +2600,152 @@ export const GUIDES: Guide[] = [
       { p: '**[Open Protect PDF](/protect-pdf)**' },
     ],
   },
+
+  {
+    path: '/guides/compare-two-pdfs',
+    lang: 'en',
+    tool: 'compare',
+    title: 'How to compare two PDFs and see what changed',
+    description:
+      'Two versions of a contract and no idea what moved. A text diff and a pixel diff, what the red and green mean, and why neither file should be uploaded.',
+    h1: 'How to compare two PDFs',
+    name: 'Guide: compare two PDFs',
+    published: '2026-11-11',
+    blocks: [
+      {
+        p: 'Someone sends back "the updated contract" and says nothing about what they updated. Reading both versions side by side works for two pages and stops working at ten, and the thing you miss is never the paragraph that was rewritten. It is the number that moved, or the clause that quietly went away. Two documents can also differ in ways that reading will not surface at all, which is why one comparison is rarely enough.',
+      },
+
+      { h2: 'Why one comparison is not enough' },
+      {
+        p: '[Compare PDFs](/compare-pdf) runs two independent comparisons over the same pair of files and shows you both, because each is blind to what the other catches:',
+      },
+      {
+        ul: [
+          '**The text diff** reads the text out of both files and compares it line by line, page by page. It catches wording, numbers and dates precisely, and it tells you exactly which line changed. It cannot see anything that is not text: a moved logo, a redrawn table border, a signature image swapped for another.',
+          '**The visual diff** renders both pages to images and compares them pixel by pixel. It catches everything you can see, layout and images included. It cannot tell you what a changed word now says, only that the ink in that spot is different.',
+        ],
+      },
+      {
+        p: 'A document where the wording is identical and the text diff reports nothing, while the visual diff lights up, is usually one where a font, a margin or an image changed. That is worth knowing before you sign it.',
+      },
+
+      { h2: 'Running it' },
+      {
+        ol: [
+          'Open [Compare PDFs](/compare-pdf) and drop the older file into **Original**.',
+          'Drop the newer one into **Changed**. The labels are not decoration: they decide which direction counts as an addition and which as a removal, so putting them the wrong way round inverts every colour in the result.',
+          'Click **Compare**. Both comparisons run together, and a progress count tracks the pages as they render.',
+          'Use the switch above the results to move between the **Text** and **Visual** views. The summary line tells you how many text lines changed and how many pages differ at all.',
+        ],
+      },
+
+      { h2: 'Reading the visual diff' },
+      {
+        p: 'Each page comes back as a single image rather than a pair, with the unchanged content faded to a quarter of its strength so that what moved stands out. Two colours do the work:',
+      },
+      {
+        ul: [
+          '**Red is gone.** The pixel was darker in the original than in the changed file, so something that used to be there has been removed or moved away.',
+          '**Green is new.** The pixel was darker in the changed file, so something arrived.',
+          '**Faded grey is unchanged**, and it is there to give you the context to read the rest by, not to be looked at.',
+        ],
+      },
+      {
+        p: 'A line of text that was edited shows as red and green together, because the old glyphs went and new ones arrived in roughly the same place. A block that simply moved down the page shows as red where it was and green where it is now, which is how you tell a move from a rewrite at a glance.',
+      },
+      {
+        p: 'The comparison works on brightness rather than colour, and ignores differences smaller than a threshold, so antialiasing noise along the edges of letters does not flood the page with false positives. A genuine but faint change, such as light grey text going slightly lighter, can fall under that threshold. The text diff is what catches those.',
+      },
+
+      { h2: 'Where it will mislead you' },
+      {
+        ul: [
+          '**An inserted or deleted page shifts everything after it.** Both comparisons line the files up by page number, so adding a page at the front makes every later page look rewritten. If the summary says nearly every page changed, check the page counts before reading anything into it.',
+          '**A page that exists in only one file** is shown on its own and counted as entirely changed, because there is nothing to compare it against.',
+          '**Scanned documents compare as pictures.** Two scans of the same paper differ in every pixel from the scanner alone. Run both through [OCR](/ocr-pdf) first and compare the text, or accept that the visual diff will be noise.',
+          '**Nothing is inferred about meaning.** A renumbered clause and a rewritten clause look the same to both comparisons. The tool shows you where to look; it does not tell you whether it matters.',
+        ],
+      },
+
+      { h2: 'These are the last two files to upload' },
+      {
+        p: 'Comparing contract versions on someone else\'s server means uploading both of them, which is to say the terms, the parties and the numbers, twice. The usual online comparison tools do exactly that, and several keep the files long enough to show you the result from a link. Nothing is uploaded here. Both documents are read, rendered and compared inside the browser tab, and you can confirm it rather than take it on trust: open the network panel first and watch it stay empty, which [how to check if a PDF tool uploads your files](/guides/does-a-pdf-tool-upload-your-files) walks through.',
+      },
+      { p: '**[Open Compare PDFs](/compare-pdf)**' },
+    ],
+  },
+  {
+    path: '/guides/split-pdf-without-uploading',
+    lang: 'en',
+    tool: 'split',
+    title: 'How to split a PDF without uploading it',
+    description:
+      'By ranges or extract: one gives several files, the other one file, and picking wrong is the usual mistake. The range syntax, including the open-ended one.',
+    h1: 'How to split a PDF',
+    name: 'Guide: split a PDF',
+    published: '2026-11-11',
+    blocks: [
+      {
+        p: 'Splitting a PDF sounds like one operation and is actually three, and the one most people want is not the one they click. The difference is not how the pages are chosen. It is how many files you get back at the end.',
+      },
+
+      { h2: 'The three modes' },
+      {
+        p: '[Split PDF](/split-pdf) offers **Every page**, **By ranges** and **Extract pages**:',
+      },
+      {
+        ul: [
+          '**Every page** gives you one file per page. A forty page document becomes forty files. Useful for pulling a scanned batch apart, rarely what you want otherwise.',
+          '**By ranges** gives you **one file per range**. Type `1-3, 4-6, 7-` and three files come back.',
+          '**Extract pages** gives you **one file in total**, containing exactly the pages you listed and nothing else. Type `1, 3-5, 9` and a single five page document comes back.',
+        ],
+      },
+      {
+        p: 'That last distinction is the whole thing. **By ranges** splits a document up; **Extract pages** pulls a document out. Pick the wrong one and you get three files when you wanted one, or one when you wanted three. The page numbers you type can be identical in both cases, which is why the mistake is easy to make and easy to miss.',
+      },
+
+      { h2: 'The range syntax, including the part nobody documents' },
+      {
+        ul: [
+          'A single page is just its number: `4`.',
+          'A span is two numbers with a hyphen: `4-9`, inclusive at both ends.',
+          'Separate them with commas: `1, 4-9, 12`.',
+          '**Leave the end off to mean "to the end of the document"**: `7-` is page seven onwards. This is the one worth remembering, because it saves you opening the file to find out how long it is, and it keeps working when the document grows.',
+        ],
+      },
+      {
+        p: 'The hints under the field show the shape for each mode: "Each range becomes a file" for ranges, "These pages go into one new file" for extract. Page numbers are the ones you see in the document, starting at one.',
+      },
+
+      { h2: 'What comes back' },
+      {
+        p: 'Each output is named after the original with the pages appended, so `contract.pdf` split by ranges gives you `contract_p1-3.pdf`, `contract_p4-6.pdf` and so on, and a single page comes back as `contract_p7.pdf`. Extracting instead gives you one `contract_extract.pdf`. When there is more than one file you can take them individually or download the lot as `contract_split.zip`.',
+      },
+
+      { h2: 'What a split leaves behind' },
+      {
+        p: 'Each output is built as a new document with the chosen pages copied into it, which is the same mechanism [merging](/guides/merge-pdf-without-uploading) uses and it loses the same things. The pages themselves arrive intact, text, images, vector drawing and all. What does not survive is everything the document held at its own level rather than on a page:',
+      },
+      {
+        ul: [
+          '**Bookmarks and the outline tree.** They point at pages in the original document, and those targets do not exist in the new one.',
+          '**Form fields.** An interactive form split into parts comes back as flat pages that look right and cannot be filled in. If you need the form, split a copy and keep the original.',
+          '**Digital signatures.** A signature certifies a specific byte sequence. Changing which pages are present invalidates it by design, so the signature is dropped rather than carried across broken.',
+          '**Document properties.** Title, author and the rest do not come along. That is usually a quiet improvement, and [how to check and remove hidden PDF metadata](/guides/remove-pdf-metadata) covers what tends to be in there.',
+        ],
+      },
+
+      { h2: 'Why splitting is a bad reason to upload' },
+      {
+        p: 'Splitting is most often a step on the way to sending part of something: three pages of a longer statement, one invoice out of a monthly batch, a single page of a medical report. The document you are about to carve up therefore contains more than the part you want to share, which makes it exactly the wrong file to hand to a stranger\'s server. Nothing is uploaded here. The file is read, cut and written back inside the browser tab, with no request leaving your machine, and that is checkable rather than promised: see [how to check if a PDF tool uploads your files](/guides/does-a-pdf-tool-upload-your-files).',
+      },
+      {
+        p: 'If the part you are keeping still contains something the recipient should not read, splitting will not deal with it, because the text is all still there on the pages you kept. [Redact PDF](/redact-pdf) removes it properly, and [how to check a PDF redaction really removed the text](/guides/check-pdf-redaction) shows how to confirm it worked.',
+      },
+      { p: '**[Open Split PDF](/split-pdf)**' },
+    ],
+  },
 ];
 
 /** The guides about a tool, in one language (for the link on the tool's page). */
