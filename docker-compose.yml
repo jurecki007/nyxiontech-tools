@@ -1,0 +1,37 @@
+# Self-hosting: `docker compose up -d`, then open http://localhost:8080.
+#
+# The app is a static site with no backend, so there is one service and nothing to
+# keep: no database, no volumes, no secrets, no environment to fill in. Documents
+# are processed in the browser and never reach this container.
+#
+# Checked on every pull request by the compose job in .github/workflows/ci.yml,
+# which builds this file, waits for the health check and fetches a real page.
+services:
+  nyxiontech-pdf-tools:
+    build: .
+    image: nyxiontech-pdf-tools
+    container_name: nyxiontech-pdf-tools
+    # Publish somewhere else by changing the left-hand number: "3000:80".
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    # Nothing is written to disk, so the filesystem can stay read-only. nginx still
+    # needs its pid file and its proxy caches, and those go to memory instead.
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx
+      - /var/run
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      # /health is served by nginx itself (nginx/nginx.conf), so no extra tooling
+      # has to be installed in the image to run this.
+      #
+      # 127.0.0.1 and not localhost: nginx listens on 0.0.0.0:80 and nothing listens
+      # on IPv6, while localhost inside the container resolves to ::1 first, so the
+      # check would be refused and the container would sit there marked unhealthy.
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:80/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

@@ -37,6 +37,39 @@ jobs:
           path: playwright-report
           retention-days: 7
 
+  # Nothing but this job stops docker-compose.yml drifting away from the Dockerfile.
+  # A self-hosted copy that will not start, or that sits there marked unhealthy, is
+  # worse than shipping no compose file at all, and neither shows up in any other test.
+  compose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - run: docker compose up -d --build
+      - name: Wait for the container's own health check to pass
+        run: |
+          for i in $(seq 1 60); do
+            status=$(docker inspect --format '{{.State.Health.Status}}' nyxiontech-pdf-tools)
+            if [ "$status" = healthy ]; then echo "healthy after about $((i * 5))s"; exit 0; fi
+            if [ "$status" = unhealthy ]; then break; fi
+            sleep 5
+          done
+          echo "The container never became healthy."
+          docker inspect --format '{{json .State.Health}}' nyxiontech-pdf-tools
+          docker compose logs
+          exit 1
+      - name: Serve a page, a Polish page and a missing one
+        run: |
+          curl -fsS http://localhost:8080/health
+          curl -fsS http://localhost:8080/info
+          curl -fsS -o /dev/null http://localhost:8080/guides/split-pdf-without-uploading
+          curl -fsS -o /dev/null http://localhost:8080/pl/polacz-pdf
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8080/nope)" = 404
+      - if: always()
+        run: docker compose down
+
   # Builds the Windows app (without installers, so no signing key is needed) and
   # runs its smoke tests, so desktop problems show up in PRs and not only at release.
   desktop:
