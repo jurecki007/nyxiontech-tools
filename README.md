@@ -134,7 +134,13 @@ Not covered: the print dialog itself in "Word to PDF" (the tests check the docum
 
 ## Self-hosting
 
-The app is a static site, so any web server works. The included Docker image is nginx serving the build:
+The app is a static site, so any web server works. With Docker Compose:
+
+```bash
+docker compose up -d   # http://localhost:8080
+```
+
+`docker-compose.yml` builds the included image (nginx serving the build) and runs it with a read-only filesystem, no volumes, no environment and nothing to persist. There is no backend and no database to set up, because documents are processed in the browser and never reach the container. Publish a different port by editing the `ports` line. Without Compose:
 
 ```bash
 docker build -t nyxiontech-pdf-tools .
@@ -142,7 +148,7 @@ docker run --rm -p 8080:80 nyxiontech-pdf-tools   # http://localhost:8080
 ```
 
 - Every tool has its own page (`/merge-pdf`, `/pl/polacz-pdf`, ...), built as `merge-pdf.html`, `pl/polacz-pdf.html`. nginx serves `$uri`, then `$uri.html`, then `$uri/index.html`; a trailing slash on a page redirects to the address without it, and any other address gets `404.html` with a 404 status. Another web server needs the same rules (or at least a fallback to `index.html`, which opens the dashboard).
-- `/health` returns `{"status":"UP"}` for liveness and readiness probes.
+- `/health` returns `{"status":"UP"}` for liveness and readiness probes, and is what the Compose health check polls. It asks for `127.0.0.1` rather than `localhost`, because nginx listens on IPv4 only and `localhost` inside the container resolves to `::1` first.
 - `/info` returns the name, version and build time.
 - Hashed `/assets/*` are cached for a year, `/vendor/*` (OCR and ML files) for a week, and `index.html` is always revalidated.
 - A strict Content-Security-Policy allows only this origin, plus WebAssembly and blob workers (`nginx/security-headers.conf`).
