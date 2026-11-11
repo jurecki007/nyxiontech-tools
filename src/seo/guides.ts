@@ -5,6 +5,12 @@
 // has no hreflang links. Describe the tools exactly as the code behaves.
 //
 // Inline markup in text: `code`, **bold**, [label](href). Everything else is escaped.
+//
+// Every guide has to be linked from the text of at least one other guide, and every
+// site-relative link has to resolve to a real page. Both are checked by
+// tests/e2e/routing.spec.ts, so a new guide is not finished until something older points
+// at it: its own tool page and the sitemap are not enough to make it findable. Link in the
+// guide's own language unless you say in the sentence that the target is in another one.
 import type { Lang, ToolId } from '../utilities/routes.ts';
 
 export type Block = { h2: string } | { p: string } | { ul: string[] } | { ol: string[] } | { pre: string };
@@ -108,7 +114,7 @@ export const GUIDES: Guide[] = [
       { p: 'Sprawdzaj zawsze plik wynikowy, który wyślesz, a nie oryginał. Wystarczy kilka minut:' },
       {
         ol: [
-          '**Test kopiuj-wklej.** Otwórz plik, zaznacz całą stronę (Ctrl+A) i wklej do Notatnika. Zaznacz też myszką sam obszar pod zaczernieniem. Jeśli w schowku pojawią się ukryte dane, nie zostały usunięte.',
+          '**Test kopiuj-wklej.** Otwórz plik, zaznacz całą stronę (Ctrl+A) i wklej do Notatnika. Zaznacz też myszką sam obszar pod zaczernieniem. Jeśli w schowku pojawią się ukryte dane, nie zostały usunięte. Jeśli z pliku nie kopiuje się nic albo wkleja się bełkot, ten test niczego nie rozstrzyga: przyczyny opisuje poradnik o [kopiowaniu tekstu z PDF](/pl/poradnik/skopiuj-tekst-z-pdf).',
           '**Wyszukiwanie w pliku.** Naciśnij Ctrl+F i wpisz fragment usuniętego tekstu: nazwisko, kilka ostatnich cyfr PESEL-u, numer konta. Szukaj w wersji ze spacjami, z myślnikami i bez nich, bo numery bywają różnie zapisane.',
           '**pdftotext.** Program z pakietu Poppler (w Linuksie zwykle paczka `poppler-utils`, na Macu `poppler` z Homebrew) wyciąga cały tekst stron, także ten zakryty prostokątem. Brak wyniku polecenia poniżej to dobry znak.',
           '**Komentarze, formularze i metadane.** Otwórz panel komentarzy i przejrzyj pola formularza; ani test kopiowania, ani pdftotext ich nie pokazują. We właściwościach dokumentu albo poleceniem `pdfinfo` sprawdź autora i tytuł.',
@@ -231,7 +237,7 @@ export const GUIDES: Guide[] = [
       {
         ol: [
           '**Pracuj na kopii.** Oryginał z pełnymi danymi zostaje w dokumentacji szkoły. Sprawdzasz zawsze plik wynikowy, który trafi do BIP, a nie plik roboczy.',
-          '**Test kopiuj-wklej.** Otwórz plik, zaznacz całą stronę (Ctrl+A) i wklej do Notatnika. Potem zaznacz myszką sam obszar pod zaczernieniem. Jeśli w schowku pojawią się ukryte dane, nie zostały usunięte.',
+          '**Test kopiuj-wklej.** Otwórz plik, zaznacz całą stronę (Ctrl+A) i wklej do Notatnika. Potem zaznacz myszką sam obszar pod zaczernieniem. Jeśli w schowku pojawią się ukryte dane, nie zostały usunięte. Gdy z pliku nie kopiuje się nic albo wkleja się bełkot, ten test niczego nie rozstrzyga: przyczyny opisuje poradnik o [kopiowaniu tekstu z PDF](/pl/poradnik/skopiuj-tekst-z-pdf).',
           '**Wyszukiwanie.** Naciśnij Ctrl+F i wpisz fragment każdej usuniętej informacji: nazwisko, kilka cyfr PESEL-u, numer konta. Numery sprawdzaj ze spacjami, z myślnikami i bez nich.',
           '**Komentarze, pola, właściwości i nazwa pliku.** Przejrzyj panel komentarzy i pola formularza, sprawdź we właściwościach dokumentu autora i tytuł. Nazwa „petycja_Kowalska.pdf” zdradza więcej niż zaczerniona treść.',
           '**Druga osoba.** Ktoś, kto nie przygotowywał dokumentu, powtarza testy z punktów 2, 3 i 4 i przegląda każdą stronę, także podpisy, pieczątki i załączniki.',
@@ -328,7 +334,7 @@ export const GUIDES: Guide[] = [
 
       { h2: 'Krok 3: połącz dokumenty w jeden plik' },
       {
-        p: 'W narzędziu [Połącz PDF](/pl/polacz-pdf) dodajesz pliki i przeciągasz je w odpowiedniej kolejności. Strony są kopiowane bez zmian, więc warstwa tekstu z OCR zostaje. Pojedyncze strony przestawisz w narzędziu [Zmień kolejność stron](/pl/zmien-kolejnosc-stron-pdf), a zbyt duży plik rozdzielisz w narzędziu [Podziel PDF](/pl/podziel-pdf).',
+        p: 'W narzędziu [Połącz PDF](/pl/polacz-pdf) dodajesz pliki i przeciągasz je w odpowiedniej kolejności. Strony są kopiowane bez zmian, więc warstwa tekstu z OCR zostaje. Pojedyncze strony przestawisz w narzędziu [Zmień kolejność stron](/pl/zmien-kolejnosc-stron-pdf), a zbyt duży plik rozdzielisz w narzędziu [Podziel PDF](/pl/podziel-pdf). Co scalenie zabiera ze sobą, opisuje poradnik o [łączeniu PDF bez wysyłania](/pl/poradnik/polacz-pdf-bez-wysylania), a rozbicie zbiorczego skanu na osobne dokumenty ma własny poradnik: [jak podzielić skan na dokumenty](/pl/poradnik/podziel-skan-na-dokumenty).',
       },
 
       { h2: 'Krok 4: zmniejsz plik do wysłania e-mailem' },
@@ -381,7 +387,7 @@ export const GUIDES: Guide[] = [
       { p: 'Always test the file you are about to send, not the original. Do every check: each one catches something the others miss.' },
       {
         ol: [
-          '**Copy and paste.** Open the file, select everything on the page (Ctrl+A or Cmd+A) and paste it into a plain text editor. Then drag a selection over just the blacked-out area and paste again. If the hidden words appear, they were only covered.',
+          '**Copy and paste.** Open the file, select everything on the page (Ctrl+A or Cmd+A) and paste it into a plain text editor. Then drag a selection over just the blacked-out area and paste again. If the hidden words appear, they were only covered. If everything you paste comes out as nonsense rather than just the hidden part, this check cannot tell you anything until you deal with that: see [why PDF text pastes as gibberish](/guides/pdf-text-pastes-as-gibberish).',
           '**Search.** Press Ctrl+F (Cmd+F) and search for part of each thing you removed: a surname, the last digits of an account number, a street name. Numbers are written in many ways, so try them with spaces, with dashes and without.',
           '**Extract the text with pdftotext.** pdftotext, part of Poppler (`poppler-utils` on most Linux systems, `poppler` in Homebrew on a Mac), prints all the text on the pages, including text hidden under boxes or drawn in white. If the commands below find nothing, that part is clean.',
           '**Comments, form fields and properties.** Open the comments panel and look through any form fields: copy-paste and pdftotext do not show their contents. Check the document properties in your viewer, or run `pdfinfo`, for the author, title and subject.',
@@ -399,6 +405,9 @@ export const GUIDES: Guide[] = [
           'pdftotext output does not contain the removed items.',
           'No comment, form field or property still holds them, and the file name is neutral.',
         ],
+      },
+      {
+        p: 'To see the whole answer at once instead of checking one item at a time, [Compare PDFs](/compare-pdf) will diff the original against the redacted file and list every line of text that disappeared. A page that was redacted properly loses its entire text layer, because the page is re-rendered as an image, so a page that reports only a few removed lines is a page the redaction did not reach. [How to compare two PDFs](/guides/compare-two-pdfs) covers reading the result.',
       },
       {
         p: 'If any check fails, go back to the original, redact again with a tool that removes the content, and test the new file. Do not try to fix the leaking file by drawing more boxes on it.',
@@ -657,8 +666,8 @@ export const GUIDES: Guide[] = [
       { h2: 'When compression is the wrong tool' },
       {
         ul: [
-          '**Photos of paper documents.** Shrink and resize the photos first with [Compress & convert images](/image-converter), then put them into one file with [Images to PDF](/image-to-pdf). Images to PDF keeps the pixel size of each photo, so smaller photos give a smaller PDF.',
-          '**Only some pages matter.** Send just those: in [Split PDF](/split-pdf), choose **Extract pages** and list them.',
+          '**Photos of paper documents.** Shrink and resize the photos first with [Compress & convert images](/image-converter), then put them into one file with [Images to PDF](/image-to-pdf). Images to PDF keeps the pixel size of each photo, so smaller photos give a smaller PDF. If the pages come out rotated, [why phone photos come out sideways in a PDF](/guides/photos-sideways-in-pdf) explains what causes it.',
+          '**Only some pages matter.** Send just those: in [Split PDF](/split-pdf), choose **Extract pages** and list them. Picking **By ranges** instead gives you one file per range rather than one file in total, which [how to split a PDF](/guides/split-pdf-without-uploading) goes into.',
           '**It is still too big.** Split the document into parts and send several e-mails, or share it through a storage service you already use. Keep in mind that a shared link puts the file on that service.',
         ],
       },
@@ -749,12 +758,15 @@ export const GUIDES: Guide[] = [
           '**Skutki braku formy.** Według art. 73 § 1 czynność bez zastrzeżonej formy jest nieważna tylko wtedy, gdy ustawa przewiduje rygor nieważności. W innych przypadkach art. 74 § 1 ogranicza dowody w sporze, np. zeznania świadków.',
         ],
       },
+      {
+        p: 'Zanim podpiszesz wersję, która wróciła po poprawkach, sprawdź, co się w niej zmieniło. Poradnik o [porównywaniu dwóch wersji umowy](/pl/poradnik/porownaj-wersje-umowy-pdf) pokazuje, jak znaleźć każdą różnicę, nie wysyłając żadnej z wersji do cudzej usługi.',
+      },
 
       { h2: 'Ograniczenia' },
       {
         ul: [
           'Nie ma certyfikatu ani zabezpieczenia przed zmianą. Każdy, kto ma edytor PDF, może zmienić plik po podpisaniu albo skopiować z niego obraz podpisu.',
-          'Istniejącego tekstu w PDF nie da się przepisać. Puste miejsca wypełnij narzędziem **Tekst**, a pola interaktywne w narzędziu [Wypełnij formularz PDF](/pl/wypelnij-formularz-pdf).',
+          'Istniejącego tekstu w PDF nie da się przepisać. Puste miejsca wypełnij narzędziem **Tekst**, a pola interaktywne w narzędziu [Wypełnij formularz PDF](/pl/wypelnij-formularz-pdf). Jeśli po wpisaniu znikają polskie znaki, skąd to się bierze, tłumaczy poradnik o [wypełnianiu formularzy PDF](/pl/poradnik/wypelnij-formularz-pdf).',
           'Ostatni podpis zostaje w przeglądarce (przycisk **Użyj ostatniego**), a dokument w sekcji **Ostatnie dokumenty** na pulpicie. Na wspólnym komputerze usuń dokument przyciskiem **Usuń**, a podpis, czyszcząc dane witryny, albo pracuj w oknie prywatnym.',
         ],
       },
@@ -1213,7 +1225,7 @@ export const GUIDES: Guide[] = [
       { h2: 'Co zrobić, gdy plik nadal jest za duży' },
       {
         ul: [
-          '**Podziel dokument.** [Podziel PDF](/pl/podziel-pdf) rozbije go na części, które zmieszczą się w kilku wiadomościach.',
+          '**Podziel dokument.** [Podziel PDF](/pl/podziel-pdf) rozbije go na części, które zmieszczą się w kilku wiadomościach. Tryby dzielenia i składnię zakresów wyjaśnia poradnik o [dzieleniu skanu na osobne dokumenty](/pl/poradnik/podziel-skan-na-dokumenty).',
           '**Wyrzuć zbędne strony.** Puste strony i powtórzone załączniki potrafią zrobić różnicę; przejrzyj dokument w [Uporządkuj strony](/pl/zmien-kolejnosc-stron-pdf).',
           '**Wyślij link zamiast pliku.** Gmail robi to sam powyżej 25 MB, a Interia proponuje Galerie Pocztowe. Przy dokumentach z danymi osobowymi sprawdź najpierw, czy wolno Ci umieścić je w usłudze chmurowej, bo to już powierzenie przetwarzania innemu podmiotowi.',
           '**Skanuj oszczędniej.** Skan w 600 dpi w kolorze waży wielokrotnie więcej niż ten sam dokument w 300 dpi w skali szarości, a do odczytu i do OCR w zupełności wystarcza.',
@@ -1396,8 +1408,10 @@ export const GUIDES: Guide[] = [
         ul: [
           'Too large to e-mail? [Compress PDF](/compress-pdf) will shrink it, and the [guide to e-mail size limits](/guides/compress-pdf-for-email) explains which setting keeps your text selectable.',
           'Wrong order, or a page to remove? [Organize pages](/organize-pdf-pages) works visually on the merged file.',
+          'Need one part back out again? [Split PDF](/split-pdf) is the reverse operation, and [how to split a PDF](/guides/split-pdf-without-uploading) explains why **By ranges** and **Extract pages** hand you back different numbers of files.',
           'Want a title and author on the finished document? [Edit metadata](/edit-pdf-metadata) fills in the properties the merge left blank.',
           'Need page numbers running across the whole bundle? [Add page numbers](/add-page-numbers-to-pdf) does that after merging, which is the right order to do it in.',
+          'Still to be signed? Sign the merged file rather than the parts, because a signature applied before the merge does not survive it. [Sign PDF](/sign-pdf) does that in the browser, and [how to sign a PDF without uploading it](/guides/sign-pdf-without-uploading) sets out what such a signature is worth.',
         ],
       },
 
@@ -1621,6 +1635,7 @@ export const GUIDES: Guide[] = [
           'Wyczyść pozostałe pola w [Edytuj metadane](/pl/edytuj-metadane-pdf) i uzupełnij sensowny tytuł, bo tytuł jest wymagany, a puste pole też bywa problemem.',
           'Sprawdź nazwę pliku. `petycja_wersja_bez_anonimizacji.pdf` mówi wszystko, zanim ktokolwiek go otworzy.',
           'Jeśli dokument zawiera dane do zasłonięcia na samych stronach, użyj [Anonimizuj PDF](/pl/anonimizuj-pdf) i sprawdź wynik zgodnie z poradnikiem o [anonimizacji zgodnej z RODO](/pl/poradnik/anonimizacja-pdf-rodo).',
+          'Jeśli publikujesz w BIP szkoły, poradnik o [anonimizacji dokumentów w BIP szkoły](/pl/poradnik/anonimizacja-bip-szkola) przechodzi przez te same kroki na protokołach, uchwałach i umowach.',
           'Na koniec przeczytaj plik jeszcze raz obiema komendami. Sprawdza się wynik, nie intencję.',
         ],
       },
@@ -1862,6 +1877,7 @@ export const GUIDES: Guide[] = [
         ul: [
           'Żeby dokument dało się przeszukiwać, przepuść go przez [OCR PDF](/pl/ocr-pdf). Zdjęcie tekstu to dla komputera obrazek, dopóki ktoś nie rozpozna liter.',
           'Jeśli plik jest za duży na załącznik, zmniejsz go w [Kompresuj PDF](/pl/kompresuj-pdf); szczegóły opisuje poradnik o [kompresji PDF do maila](/pl/poradnik/kompresja-pdf-do-emaila).',
+          'Zdjęcia możesz też zmniejszyć, zanim trafią do PDF-a. Poradnik o [zmniejszaniu zdjęcia i usuwaniu z niego lokalizacji](/pl/poradnik/zmniejsz-zdjecie-i-usun-exif) opisuje, co przy okazji znika z pliku.',
           'Jeśli to zdjęcie dokumentu tożsamości, zanim je wyślesz, przeczytaj poradnik o [znaku wodnym na skanie dowodu](/pl/poradnik/znak-wodny-na-skanie-dowodu).',
           'Jeśli ktoś wymaga od ciebie plików JPG, a masz HEIC, zamienisz je w [HEIC do JPG](/pl/heic-do-jpg).',
         ],
@@ -2368,6 +2384,9 @@ export const GUIDES: Guide[] = [
       {
         p: 'There is a price. The pages become pictures, so the text is only ever as sharp as the rendering, and the file may come out larger or smaller depending on what was in it. For a document you only need to read from, copying the recognised text is simpler and gives up nothing.',
       },
+      {
+        p: 'If what you want is a document you can edit rather than one you can search, [PDF to Word](/pdf-to-word) builds a `.docx` instead, and [how to convert PDF to Word without uploading it](/guides/pdf-to-word-without-uploading) sets out what the conversion keeps and what it drops.',
+      },
 
       { h2: 'What recognition will not do' },
       {
@@ -2435,7 +2454,7 @@ export const GUIDES: Guide[] = [
       {
         ul: [
           'The photo is decoded with its orientation already applied, so the picture the tool is holding is the right way up before anything else happens.',
-          'It is then drawn into a fresh image and encoded again. PNG files stay PNG; everything else, iPhone HEIC included, becomes JPEG at 90% quality. There is no quality setting on this page.',
+          'It is then drawn into a fresh image and encoded again. PNG files stay PNG; everything else, iPhone HEIC included, becomes JPEG at 90% quality. There is no quality setting on this page. If you want the JPEGs themselves rather than a PDF, [how to convert HEIC to JPG without uploading](/guides/heic-to-jpg-without-uploading) covers that conversion on its own.',
           'Because the picture is written out fresh, the rotation now lives in the pixels themselves and there is no tag left for anything to ignore. The EXIF block does not survive the trip either, so the location, the camera model and the date the photo was taken do not travel into the PDF. Keep your originals if you need any of that.',
           'Sizes assume 96 pixels to the inch, so a photo 1920 pixels wide is 1440 points, about 508 millimetres, before it is scaled to fit the page you chose.',
         ],
