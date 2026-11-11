@@ -145,6 +145,26 @@ test.describe('static tool pages', () => {
     for (const g of GUIDES) expect(text, g.path).toContain(`(${SITE}${g.path})`);
   });
 
+  // Guides cross-link by hand inside their own text and nothing else checks those links. A
+  // mistyped path ships as a 404, and a new guide can go live reachable only from its own tool
+  // page and the sitemap, which is the weakest way for a reader or a crawler to find it. The
+  // second half of this test is what stops that: every guide has to be linked from another one.
+  // Language is deliberately not asserted. One Polish guide points at the English redaction
+  // guide on purpose, and says in the sentence that it is in English.
+  test('every link in a guide points at a real page, and no guide stands on its own', () => {
+    const pages = [...LANGS.map(homePath), ...TOOL_IDS.flatMap((id) => LANGS.map((l) => toolPath(id, l))), ...GUIDES.map((g) => g.path)];
+    const linkedFrom = new Map<string, string[]>();
+    for (const g of GUIDES) {
+      const text = g.blocks.flatMap((b) => ('p' in b ? [b.p] : 'ul' in b ? b.ul : 'ol' in b ? b.ol : [])).join(' ');
+      // Only site-relative links: an external URL is built by concatenation and never starts with "/".
+      for (const [, href] of text.matchAll(/\]\((\/[^)#]*)[^)]*\)/g)) {
+        expect(pages, `${g.path} links to ${href}, which is not a page`).toContain(href);
+        if (href !== g.path) linkedFrom.set(href, [...(linkedFrom.get(href) ?? []), g.path]);
+      }
+    }
+    for (const g of GUIDES) expect(linkedFrom.get(g.path) ?? [], `no other guide links to ${g.path}`).not.toHaveLength(0);
+  });
+
   // The cards in public/og/ are drawn by scripts/build-og-images.mjs and committed, so the
   // normal build never opens a browser. Nothing but this test stops a new page pointing at
   // a card nobody generated, or every page falling back to the one site-wide card.
