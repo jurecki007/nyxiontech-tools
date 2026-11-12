@@ -10,7 +10,7 @@ Edit, sign, merge, split, compress, OCR, redact and convert, without uploading a
 [![Made by Nyxiontech](https://img.shields.io/badge/made%20by-Nyxiontech-2643e8)](https://nyxiontech.com)
 [![NoLogin Verified](https://nologin.tools/badges/flat.svg)](https://nologin.tools/badge/tools-nyxiontech-com "Verified by NoLoginTools.org")
 
-[Website](https://nyxiontech.com) · [Report a bug](https://github.com/jurecki007/nyxiontech-tools/issues/new?template=bug_report.yml) · [Request a feature](https://github.com/jurecki007/nyxiontech-tools/issues/new?template=feature_request.yml)
+[Guides](https://tools.nyxiontech.com/guides) · [Report a bug](https://github.com/jurecki007/nyxiontech-tools/issues/new?template=bug_report.yml) · [Request a feature](https://github.com/jurecki007/nyxiontech-tools/issues/new?template=feature_request.yml)
 
 <a href="https://ko-fi.com/nyxiontech"><img alt="Support on Ko-fi" src="https://img.shields.io/badge/Support%20on-Ko--fi-ff5e5b?style=for-the-badge&logo=kofi&logoColor=white"></a>
 
@@ -19,6 +19,8 @@ Edit, sign, merge, split, compress, OCR, redact and convert, without uploading a
 <h3 align="center"><a href="https://tools.nyxiontech.com">Try it in your browser →</a> &nbsp;·&nbsp; <a href="https://github.com/jurecki007/nyxiontech-tools/releases/latest">Download for Windows</a></h3>
 
 ![Redacting a sample agreement: search for a name, add the e-mail, phone and bank account presets, then redact and download](docs/demo.gif)
+
+**If this saved you a trip to an upload site, a star helps the next person find it.** There is nothing to sign up for and nothing to buy.
 
 ## Why
 
@@ -29,6 +31,8 @@ Edit, sign, merge, split, compress, OCR, redact and convert, without uploading a
 - **Windows app** with per-user and MSI installers that updates itself.
 
 It covers the everyday jobs people otherwise use iLovePDF, Smallpdf and similar services for: [merge](https://tools.nyxiontech.com/merge-pdf), [compress](https://tools.nyxiontech.com/compress-pdf), [sign](https://tools.nyxiontech.com/sign-pdf), [redact](https://tools.nyxiontech.com/redact-pdf), [OCR](https://tools.nyxiontech.com/ocr-pdf), [password-protect](https://tools.nyxiontech.com/protect-pdf), [PDF to Word](https://tools.nyxiontech.com/pdf-to-word), [HEIC to JPG](https://tools.nyxiontech.com/heic-to-jpg) and [more](#dashboard-tools). Projects are autosaved in the browser's IndexedDB.
+
+There are 32 how-to guides as well, [in English](https://tools.nyxiontech.com/guides) and [in Polish](https://tools.nyxiontech.com/pl/poradniki): what actually happens inside the file, where the usual advice goes wrong, and which tool finishes the job. The Polish set is written for Polish rules rather than translated.
 
 ### How it compares
 
@@ -361,6 +365,21 @@ npm run build && npm run og:build   # after changing a title, a description or a
 ```
 
 The results are committed, so the normal build only copies them and needs neither Playwright nor a browser. `tests/e2e/routing.spec.ts` fails if a page points at a card that is not there, if two pages share one, or if a card is not a 1200x630 PNG.
+
+### Links in the documentation
+
+A link in the README that points at a renamed file or a heading that no longer exists stays broken
+until somebody clicks it, and the README is the page most visitors read before deciding anything.
+`scripts/check-doc-links.mjs` resolves every repository-relative link and every `#heading` in the
+project's Markdown, reproducing GitHub's own anchor rules, and names the ones that lead nowhere.
+
+```bash
+npm run docs:check
+```
+
+It runs in `prebuild`, so a broken link fails the build. Everything is resolved on disk and nothing
+is fetched, so it needs no network and can never fail because somebody else's site was down.
+External links are left to a human.
 
 ### Telling search engines about a new page
 

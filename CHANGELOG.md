@@ -6,6 +6,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 ## [Unreleased]
 
 ### Added
+- The README links the guides and asks for a star: nothing on it asked for anything before, and its first link sent a visitor to the company site rather than to the tools. A star helps other people find the project, which is the only thing this repository wants from a reader.
+- `npm run docs:check` resolves every repository-relative link and every heading reference in the project's Markdown, and the build fails on one that leads nowhere.
 - A page that lists the guides: /guides in English, /pl/poradniki in Polish, grouped by the tool each one is about, with a line under every link saying what it covers. The sidebar links to it, as does every tool page and every guide. Until now a guide could only be found from its own tool page or the sitemap.
 - Two English guides: comparing two PDFs (how the text diff and the pixel diff differ, what the red and green mean, and the page shift that makes every page look rewritten) and splitting a PDF (ranges against extract, the open-ended `7-` range, and what a split drops).
 - Every tool has its own address, such as tools.nyxiontech.com/merge-pdf or /compress-pdf, that can be bookmarked and shared, and a page search engines can find (title, description, how-to and questions for that tool). Old `#/tool/…` links still work and switch to the new address. The desktop app is unchanged.
