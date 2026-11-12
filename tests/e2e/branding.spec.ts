@@ -1,4 +1,6 @@
 import { expect, test } from '@playwright/test';
+import { en } from '../../src/i18n/en';
+import { pl } from '../../src/i18n/pl';
 
 test.describe('branding, about and updates', () => {
   test('shows the Nyxiontech name, version and links', async ({ page }) => {
@@ -9,6 +11,18 @@ test.describe('branding, about and updates', () => {
     await expect(page.locator('.nav-links a', { hasText: 'nyxiontech.com' })).toHaveAttribute('href', 'https://nyxiontech.com');
     await expect(page.locator('.nav-links a', { hasText: 'GitHub' })).toHaveAttribute('href', /github\.com/);
     await expect(page.locator('.nav-links a', { hasText: 'Support' })).toHaveAttribute('href', 'https://ko-fi.com/nyxiontech');
+  });
+
+  // The prerendered pages state the country of origin for crawlers, but the app replaces
+  // that body as soon as it starts: a person opening the site sees this footer instead.
+  // A directory reviewer is a person, so the fact has to survive the handover.
+  test('the sidebar states the country of origin, in each interface language', async ({ page }) => {
+    await page.goto('/#/');
+    await expect(page.locator('.nav-origin')).toHaveText(en.shell.madeIn);
+    await expect(page.locator('.nav-origin')).toContainText('Poland');
+    await page.goto('/pl/');
+    await expect(page.locator('.nav-origin')).toHaveText(pl.shell.madeIn);
+    await expect(page.locator('.nav-origin')).toContainText('Polsce');
   });
 
   test("What's new lists the running version from the changelog", async ({ page }) => {

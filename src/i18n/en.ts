@@ -65,6 +65,7 @@ export const en = {
     openedFileError: 'Could not read the opened file.',
     sharedFilesGone: 'The shared files are no longer available. Please share them again.',
     madeBy: 'Made by Nyxiontech',
+    madeIn: 'Made in Poland, in the EU',
     support: 'Support',
     supportTitle: 'Support the project',
   },

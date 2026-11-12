@@ -102,6 +102,10 @@ export function Shell({ ctx, onOpenProject, error, onDismissError }: { ctx: Util
             <div className="nav-version">v{APP_VERSION} · AGPL-3.0</div>
             <LanguageSwitch />
           </div>
+          {/* Directories of European software will not list a product whose country of origin
+              they cannot establish from a public source. The prerendered pages carry it for
+              crawlers; this is the same fact where a person reading the page can see it. */}
+          <div className="nav-origin">{t.shell.madeIn}</div>
         </div>
       </aside>
 

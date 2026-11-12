@@ -61,6 +61,7 @@ export const fr: Messages = {
     openedFileError: 'Le fichier ouvert n’a pas pu être lu.',
     sharedFilesGone: 'Les fichiers partagés ne sont plus disponibles. Partagez-les de nouveau.',
     madeBy: 'Réalisé par Nyxiontech',
+    madeIn: 'Conçu en Pologne, dans l’UE',
     support: 'Soutenir',
     supportTitle: 'Soutenir le projet',
   },

@@ -19,6 +19,17 @@ function strings(value: unknown): string[] {
   return [];
 }
 
+test.describe('country of origin', () => {
+  // Stated in every language the desktop app offers, not only the two the website has.
+  // Each spelling of Poland starts with "Pol" in the Latin alphabet and with the Cyrillic
+  // equivalent in Ukrainian.
+  test('every dictionary says where the product is made', () => {
+    for (const [lang, messages] of Object.entries(MESSAGES)) {
+      expect(messages.shell.madeIn, lang).toMatch(/Pol|\u041f\u043e\u043b/);
+    }
+  });
+});
+
 test.describe('Polish interface', () => {
   test('/pl/polacz-pdf shows Polish labels and merges in Polish', async ({ page }) => {
     const csp = cspViolations(page);
