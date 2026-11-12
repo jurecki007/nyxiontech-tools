@@ -52,6 +52,8 @@ export const de: Messages = {
     whatsNewTitle: 'Neuerungen in dieser Version',
     about: 'Über die App',
     aboutTitle: (app) => `Über ${app}`,
+    guides: 'Anleitungen',
+    guidesTitle: 'Schritt-für-Schritt-Anleitungen zu diesen Werkzeugen',
     star: 'Stern auf GitHub',
     starTitle: 'Quellcode auf GitHub. Ein Stern hilft anderen, das Projekt zu finden.',
     install: 'App installieren',

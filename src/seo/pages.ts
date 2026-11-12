@@ -1,12 +1,13 @@
 // Builds the static pages search engines index: one per tool and language
 // (/merge-pdf, /pl/polacz-pdf), the Polish home (/pl/), the guides
-// (/guides/check-pdf-redaction; see guides.ts), the 404 page and the sitemap. Each page is the built index.html with its own title, description,
+// (/guides/check-pdf-redaction; see guides.ts), the guides index (/guides, /pl/poradniki),
+// the 404 page and the sitemap. Each page is the built index.html with its own title, description,
 // canonical URL, hreflang links, structured data and crawlable fallback content;
 // the app loads on top and opens the tool. Run at build time by vite.config.ts;
 // pure string functions, no Node or browser APIs.
-import { COMMON, HOME_PL, TOOL_PAGES, type PageCopy } from './content.ts';
+import { COMMON, GUIDES_INDEX, HOME_PL, TOOL_PAGES, type PageCopy } from './content.ts';
 import { GUIDES, guidesFor, type Block, type Guide } from './guides.ts';
-import { homePath, TOOL_IDS, toolPath, type Lang, type ToolId } from '../utilities/routes.ts';
+import { guidesPath, homePath, TOOL_IDS, toolPath, type Lang, type ToolId } from '../utilities/routes.ts';
 
 export const SITE = 'https://tools.nyxiontech.com';
 const ORG_ID = 'https://nyxiontech.com/#organization';
@@ -188,7 +189,7 @@ function toolBody(id: ToolId, lang: Lang, copy: PageCopy, faq: [string, string][
     ...guidesFor(id, lang).map((g) => `${IND}<p><a href="${g.path}">${esc(g.name)}</a></p>`),
     `${IND}<h2>${esc(c.related)}</h2>`,
     list('ul', related),
-    `${IND}<p><a href="${homePath(lang)}">${esc(c.allTools)}</a> · <a href="${toolPath(id, other)}" hreflang="${other}" lang="${other}">${esc(c.otherLanguage)}</a> · <a href="${REPO}">${esc(c.source)}</a></p>`,
+    `${IND}<p><a href="${homePath(lang)}">${esc(c.allTools)}</a> · <a href="${guidesPath(lang)}">${esc(c.guides)}</a> · <a href="${toolPath(id, other)}" hreflang="${other}" lang="${other}">${esc(c.otherLanguage)}</a> · <a href="${REPO}">${esc(c.source)}</a></p>`,
     `${IND}<p>${esc(c.footer)}</p>`,
   ].join('\n');
 }
@@ -231,6 +232,9 @@ const GUIDE_STYLE = `<style>
       .guide { max-width: 46rem; margin: 0 auto; padding: 2rem 1rem 3rem; }
       .guide a { color: var(--link); }
       .guide .crumbs, .guide footer { color: var(--muted); font-size: 0.9rem; }
+      /* The guides index: a line of description under each link. */
+      .guide .note { color: var(--muted); font-size: 0.95rem; }
+      .guide li:has(.note) { margin: 0.8rem 0; }
       .guide h1 { font-size: 1.9rem; line-height: 1.25; margin: 0.5rem 0 1rem; }
       .guide h2 { font-size: 1.3rem; margin: 2.2rem 0 0.6rem; }
       .guide li { margin: 0.35rem 0; }
@@ -249,7 +253,7 @@ function guidePage(template: string, g: Guide): string {
     `${IND}<p class="crumbs"><a href="${homePath(g.lang)}">${esc(c.home)}</a> › <a href="${toolUrl}">${esc(tool.name)}</a></p>`,
     `${IND}<h1>${esc(g.h1)}</h1>`,
     ...g.blocks.map(blockHtml),
-    `${IND}<footer><p><a href="${homePath(g.lang)}">${esc(c.allTools)}</a> · <a href="${REPO}">${esc(c.source)}</a> · ${esc(c.footer)}</p></footer>`,
+    `${IND}<footer><p><a href="${homePath(g.lang)}">${esc(c.allTools)}</a> · <a href="${guidesPath(g.lang)}">${esc(c.guides)}</a> · <a href="${REPO}">${esc(c.source)}</a> · ${esc(c.footer)}</p></footer>`,
   ].join('\n');
   let html = render(template, {
     lang: g.lang,
@@ -296,6 +300,14 @@ function guidePage(template: string, g: Guide): string {
   html = swap(html, /<meta property="og:type" content="[^"]*" \/>/, '<meta property="og:type" content="article" />', 'og:type');
   // One language only: no alternate locale either.
   html = swap(html, /\s*<meta property="og:locale:alternate" content="[^"]*" \/>/, '', 'og:locale:alternate');
+  return asArticle(html);
+}
+
+/**
+ * Turns a rendered page into a standalone article: the text is the page and the app is
+ * never loaded on top of it. Used by the guides and by the page that lists them.
+ */
+function asArticle(html: string): string {
   html = swap(html, /\s*<script type="module"[^>]*><\/script>/, '', 'app script');
   html = html.replace(/\s*<link rel="modulepreload"[^>]*>/g, '');
   html = swap(html, /\s*<link rel="stylesheet"[^>]*href="\/assets\/[^"]*"[^>]*>/, '', 'app stylesheet');
@@ -304,6 +316,77 @@ function guidePage(template: string, g: Guide): string {
   html = swap(html, /<style>[^<]*boot-fallback[^<]*<\/style>/, GUIDE_STYLE, 'boot-fallback style');
   html = swap(html, /<main class="boot-fallback"[^>]*>/, '<main class="guide">', 'fallback <main>');
   return html;
+}
+
+/**
+ * The page that lists the guides, one per language (/guides, /pl/poradniki). An article
+ * like the guides, so the app is not loaded over it, but unlike a guide it exists in both
+ * languages and keeps its hreflang links. Entries are grouped by the tool each guide is
+ * about, in the order of the app's sidebar, so the page reads as a map of the site.
+ */
+function guidesIndexPage(template: string, lang: Lang): string {
+  const c = COMMON[lang];
+  const copy = GUIDES_INDEX[lang];
+  const other: Lang = lang === 'en' ? 'pl' : 'en';
+  const path = guidesPath(lang);
+  const pageUrl = url(path);
+  const groups = TOOL_IDS.map((id) => ({ id, guides: GUIDES.filter((g) => g.lang === lang && g.tool === id) })).filter((g) => g.guides.length > 0);
+  const listed = groups.flatMap((g) => g.guides);
+  const body = [
+    `${IND}<p class="crumbs"><a href="${homePath(lang)}">${esc(c.home)}</a> › ${esc(c.guides)}</p>`,
+    `${IND}<h1>${esc(copy.h1)}</h1>`,
+    ...copy.intro.map((p) => `${IND}<p>${esc(p)}</p>`),
+    ...groups.flatMap(({ id, guides }) => [
+      `${IND}<h2><a href="${toolPath(id, lang)}">${esc(TOOL_PAGES[id][lang].name)}</a></h2>`,
+      list(
+        'ul',
+        guides.map((g) => `<a href="${g.path}">${esc(g.h1)}</a><br /><span class="note">${esc(g.description)}</span>`),
+      ),
+    ]),
+    `${IND}<footer><p><a href="${homePath(lang)}">${esc(c.allTools)}</a> · <a href="${guidesPath(other)}" hreflang="${other}" lang="${other}">${esc(COMMON[other].guides)}</a> · <a href="${REPO}">${esc(c.source)}</a> · ${esc(c.footer)}</p></footer>`,
+  ].join('\n');
+  return asArticle(
+    render(template, {
+      lang,
+      title: copy.title,
+      description: copy.description,
+      path,
+      alternates: alternates(guidesPath('en'), guidesPath('pl')),
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@graph': [
+          organization,
+          website,
+          {
+            '@type': 'CollectionPage',
+            '@id': `${pageUrl}#webpage`,
+            url: pageUrl,
+            name: copy.title,
+            description: copy.description,
+            inLanguage: lang,
+            isPartOf: { '@id': WEBSITE_ID },
+            breadcrumb: { '@id': `${pageUrl}#breadcrumb` },
+            mainEntity: { '@id': `${pageUrl}#list` },
+          },
+          {
+            '@type': 'ItemList',
+            '@id': `${pageUrl}#list`,
+            numberOfItems: listed.length,
+            itemListElement: listed.map((g, i) => ({ '@type': 'ListItem', position: i + 1, url: url(g.path), name: g.h1 })),
+          },
+          {
+            '@type': 'BreadcrumbList',
+            '@id': `${pageUrl}#breadcrumb`,
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: c.home, item: url(homePath(lang)) },
+              { '@type': 'ListItem', position: 2, name: c.guides, item: pageUrl },
+            ],
+          },
+        ],
+      },
+      body,
+    }),
+  );
 }
 
 export interface StaticPage {
@@ -390,11 +473,18 @@ export function buildPages(template: string): StaticPage[] {
         `${IND}${toolLinks('pl')}`,
         `${IND}<h2>${esc(COMMON.pl.faq)}</h2>`,
         faqHtml(HOME_PL.faq),
-        `${IND}<p><a href="/" hreflang="en" lang="en">English</a> · <a href="${REPO}">${esc(COMMON.pl.source)}</a> · <a href="${REPO}/releases/latest">Aplikacja na Windows</a> · <a href="https://nyxiontech.com">Nyxiontech</a></p>`,
+        `${IND}<p><a href="${guidesPath('pl')}">${esc(COMMON.pl.guides)}</a> · <a href="/" hreflang="en" lang="en">English</a> · <a href="${REPO}">${esc(COMMON.pl.source)}</a> · <a href="${REPO}/releases/latest">Aplikacja na Windows</a> · <a href="https://nyxiontech.com">Nyxiontech</a></p>`,
         `${IND}<p>${esc(COMMON.pl.footer)}</p>`,
       ].join('\n'),
     }),
   });
+
+  for (const lang of ['en', 'pl'] as const) {
+    const copy = GUIDES_INDEX[lang];
+    checkCopy(`guides index (${lang})`, copy.title, copy.description);
+    const path = guidesPath(lang);
+    pages.push({ file: `${path.slice(1)}.html`, path, lang, title: copy.title, html: guidesIndexPage(template, lang) });
+  }
 
   for (const g of GUIDES) {
     checkCopy(`guide ${g.path}`, g.title, g.description);
@@ -436,7 +526,7 @@ export function sitemap(): string {
       `    <xhtml:link rel="alternate" hreflang="x-default" href="${url(en)}" />`,
       '  </url>',
     ].join('\n');
-  const pairs: [string, string][] = [[homePath('en'), homePath('pl')], ...TOOL_IDS.map((id): [string, string] => [toolPath(id, 'en'), toolPath(id, 'pl')])];
+  const pairs: [string, string][] = [[homePath('en'), homePath('pl')], [guidesPath('en'), guidesPath('pl')], ...TOOL_IDS.map((id): [string, string] => [toolPath(id, 'en'), toolPath(id, 'pl')])];
   const urls = pairs.flatMap(([en, pl]) => [entry(en, en, pl), entry(pl, en, pl)]);
   for (const g of GUIDES) urls.push(['  <url>', `    <loc>${url(g.path)}</loc>`, '  </url>'].join('\n'));
   return `<?xml version="1.0" encoding="UTF-8"?>

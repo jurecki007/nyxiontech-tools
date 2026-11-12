@@ -51,6 +51,8 @@ export const pl: Messages = {
     whatsNewTitle: 'Co nowego w tej wersji',
     about: 'O aplikacji',
     aboutTitle: (app) => `O aplikacji ${app}`,
+    guides: 'Poradniki',
+    guidesTitle: 'Poradniki krok po kroku do tych narzędzi',
     star: 'Gwiazdka na GitHubie',
     starTitle: 'Kod źródłowy na GitHubie. Gwiazdka pomaga innym go znaleźć.',
     install: 'Zainstaluj aplikację',

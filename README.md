@@ -344,6 +344,8 @@ Search engines ignore everything after `#`, so each tool has a real page. After 
 
 Guides (`src/seo/guides.ts`, e.g. `/guides/check-pdf-redaction`) are articles about a task, each in one language, so they have no hreflang links. They are built from the same `index.html` but without the app's script and stylesheet, are listed in the sitemap, and the matching tool page links to them. Describe the tool only as the code behaves.
 
+The page that lists them is built the same way: `/guides` and `/pl/poradniki` (`guidesPath` in `src/utilities/routes.ts`, copy in `GUIDES_INDEX`), grouped by tool, one language per page but with hreflang links between the two, because unlike a guide the index exists in both. A new guide appears on it automatically; `tests/e2e/routing.spec.ts` fails if it does not. It is also the address to give a directory that asks where the documentation is.
+
 In the browser, `src/lib/route.ts` reads the tool from the address, and in-app links switch tools with `history.pushState`, so the address bar always shows a shareable link. Pages under `/pl/` keep Polish addresses and show the Polish interface (`src/i18n`). The desktop app keeps `#/tool/<id>` routes, because its window always loads the bundled `index.html`; it follows the system language, and the switch in the sidebar overrides it.
 
 The Polish steps in `TOOL_PAGES` quote button labels (e.g. „Anonimizuj i zapisz”). When you rename a label in `src/i18n/pl.ts`, change the quote there too.

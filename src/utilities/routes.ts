@@ -44,6 +44,13 @@ export const homePath = (lang: Lang) => (lang === 'pl' ? '/pl/' : '/');
 /** Path of a tool's page: "/merge-pdf" or "/pl/polacz-pdf". */
 export const toolPath = (id: ToolId, lang: Lang) => (lang === 'pl' ? `/pl/${TOOL_SLUGS[id].pl}` : `/${TOOL_SLUGS[id].en}`);
 
+/**
+ * Path of the page that lists the guides: "/guides" or "/pl/poradniki". The guides
+ * themselves live under "/guides/" and "/pl/poradnik/" (src/seo/guides.ts); this is the
+ * one page that gathers them, so a reader or a crawler can reach any guide from any page.
+ */
+export const guidesPath = (lang: Lang) => (lang === 'pl' ? '/pl/poradniki' : '/guides');
+
 /** The page a path names, or null if it isn't one. Accepts a trailing slash and any letter case. */
 export function parsePath(pathname: string): { tool: ToolId | null; lang: Lang } | null {
   let p = pathname.toLowerCase().replace(/\/index\.html$/, '/');

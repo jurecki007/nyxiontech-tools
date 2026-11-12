@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Download, Globe, Heart, Info, LayoutDashboard, RefreshCw, Search, Sparkles } from 'lucide-react';
+import { BookOpen, Download, Globe, Heart, Info, LayoutDashboard, RefreshCw, Search, Sparkles } from 'lucide-react';
 import { AboutDialog, type AboutTab } from './AboutDialog';
 import { GithubIcon } from './GithubIcon';
 import { LanguageSwitch } from './LanguageSwitch';
@@ -7,13 +7,14 @@ import { Home } from './Home';
 import { PrivacyIndicator } from './Privacy';
 import { SupportNote } from './SupportNote';
 import { APP_NAME, APP_SHORT_NAME, APP_VERSION, COMPANY_URL, DONATE_URL, REPO_URL } from '../config';
-import { externalLink } from '../lib/desktop';
+import { externalLink, isDesktop } from '../lib/desktop';
 import { en } from '../i18n/en';
 import { fold, storedIn, useT } from '../i18n';
 import { useInstallPrompt } from '../lib/pwa';
 import { linkTo, useRoute } from '../lib/route';
 import { useUpdates, type AvailableUpdate, type InstallState } from '../lib/updates';
 import { getUtility, UTILITIES, UTILITY_GROUPS, type ToolId, type UtilityContext } from '../utilities';
+import { guidesPath } from '../utilities/routes';
 import type { Project } from '../types';
 
 /** Dashboard layout: tool navigation on the left, the dashboard or a tool page on the right. */
@@ -81,6 +82,14 @@ export function Shell({ ctx, onOpenProject, error, onDismissError }: { ctx: Util
             <button onClick={() => setAbout('about')} title={t.shell.aboutTitle(APP_NAME)}>
               <Info size={13} /> {t.shell.about}
             </button>
+            {/* The guides are web pages, so the desktop app, which works offline, has none.
+                The prerendered fallback carries this link for crawlers; this is the same link
+                where a person using the app can see it. */}
+            {!isDesktop && (
+              <a href={guidesPath(route.lang)} title={t.shell.guidesTitle}>
+                <BookOpen size={13} /> {t.shell.guides}
+              </a>
+            )}
             {install && (
               <button className="install" onClick={install} title={t.shell.installTitle}>
                 <Download size={13} /> {t.shell.install}

@@ -1,8 +1,8 @@
 import { expect, test, type APIRequestContext } from '@playwright/test';
-import { HOME_PL, TOOL_PAGES } from '../../src/seo/content';
+import { GUIDES_INDEX, HOME_PL, TOOL_PAGES } from '../../src/seo/content';
 import { GUIDES } from '../../src/seo/guides';
 import { ogImage } from '../../src/seo/pages';
-import { homePath, TOOL_IDS, toolPath, type Lang } from '../../src/utilities/routes';
+import { guidesPath, homePath, TOOL_IDS, toolPath, type Lang } from '../../src/utilities/routes';
 import { cspViolations } from './helpers';
 
 // Clean tool addresses (/merge-pdf, /pl/polacz-pdf): the static pages search engines
@@ -13,6 +13,7 @@ const SITE = 'https://tools.nyxiontech.com';
 const LANGS: Lang[] = ['en', 'pl'];
 const unescape = (s: string) => s.replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
 const first = (html: string, re: RegExp) => unescape(re.exec(html)?.[1] ?? '');
+const escHtml = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 /** The raw HTML of a page, as a crawler without JavaScript gets it (no redirects followed). */
 async function raw(request: APIRequestContext, path: string) {
@@ -55,7 +56,7 @@ test.describe('static tool pages', () => {
   // they cannot establish from a public source, so it is stated in the two places they
   // read: the structured data and the page a person opens. Country only, never an address.
   test('every static page states the country of origin, in its data and on the page', async ({ request }) => {
-    const paths = ['/', '/pl/', toolPath(TOOL_IDS[0], 'en'), toolPath(TOOL_IDS[0], 'pl'), GUIDES[0].path];
+    const paths = ['/', '/pl/', toolPath(TOOL_IDS[0], 'en'), toolPath(TOOL_IDS[0], 'pl'), guidesPath('en'), GUIDES[0].path];
     for (const path of paths) {
       const html = await raw(request, path);
       const blocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
@@ -85,9 +86,13 @@ test.describe('static tool pages', () => {
     expect(res.status()).toBe(200);
     const xml = await res.text();
     const locs = [...xml.matchAll(/<loc>([^<]*)<\/loc>/g)].map((m) => m[1]);
-    const expected = [homePath('en'), homePath('pl'), ...TOOL_IDS.flatMap((id) => LANGS.map((l) => toolPath(id, l))), ...GUIDES.map((g) => g.path)].map((p) => SITE + p);
+    const expected = [homePath('en'), homePath('pl'), ...LANGS.map(guidesPath), ...TOOL_IDS.flatMap((id) => LANGS.map((l) => toolPath(id, l))), ...GUIDES.map((g) => g.path)].map(
+      (p) => SITE + p,
+    );
     expect(locs.sort()).toEqual(expected.sort());
     for (const id of TOOL_IDS) expect(xml).toContain(`<xhtml:link rel="alternate" hreflang="pl" href="${SITE}${toolPath(id, 'pl')}" />`);
+    // The index exists in both languages, so it is listed twice with alternates, like a tool.
+    expect(xml).toContain(`<xhtml:link rel="alternate" hreflang="pl" href="${SITE}${guidesPath('pl')}" />`);
     expect(GUIDES.map((g) => g.path).sort()).toEqual([
       '/guides/check-pdf-redaction',
       '/guides/compare-two-pdfs',
@@ -144,6 +149,61 @@ test.describe('static tool pages', () => {
     }
   });
 
+  // Until this page existed the 32 guides were reachable only from their own tool page and
+  // the sitemap, which is the weakest way for a reader to find them, and every directory
+  // that asks for a documentation address got a blank. This test is what keeps it complete:
+  // a guide added to guides.ts and left off the index fails here.
+  test('the guides index lists every guide in its language and is linked from everywhere', async ({ request }) => {
+    for (const lang of LANGS) {
+      const path = guidesPath(lang);
+      const copy = GUIDES_INDEX[lang];
+      const html = await raw(request, path);
+      expect(first(html, /<html lang="([^"]+)">/), path).toBe(lang);
+      expect(first(html, /<title>([^<]*)<\/title>/), path).toBe(copy.title);
+      expect(first(html, /<meta name="description" content="([^"]*)"/), path).toBe(copy.description);
+      expect(first(html, /<link rel="canonical" href="([^"]*)"/), path).toBe(SITE + path);
+      expect(first(html, /<h1>([^<]*)<\/h1>/), path).toBe(copy.h1);
+      // Unlike a guide, the index exists in both languages, so it keeps its hreflang links.
+      expect(first(html, /hreflang="en" href="([^"]*)"/), path).toBe(SITE + guidesPath('en'));
+      expect(first(html, /hreflang="pl" href="([^"]*)"/), path).toBe(SITE + guidesPath('pl'));
+      // The list is the page: the app isn't loaded on top of it.
+      expect(html, path).not.toContain('<script type="module"');
+
+      const mine = GUIDES.filter((g) => g.lang === lang);
+      for (const g of mine) {
+        expect(html, `${path} does not link ${g.path}`).toContain(`href="${g.path}"`);
+        // The link reads as the guide's own headline, not a bare address.
+        expect(html, `${path} does not name ${g.path}`).toContain(`>${escHtml(g.h1)}</a>`);
+      }
+      // The two languages are separate sets, so each index lists only its own.
+      for (const g of GUIDES.filter((x) => x.lang !== lang)) expect(html, path).not.toContain(`href="${g.path}"`);
+      // Grouped under the tool each guide is about, and that tool's page is a click away.
+      for (const id of new Set(mine.map((g) => g.tool))) expect(html, path).toContain(`href="${toolPath(id, lang)}"`);
+
+      const graph = JSON.parse(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/.exec(html)![1])['@graph'] as { '@type': string; numberOfItems?: number }[];
+      expect(graph.map((n) => n['@type']), path).toEqual(expect.arrayContaining(['CollectionPage', 'ItemList', 'BreadcrumbList']));
+      expect(graph.find((n) => n['@type'] === 'ItemList')?.numberOfItems, path).toBe(mine.length);
+    }
+
+    // Every page a reader or a crawler can land on first leads to the index.
+    for (const lang of LANGS) {
+      const link = `href="${guidesPath(lang)}"`;
+      expect(await raw(request, homePath(lang)), `home (${lang})`).toContain(link);
+      for (const id of TOOL_IDS) expect(await raw(request, toolPath(id, lang)), toolPath(id, lang)).toContain(link);
+    }
+    for (const g of GUIDES) expect(await raw(request, g.path), g.path).toContain(`href="${guidesPath(g.lang)}"`);
+  });
+
+  test('the guides index shows its list in the browser without errors', async ({ page }) => {
+    const csp = cspViolations(page);
+    for (const lang of LANGS) {
+      await page.goto(guidesPath(lang));
+      await expect(page.getByRole('heading', { name: GUIDES_INDEX[lang].h1, level: 1 })).toBeVisible();
+      for (const g of GUIDES.filter((x) => x.lang === lang)) await expect(page.locator(`main a[href="${g.path}"]`)).toBeVisible();
+    }
+    expect(csp).toEqual([]);
+  });
+
   test('a guide shows its text in the browser without errors', async ({ page }) => {
     const csp = cspViolations(page);
     for (const g of GUIDES) {
@@ -159,6 +219,7 @@ test.describe('static tool pages', () => {
     const text = await (await request.get('/llms.txt')).text();
     for (const id of TOOL_IDS) for (const lang of LANGS) expect(text).toContain(`(${SITE}${toolPath(id, lang)})`);
     for (const g of GUIDES) expect(text, g.path).toContain(`(${SITE}${g.path})`);
+    for (const lang of LANGS) expect(text, guidesPath(lang)).toContain(`(${SITE}${guidesPath(lang)})`);
   });
 
   // Guides cross-link by hand inside their own text and nothing else checks those links. A
@@ -168,7 +229,7 @@ test.describe('static tool pages', () => {
   // Language is deliberately not asserted. One Polish guide points at the English redaction
   // guide on purpose, and says in the sentence that it is in English.
   test('every link in a guide points at a real page, and no guide stands on its own', () => {
-    const pages = [...LANGS.map(homePath), ...TOOL_IDS.flatMap((id) => LANGS.map((l) => toolPath(id, l))), ...GUIDES.map((g) => g.path)];
+    const pages = [...LANGS.map(homePath), ...LANGS.map(guidesPath), ...TOOL_IDS.flatMap((id) => LANGS.map((l) => toolPath(id, l))), ...GUIDES.map((g) => g.path)];
     const linkedFrom = new Map<string, string[]>();
     for (const g of GUIDES) {
       const text = g.blocks.flatMap((b) => ('p' in b ? [b.p] : 'ul' in b ? b.ul : 'ol' in b ? b.ol : [])).join(' ');
@@ -185,7 +246,7 @@ test.describe('static tool pages', () => {
   // normal build never opens a browser. Nothing but this test stops a new page pointing at
   // a card nobody generated, or every page falling back to the one site-wide card.
   test('every page has its own social card and the file is really there', async ({ request }) => {
-    const paths = [homePath('en'), homePath('pl'), ...TOOL_IDS.flatMap((id) => LANGS.map((l) => toolPath(id, l))), ...GUIDES.map((g) => g.path)];
+    const paths = [homePath('en'), homePath('pl'), ...LANGS.map(guidesPath), ...TOOL_IDS.flatMap((id) => LANGS.map((l) => toolPath(id, l))), ...GUIDES.map((g) => g.path)];
     const cards = new Set<string>();
     for (const path of paths) {
       const html = await raw(request, path);

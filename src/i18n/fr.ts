@@ -54,6 +54,8 @@ export const fr: Messages = {
     whatsNewTitle: 'Nouveautés de cette version',
     about: 'À propos',
     aboutTitle: (app) => `À propos de ${app}`,
+    guides: 'Guides',
+    guidesTitle: 'Guides pas à pas pour ces outils',
     star: 'Étoile sur GitHub',
     starTitle: 'Code source sur GitHub. Une étoile aide les autres à le trouver.',
     install: 'Installer l’application',
