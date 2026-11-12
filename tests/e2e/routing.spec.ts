@@ -51,6 +51,22 @@ test.describe('static tool pages', () => {
     }
   });
 
+  // Directories of European software will not list a product whose country of origin
+  // they cannot establish from a public source, so it is stated in the two places they
+  // read: the structured data and the page a person opens. Country only, never an address.
+  test('every static page states the country of origin, in its data and on the page', async ({ request }) => {
+    const paths = ['/', '/pl/', toolPath(TOOL_IDS[0], 'en'), toolPath(TOOL_IDS[0], 'pl'), GUIDES[0].path];
+    for (const path of paths) {
+      const html = await raw(request, path);
+      const blocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
+      const graph = JSON.parse(blocks[0][1])['@graph'] as { '@type': string; address?: unknown }[];
+      const org = graph.find((n) => n['@type'] === 'Organization');
+      expect(org, path).toBeDefined();
+      expect(org?.address, path).toEqual({ '@type': 'PostalAddress', addressCountry: 'PL' });
+      expect(html, path).toMatch(/Made in Poland|Tworzone w Polsce/);
+    }
+  });
+
   test('the home pages link to every tool page', async ({ request }) => {
     const en = await raw(request, '/');
     for (const id of TOOL_IDS) expect(en).toContain(`href="${toolPath(id, 'en')}"`);
