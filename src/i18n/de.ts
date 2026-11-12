@@ -59,6 +59,7 @@ export const de: Messages = {
     openedFileError: 'Die geöffnete Datei konnte nicht gelesen werden.',
     sharedFilesGone: 'Die geteilten Dateien sind nicht mehr verfügbar. Bitte teilen Sie sie erneut.',
     madeBy: 'Von Nyxiontech',
+    madeIn: 'Hergestellt in Polen, in der EU',
     support: 'Unterstützen',
     supportTitle: 'Das Projekt unterstützen',
   },

@@ -59,6 +59,7 @@ export const es: Messages = {
     openedFileError: 'No se ha podido leer el archivo abierto.',
     sharedFilesGone: 'Los archivos compartidos ya no están disponibles. Vuelve a compartirlos.',
     madeBy: 'Hecho por Nyxiontech',
+    madeIn: 'Hecho en Polonia, en la UE',
     support: 'Apoyar',
     supportTitle: 'Apoya el proyecto',
   },

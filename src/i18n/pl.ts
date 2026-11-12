@@ -58,6 +58,7 @@ export const pl: Messages = {
     openedFileError: 'Nie udało się odczytać otwartego pliku.',
     sharedFilesGone: 'Udostępnione pliki nie są już dostępne. Udostępnij je ponownie.',
     madeBy: 'Autor: Nyxiontech',
+    madeIn: 'Tworzone w Polsce, w Unii Europejskiej',
     support: 'Wesprzyj',
     supportTitle: 'Wesprzyj projekt',
   },

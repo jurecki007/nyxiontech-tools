@@ -193,6 +193,9 @@
 .nav-version {
   color: #6f7682;
 }
+.nav-origin {
+  color: #6f7682;
+}
 .shell-main {
   overflow-y: auto;
   min-width: 0;
@@ -235,8 +238,10 @@
   .nav-links {
     flex-wrap: nowrap;
   }
-  /* The language switch comes first in that row, so it is visible without scrolling. */
-  .nav-version-row {
+  /* The language switch comes first in that row, so it is visible without scrolling,
+     and the country of origin rides with it rather than off the end of the scroll. */
+  .nav-version-row,
+  .nav-origin {
     order: -1;
   }
   .nav-item {

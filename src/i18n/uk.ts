@@ -60,6 +60,7 @@ export const uk: Messages = {
     openedFileError: 'Не вдалося прочитати відкритий файл.',
     sharedFilesGone: 'Надіслані файли вже недоступні. Надішліть їх ще раз.',
     madeBy: 'Автор: Nyxiontech',
+    madeIn: 'Створено в Польщі, в ЄС',
     support: 'Підтримати',
     supportTitle: 'Підтримати проєкт',
   },
