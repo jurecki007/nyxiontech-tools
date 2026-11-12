@@ -191,10 +191,10 @@
   color: #f43f5e;
 }
 .nav-version {
-  color: #6f7682;
+  color: var(--muted-on-dark);
 }
 .nav-origin {
-  color: #6f7682;
+  color: var(--muted-on-dark);
 }
 .shell-main {
   overflow-y: auto;
