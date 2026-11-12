@@ -159,7 +159,9 @@ docker run --rm -p 8080:80 ghcr.io/jurecki007/nyxiontech-tools:latest
 
 The published image covers `linux/amd64` and `linux/arm64`, so an x86 server and an ARM
 home box pull the same tag. `:latest` and the version tag follow published releases, and
-`:edge` follows `master`. The site is static and the nginx stage runs no commands, so the
+`:edge` follows `master`. Those three names move; `:sha-<commit>` is published for every
+build and never does, so pin that one (with the digest it resolves to) where an install has to
+stay reproducible. The site is static and the nginx stage runs no commands, so the
 build happens once on the builder's own architecture and both images serve identical files.
 `.github/workflows/image.yml` builds the amd64 image, starts it and asks it for real pages
 before anything is pushed, so a broken image never reaches the registry.

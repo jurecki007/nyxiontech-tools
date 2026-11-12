@@ -7,6 +7,12 @@ name: Container image
 #   ghcr.io/jurecki007/nyxiontech-tools:edge      every push to master
 #   ghcr.io/jurecki007/nyxiontech-tools:latest    every published release
 #   ghcr.io/jurecki007/nyxiontech-tools:1.1.0     every published release
+#   ghcr.io/jurecki007/nyxiontech-tools:sha-1a2b3c4   every build, and never moves
+#
+# The three names above are all moving tags: what :edge or :latest points at changes
+# under anyone pinning them. The commit tag is the one that does not move, which is what
+# an app store or a server that wants a reproducible install should pin, together with
+# the digest it resolves to.
 #
 # The site is static and the deploy stage runs no commands, so the npm build happens once
 # on the runner's own architecture and only the nginx layer differs per platform (see the
@@ -84,6 +90,7 @@ jobs:
             type=raw,value=edge,enable=${{ github.event_name != 'release' }}
             type=raw,value=latest,enable=${{ github.event_name == 'release' }}
             type=semver,pattern={{version}},enable=${{ github.event_name == 'release' }}
+            type=sha
 
       - name: Build both architectures and push
         uses: docker/build-push-action@v6
