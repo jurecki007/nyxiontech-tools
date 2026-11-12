@@ -1157,7 +1157,7 @@ export const COMMON: Record<
       `No. ${tool} runs in your browser on your own device, so your files never leave it. It is free, with no account, no limits and no watermark, and the code is open source (AGPL-3.0).`,
     otherLanguage: 'Polski',
     source: 'Source code',
-    footer: 'Free and open source. Files never leave your device.',
+    footer: 'Free and open source. Files never leave your device. Made in Poland, in the EU.',
   },
   pl: {
     home: 'Narzędzia PDF Nyxiontech',
@@ -1170,7 +1170,7 @@ export const COMMON: Record<
       `Nie. Narzędzie „${tool}” działa w przeglądarce na Twoim urządzeniu, więc pliki go nie opuszczają. Jest bezpłatne, bez konta, limitów i znaku wodnego, a kod jest otwarty (AGPL-3.0).`,
     otherLanguage: 'English',
     source: 'Kod źródłowy',
-    footer: 'Darmowe i otwartoźródłowe. Pliki nie opuszczają Twojego urządzenia.',
+    footer: 'Darmowe i otwartoźródłowe. Pliki nie opuszczają Twojego urządzenia. Tworzone w Polsce, w Unii Europejskiej.',
   },
 };
 

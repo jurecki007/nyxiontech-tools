@@ -109,6 +109,9 @@ const organization = {
   name: 'Nyxiontech',
   url: 'https://nyxiontech.com',
   logo: `${SITE}/icon-512.png`,
+  // Directories of European software decline a product whose country of origin they
+  // cannot establish from a public source. Country only: no address, no registration data.
+  address: { '@type': 'PostalAddress', addressCountry: 'PL' },
 };
 const website = { '@type': 'WebSite', '@id': WEBSITE_ID, name: 'Nyxiontech PDF Tools', url: `${SITE}/`, publisher: { '@id': ORG_ID } };
 
@@ -388,6 +391,7 @@ export function buildPages(template: string): StaticPage[] {
         `${IND}<h2>${esc(COMMON.pl.faq)}</h2>`,
         faqHtml(HOME_PL.faq),
         `${IND}<p><a href="/" hreflang="en" lang="en">English</a> · <a href="${REPO}">${esc(COMMON.pl.source)}</a> · <a href="${REPO}/releases/latest">Aplikacja na Windows</a> · <a href="https://nyxiontech.com">Nyxiontech</a></p>`,
+        `${IND}<p>${esc(COMMON.pl.footer)}</p>`,
       ].join('\n'),
     }),
   });
