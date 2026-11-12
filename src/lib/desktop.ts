@@ -16,4 +16,12 @@ export async function saveWithDialog(blob: Blob, filename: string): Promise<bool
  * desktop app they navigate normally, and the app's navigation guard opens them
  * in the default browser instead (src-tauri/src/lib.rs).
  */
-export const externalLink = isDesktop ? {} : { target: '_blank', rel: 'noopener noreferrer' };
+// Links the app itself owns (GitHub, Ko-fi, nyxiontech.com), never links inside a document
+// someone converted: those are given rel="noopener noreferrer" in lib/office.ts and must keep it,
+// because the site at the other end has no business knowing someone is reading that document.
+//
+// For our own links, 'noreferrer' also hid the one measurement that matters: GitHub's traffic page
+// could not tell that a visitor came from here, so the site-to-repository funnel was invisible.
+// referrerPolicy="origin" sends the origin and nothing else, so GitHub sees tools.nyxiontech.com
+// and never which tool was open. 'noopener' still covers the security reason for the attribute.
+export const externalLink = isDesktop ? {} : { target: '_blank', rel: 'noopener', referrerPolicy: 'origin' as const };

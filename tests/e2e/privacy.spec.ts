@@ -132,4 +132,21 @@ test.describe('support note', () => {
     await expect(page.locator('.nav-links a', { hasText: 'Star on GitHub' })).toHaveAttribute('href', 'https://github.com/jurecki007/nyxiontech-tools');
     await expect(page.locator('.nav-links a', { hasText: 'Support' })).toHaveAttribute('href', 'https://ko-fi.com/nyxiontech');
   });
+
+  // Two different kinds of outgoing link, and the difference is deliberate. The app's own links
+  // name this origin so the project can see where its visitors come from. Links inside a document
+  // someone converted stay silent, because that is their business and not ours.
+  test("the app's own links name only this origin, and document links name nothing", async ({ page }) => {
+    await page.goto('/#/');
+    const github = page.locator('.nav-links a', { hasText: 'GitHub' });
+    await expect(github).toHaveAttribute('rel', 'noopener');
+    await expect(github).toHaveAttribute('referrerpolicy', 'origin');
+    await expect(github).not.toHaveAttribute('rel', /noreferrer/);
+
+    // The other half of the boundary lives in tests/e2e/convert.spec.ts, which requires
+    // rel="noopener noreferrer" on links inside a converted document preview.
+    const support = page.locator('.nav-links a', { hasText: 'Support' });
+    await expect(support).toHaveAttribute('referrerpolicy', 'origin');
+  });
+
 });
