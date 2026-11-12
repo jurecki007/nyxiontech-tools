@@ -154,15 +154,32 @@ docker run --rm -p 8080:80 nyxiontech-pdf-tools   # http://localhost:8080
 Or without building anything, from the GitHub Container Registry:
 
 ```bash
-docker run --rm -p 8080:80 ghcr.io/jurecki007/nyxiontech-tools:latest
+docker run --rm -p 8080:80 ghcr.io/jurecki007/nyxiontech-tools:edge
 ```
 
-The published image covers `linux/amd64` and `linux/arm64`, so an x86 server and an ARM
-home box pull the same tag. `:latest` and the version tag follow published releases, and
-`:edge` follows `master`. Those three names move; `:sha-<commit>` is published for every
-build and never does, so pin that one (with the digest it resolves to) where an install has to
-stay reproducible. The site is static and the nginx stage runs no commands, so the
-build happens once on the builder's own architecture and both images serve identical files.
+The published image covers `linux/amd64` and `linux/arm64`, so an x86 server and an ARM home
+box pull the same tag.
+
+| Tag | Follows | Moves |
+| --- | --- | --- |
+| `:edge` | every push to `master` | yes |
+| `:latest` | the newest published release | yes |
+| `:<version>` | that release and no other | no |
+| `:sha-<commit>` | one build | no |
+
+The command above uses `:edge` rather than `:latest` because publishing started after the last
+release, so `:latest` and a version tag appear with the next one. Where an install has to stay
+reproducible, pin a build tag together with the digest it resolves to:
+
+```bash
+docker run --rm -p 8080:80 ghcr.io/jurecki007/nyxiontech-tools:sha-b70e10b
+```
+
+`npm run images:check` asks the registry about every image tag named on this page and in the
+changelog, and CI runs it, so a tag documented here is a tag that exists.
+
+The site is static and the nginx stage runs no commands, so the build happens once on the
+builder's own architecture and both images serve identical files.
 `.github/workflows/image.yml` builds the amd64 image, starts it and asks it for real pages
 before anything is pushed, so a broken image never reaches the registry.
 
