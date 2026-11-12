@@ -53,6 +53,8 @@ export const uk: Messages = {
     whatsNewTitle: 'Що нового в цій версії',
     about: 'Про програму',
     aboutTitle: (app) => `Про ${app}`,
+    guides: 'Посібники',
+    guidesTitle: 'Покрокові посібники до цих інструментів',
     star: 'Зірка на GitHub',
     starTitle: 'Вихідний код на GitHub. Зірка допомагає іншим його знайти.',
     install: 'Встановити програму',

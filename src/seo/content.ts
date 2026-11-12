@@ -1131,6 +1131,36 @@ export const TOOL_PAGES: Record<ToolId, ToolPage> = {
 };
 
 /** Words shared by every page, per language. */
+/**
+ * The page that lists the guides (/guides, /pl/poradniki). Without it the guides are
+ * reachable only from their own tool page and the sitemap, which is the weakest way for a
+ * reader to find them, and every directory that asks for a documentation address gets a
+ * blank. The two languages are separate sets rather than translations of each other, so
+ * each index lists only its own.
+ */
+export const GUIDES_INDEX: Record<Lang, { title: string; description: string; h1: string; intro: string[] }> = {
+  en: {
+    title: 'Guides: how to work with PDFs without uploading them',
+    description:
+      'Step-by-step guides to redaction, signatures, OCR, metadata, passwords, compression and conversion. Each one names the catch and links to the tool.',
+    h1: 'Guides: how to work with PDFs without uploading them',
+    intro: [
+      'Each guide here takes one job from start to finish: what actually happens inside the file, where the usual advice goes wrong, and which tool on this site finishes it. Everything they describe runs in your browser, so no document is uploaded to read a guide or to follow one.',
+      'The Polish guides are a separate set rather than translations, because they answer Polish questions: GDPR as it is enforced in Poland, the data protection authority\'s decisions, public information bulletins, and the attachment limits of Polish mail providers.',
+    ],
+  },
+  pl: {
+    title: 'Poradniki: jak pracować z PDF bez wysyłania plików',
+    description:
+      'Poradniki krok po kroku: anonimizacja, podpis, OCR, metadane, hasła, kompresja i konwersja. Każdy nazywa haczyk i prowadzi do narzędzia.',
+    h1: 'Poradniki: jak pracować z PDF bez wysyłania plików',
+    intro: [
+      'Każdy poradnik prowadzi jedno zadanie od początku do końca: co naprawdę dzieje się w pliku, gdzie myli się typowa porada i które narzędzie na tej stronie je kończy. Wszystko, co opisują, działa w przeglądarce, więc żaden dokument nie jest wysyłany ani po to, żeby przeczytać poradnik, ani po to, żeby go wykonać.',
+      'Poradniki po polsku to osobny zestaw, nie tłumaczenia, bo odpowiadają na polskie pytania: RODO w praktyce UODO, Biuletyn Informacji Publicznej, ustawa o dostępności cyfrowej i limity załączników w polskiej poczcie.',
+    ],
+  },
+};
+
 export const COMMON: Record<
   Lang,
   {
@@ -1139,6 +1169,8 @@ export const COMMON: Record<
     faq: string;
     related: string;
     allTools: string;
+    /** Label of the link to the guides index, in a footer or a crumb. */
+    guides: string;
     privacyQ: string;
     privacyA: (tool: string) => string;
     otherLanguage: string;
@@ -1152,6 +1184,7 @@ export const COMMON: Record<
     faq: 'Questions',
     related: 'Related tools',
     allTools: 'All tools',
+    guides: 'Guides',
     privacyQ: 'Are my files uploaded?',
     privacyA: (tool) =>
       `No. ${tool} runs in your browser on your own device, so your files never leave it. It is free, with no account, no limits and no watermark, and the code is open source (AGPL-3.0).`,
@@ -1165,6 +1198,7 @@ export const COMMON: Record<
     faq: 'Pytania',
     related: 'Podobne narzędzia',
     allTools: 'Wszystkie narzędzia',
+    guides: 'Poradniki',
     privacyQ: 'Czy moje pliki są gdzieś wysyłane?',
     privacyA: (tool) =>
       `Nie. Narzędzie „${tool}” działa w przeglądarce na Twoim urządzeniu, więc pliki go nie opuszczają. Jest bezpłatne, bez konta, limitów i znaku wodnego, a kod jest otwarty (AGPL-3.0).`,

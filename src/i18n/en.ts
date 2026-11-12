@@ -58,6 +58,8 @@ export const en = {
     whatsNewTitle: "What's new in this version",
     about: 'About',
     aboutTitle: (app: string) => `About ${app}`,
+    guides: 'Guides',
+    guidesTitle: 'Step-by-step guides for these tools',
     star: 'Star on GitHub',
     starTitle: 'Source code on GitHub. A star helps other people find it.',
     install: 'Install app',

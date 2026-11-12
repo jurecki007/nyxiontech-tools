@@ -39,8 +39,8 @@ const FONTS = {
 
 // A home page needs no label above its own name, so it has none here.
 const COPY = {
-  en: { tagline: 'Open source, no account, no uploads', guide: 'Guide', tool: 'Tool' },
-  pl: { tagline: 'Otwarty kod, bez konta, bez wysyłania plików', guide: 'Poradnik', tool: 'Narzędzie' },
+  en: { tagline: 'Open source, no account, no uploads', guide: 'Guide', tool: 'Tool', index: 'Guides' },
+  pl: { tagline: 'Otwarty kod, bez konta, bez wysyłania plików', guide: 'Poradnik', tool: 'Narzędzie', index: 'Poradniki' },
 };
 
 /** Every .html file under dist, deepest last; order only affects progress output. */
@@ -89,7 +89,14 @@ function readPage(file) {
     lang: one(html, /<html lang="([^"]*)"/) === 'pl' ? 'pl' : 'en',
     headline: one(html, /<h1>([^<]*)<\/h1>/),
     description: firstSentence(one(html, /<meta name="description" content="([^"]*)"/)),
-    kind: /(^|\/)(guides|poradnik)\//.test(rel) ? 'guide' : /(^|\/)index\.html$/.test(rel) ? 'home' : 'tool',
+    // The page that lists the guides is neither one of them nor a tool.
+    kind: /(^|\/)(guides|poradniki)\.html$/.test(rel)
+      ? 'index'
+      : /(^|\/)(guides|poradnik)\//.test(rel)
+        ? 'guide'
+        : /(^|\/)index\.html$/.test(rel)
+          ? 'home'
+          : 'tool',
   };
 }
 
@@ -109,7 +116,7 @@ const escapeHtml = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace
 
 function card(page, fontCss) {
   const c = COPY[page.lang];
-  const eyebrow = page.kind === 'home' ? '' : page.kind === 'guide' ? c.guide : c.tool;
+  const eyebrow = page.kind === 'home' ? '' : page.kind === 'guide' ? c.guide : page.kind === 'index' ? c.index : c.tool;
   const h = headlineStyle(page.headline);
   return `<!doctype html>
 <html lang="${page.lang}">

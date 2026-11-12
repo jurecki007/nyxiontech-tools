@@ -51,6 +51,8 @@ Polish pages (strony po polsku): [Narzędzia PDF](https://tools.nyxiontech.com/p
 
 ## Guides
 
+All of them on one page: [Guides](https://tools.nyxiontech.com/guides) in English, [Poradniki](https://tools.nyxiontech.com/pl/poradniki) in Polish. The Polish guides are a separate set rather than translations: they answer Polish questions (GDPR as the Polish authority enforces it, public information bulletins, Polish mail providers' attachment limits).
+
 - [How to check a PDF redaction really removed the text](https://tools.nyxiontech.com/guides/check-pdf-redaction): copy-paste, search and pdftotext checks; comments, forms and metadata.
 - [How to sign a PDF without uploading it](https://tools.nyxiontech.com/guides/sign-pdf-without-uploading): drawn, typed or scanned signature in the browser; simple vs qualified signatures (eIDAS art. 25, US ESIGN Act).
 - [How to check and remove hidden PDF metadata](https://tools.nyxiontech.com/guides/remove-pdf-metadata): information dictionary and XMP, pdfinfo and exiftool checks, what Edit metadata removes and what it keeps.
