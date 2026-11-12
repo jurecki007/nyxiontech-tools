@@ -1,10 +1,10 @@
 # TODO
 
-Where the project stands and what is left. Last updated 2026-11-04.
+Where the project stands and what is left. Last updated 2026-11-12.
 
 ## Status
 
-- **v1.1.0 is released**: web app, Windows installers (`.exe`, `.msi`) and signed update files on [GitHub Releases](https://github.com/jurecki007/nyxiontech-tools/releases/tag/v1.1.0).
+- **v1.2.0 is released**: web app, Windows installers (`.exe`, `.msi`) and signed update files on [GitHub Releases](https://github.com/jurecki007/nyxiontech-tools/releases/tag/v1.2.0).
 - **The repository is public** (since 2026-11-04): anyone can download the installers, and installed apps fetch updates from GitHub Releases.
 - **CI is green on `master`**: web tests on Linux, desktop build on Windows. Desktop smoke tests run for information only, see below.
 - **Donations**: Ko-fi live at `ko-fi.com/nyxiontech` (Stripe: card, Apple/Google Pay, Przelewy24, BLIK). GitHub Sponsors for `jurecki007` is under review.
@@ -16,7 +16,7 @@ Where the project stands and what is left. Last updated 2026-11-04.
 - [x] Turn on private vulnerability reporting, Dependabot alerts, secret scanning and push protection.
 - [x] Protect `master`: PRs need green `build-and-test` and `desktop`; no force pushes or deletion. The owner can still push directly. For a history rewrite, turn off the force-push block in Settings → Branches first.
 - [x] Check the public page: licence detected as AGPL-3.0, release and updater endpoint reachable without login.
-- [ ] Install v1.1.0 from the release on a clean machine, and check the SmartScreen warning and that the app starts.
+- [ ] Install v1.2.0 from the release on a clean machine, and check the SmartScreen warning and that the app starts.
 
 ## Code signing (free, through SignPath Foundation)
 

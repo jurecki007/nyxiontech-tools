@@ -74,7 +74,7 @@ The installers are not code-signed yet: the application to [SignPath Foundation]
 To check that your download is the file GitHub Actions built from this repository, compare its SHA-256 hash with the `sha256:` digest that GitHub shows next to each file on the [release page](https://github.com/jurecki007/nyxiontech-tools/releases/latest):
 
 ```powershell
-Get-FileHash .\Nyxiontech.PDF.Tools_1.1.0_x64-setup.exe   # SHA256 by default
+Get-FileHash .\Nyxiontech.PDF.Tools_1.2.0_x64-setup.exe   # SHA256 by default
 ```
 
 You can also build the installers yourself from source (see [Windows desktop app](#windows-desktop-app)).
