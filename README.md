@@ -151,6 +151,21 @@ docker build -t nyxiontech-pdf-tools .
 docker run --rm -p 8080:80 nyxiontech-pdf-tools   # http://localhost:8080
 ```
 
+Or without building anything, from the GitHub Container Registry:
+
+```bash
+docker run --rm -p 8080:80 ghcr.io/jurecki007/nyxiontech-tools:latest
+```
+
+The published image covers `linux/amd64` and `linux/arm64`, so an x86 server and an ARM
+home box pull the same tag. `:latest` and the version tag follow published releases, and
+`:edge` follows `master`. Those three names move; `:sha-<commit>` is published for every
+build and never does, so pin that one (with the digest it resolves to) where an install has to
+stay reproducible. The site is static and the nginx stage runs no commands, so the
+build happens once on the builder's own architecture and both images serve identical files.
+`.github/workflows/image.yml` builds the amd64 image, starts it and asks it for real pages
+before anything is pushed, so a broken image never reaches the registry.
+
 - Every tool has its own page (`/merge-pdf`, `/pl/polacz-pdf`, ...), built as `merge-pdf.html`, `pl/polacz-pdf.html`. nginx serves `$uri`, then `$uri.html`, then `$uri/index.html`; a trailing slash on a page redirects to the address without it, and any other address gets `404.html` with a 404 status. Another web server needs the same rules (or at least a fallback to `index.html`, which opens the dashboard).
 - `/health` returns `{"status":"UP"}` for liveness and readiness probes, and is what the Compose health check polls. It asks for `127.0.0.1` rather than `localhost`, because nginx listens on IPv4 only and `localhost` inside the container resolves to `::1` first.
 - `/info` returns the name, version and build time.
