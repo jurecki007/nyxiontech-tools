@@ -1,7 +1,7 @@
 {
   "name": "nyxiontech-pdf-tools",
   "private": true,
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Free, open-source PDF and image tools that run entirely in the browser. Files are never uploaded.",
   "license": "AGPL-3.0-or-later",
   "author": "Nyxiontech (https://nyxiontech.com)",

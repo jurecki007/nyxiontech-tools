@@ -5,6 +5,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-11-12
+
 ### Added
 - The self-hosting image is published for `linux/amd64` and `linux/arm64` at `ghcr.io/jurecki007/nyxiontech-tools`, so running a copy no longer means building one: `docker run --rm -p 8080:80 ghcr.io/jurecki007/nyxiontech-tools:edge`. `:edge` follows the default branch, `:latest` and a version tag are created for a published release, and `:sha-<commit>` is created for every build and never moves. Nothing is pushed until the image has been started and asked for real pages, and `npm run images:check` fails the build if the README or this file names an image tag the registry does not have.
 - The README links the guides and asks for a star: nothing on it asked for anything before, and its first link sent a visitor to the company site rather than to the tools. A star helps other people find the project, which is the only thing this repository wants from a reader.
