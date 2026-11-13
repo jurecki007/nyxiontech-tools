@@ -29,6 +29,7 @@ Edit, sign, merge, split, compress, OCR, redact and convert, without uploading a
 - **Redaction that really removes the text.** Redacted pages are re-rendered as images with the boxes burnt in, and comments and form-field values that contain the searched text are removed too. The tests check the output for leaks.
 - **Open source** (AGPL-3.0): read the code, or host your own copy with the included Docker image.
 - **Windows app** with per-user and MSI installers that updates itself.
+- **Accessibility is checked, not claimed.** Every CI run puts axe-core over the dashboard, a tool page, the Polish dashboard and the guides index and fails on any WCAG 2.1 A or AA violation. They pass today with none.
 
 It covers the everyday jobs people otherwise use iLovePDF, Smallpdf and similar services for: [merge](https://tools.nyxiontech.com/merge-pdf), [compress](https://tools.nyxiontech.com/compress-pdf), [sign](https://tools.nyxiontech.com/sign-pdf), [redact](https://tools.nyxiontech.com/redact-pdf), [OCR](https://tools.nyxiontech.com/ocr-pdf), [password-protect](https://tools.nyxiontech.com/protect-pdf), [PDF to Word](https://tools.nyxiontech.com/pdf-to-word), [HEIC to JPG](https://tools.nyxiontech.com/heic-to-jpg) and [more](#dashboard-tools). Projects are autosaved in the browser's IndexedDB.
 
@@ -129,6 +130,7 @@ npm run test:e2e          # builds, serves the production build on :4173, runs t
 npm run test:e2e:report   # opens the HTML report
 ```
 
+- `tests/e2e/accessibility.spec.ts` runs axe-core over the dashboard, a tool page, the Polish dashboard and the guides index, and fails on any WCAG 2.1 A or AA violation. It also asserts the contrast of `--muted` and `--muted-on-dark` directly, because both sit close to the 4.5:1 line on purpose and a small nudge to either would cross it.
 - Test documents are generated in `tests/global-setup.ts` and contain no real data.
 - Tests use the installed Google Chrome. Set `PW_CHANNEL=chromium` after `npx playwright install chromium` to use Playwright's own browser (CI does this).
 - Tests run with one worker, because OCR and the AI model use a lot of memory.

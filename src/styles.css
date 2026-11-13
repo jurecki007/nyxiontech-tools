@@ -4,7 +4,13 @@
   --panel-2: #f8f9fb;
   --border: #e2e5ea;
   --text: #1c1f24;
-  --muted: #6b7280;
+  /* --muted sits on --bg, --panel and --panel-2, all light. --muted-on-dark is its
+     counterpart for the sidebar, which is always --dark. Both are set at the lightest
+     and darkest value that still clears WCAG AA 4.5:1 against their own background:
+     #686f7d on --bg is 4.59:1, #7f8694 on --dark is 4.91:1. Darkening the first or
+     lightening the second breaks that, and tests/e2e/accessibility.spec.ts will say so. */
+  --muted: #686f7d;
+  --muted-on-dark: #7f8694;
   --accent: #2643e8;
   --accent-strong: #1530cb;
   --accent-soft: #e8ebfd;
