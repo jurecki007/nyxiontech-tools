@@ -349,6 +349,12 @@ type Cantoo = typeof import('@cantoo/pdf-lib');
  * @cantoo/pdf-lib encrypts stream contents but writes strings (document info,
  * annotations, form values, outlines) in clear text, although its own reader
  * and every other reader decrypt them. Encrypt every string with its object's key.
+ *
+ * Strings held by a dictionary or an array are written back in place, which is what the
+ * walk below is for. A string kept as its own indirect object, which some producers emit,
+ * has no parent to write through and is replaced in the context instead. Walking only
+ * dictionaries and arrays would leave those readable without the password, and the reader
+ * would decrypt bytes that were never encrypted and hand back an empty value.
  */
 function encryptStrings(lib: Cantoo, doc: Awaited<ReturnType<Cantoo['PDFDocument']['load']>>) {
   const { PDFArray, PDFDict, PDFHexString, PDFName, PDFStream, PDFString } = lib;
@@ -380,7 +386,9 @@ function encryptStrings(lib: Cantoo, doc: Awaited<ReturnType<Cantoo['PDFDocument
         }
       }
     };
-    walk(obj instanceof PDFStream ? obj.dict : obj);
+    const bare = convert(obj);
+    if (bare) context.assign(ref, bare);
+    else walk(obj instanceof PDFStream ? obj.dict : obj);
   }
 }
 
