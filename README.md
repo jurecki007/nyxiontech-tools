@@ -10,6 +10,8 @@ Edit, sign, merge, split, compress, OCR, redact and convert, without uploading a
 [![Made by Nyxiontech](https://img.shields.io/badge/made%20by-Nyxiontech-2643e8)](https://nyxiontech.com)
 [![NoLogin Verified](https://nologin.tools/badges/flat.svg)](https://nologin.tools/badge/tools-nyxiontech-com "Verified by NoLoginTools.org")
 
+[![As seen on Open Source Alternatives](https://www.opensourcealternatives.to/badge-osa.svg)](https://www.opensourcealternatives.to)
+
 [Guides](https://tools.nyxiontech.com/guides) · [Report a bug](https://github.com/jurecki007/nyxiontech-tools/issues/new?template=bug_report.yml) · [Request a feature](https://github.com/jurecki007/nyxiontech-tools/issues/new?template=feature_request.yml)
 
 <a href="https://ko-fi.com/nyxiontech"><img alt="Support on Ko-fi" src="https://img.shields.io/badge/Support%20on-Ko--fi-ff5e5b?style=for-the-badge&logo=kofi&logoColor=white"></a>
@@ -59,8 +61,8 @@ Built and maintained by [Nyxiontech](https://nyxiontech.com), which builds AI im
 
 - **Web:** use it at **[tools.nyxiontech.com](https://tools.nyxiontech.com)**, or host it yourself (below).
 - **Windows 10/11:** get the installer from the [latest release](https://github.com/jurecki007/nyxiontech-tools/releases/latest):
-  - `Nyxiontech.PDF.Tools_<version>_x64-setup.exe`: installs for the current user, no admin rights needed.
-  - `…_x64_en-US.msi`: per-machine installer for IT rollout (Intune, Group Policy).
+  - `Nyxiontech.PDF.Tools_<version>_x64-setup.exe`: installs for the current user, no admin rights needed (~50 MB).
+  - `…_x64_en-US.msi`: per-machine installer for IT rollout (Intune, Group Policy; ~51 MB).
 
   The app updates itself: when a new version is released, it offers to install it. Updates are signed, and the app refuses any that are not. To stop the app from checking, untick **Check for updates automatically** under **About**.
 
@@ -219,8 +221,8 @@ npm run test:desktop      # smoke tests of the built exe (~30 s)
 Building needs [Rust](https://rustup.rs) (stable, MSVC) and the Visual Studio C++ Build Tools. Output in `src-tauri/target/release/`:
 
 - `nyxiontech-pdf-tools.exe`: the app on its own (the web build is embedded). Runs on any Windows 10/11 machine with WebView2, which Windows 11 includes.
-- `bundle/nsis/Nyxiontech PDF Tools_<version>_x64-setup.exe`: per-user installer (~35 MB).
-- `bundle/msi/Nyxiontech PDF Tools_<version>_x64_en-US.msi`: per-machine installer for IT rollout (Intune, Group Policy).
+- `bundle/nsis/Nyxiontech PDF Tools_<version>_x64-setup.exe`: per-user installer (~50 MB).
+- `bundle/msi/Nyxiontech PDF Tools_<version>_x64_en-US.msi`: per-machine installer for IT rollout (Intune, Group Policy; ~51 MB).
 - `…_offline-setup.exe` and `…_offline.msi` (~240 MB, from `desktop:build:offline`): the same, with the full WebView2 installer inside.
 
 On a fresh machine the app needs nothing but WebView2: the C/C++ runtime is linked into the exe, and the other DLLs are part of Windows 10/11. Windows 11 and updated Windows 10 already have WebView2. If it is missing, the normal installers download it (so they need internet), and the offline installers install the copy they carry. The bare exe never installs it. Windows 7/8 are not supported.
