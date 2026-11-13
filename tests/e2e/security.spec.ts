@@ -151,6 +151,8 @@ test.describe('Protect PDF', () => {
     expect(await needsPassword(locked)).toBe(true);
     expect(await fileContains(locked, 'LEAK-ANNOT')).toBe(false);
     expect(await fileContains(locked, 'LEAK-INFO')).toBe(false);
+    // A string kept as its own indirect object has no parent dictionary to be written back through.
+    expect(await fileContains(locked, 'LEAK-INDIRECT')).toBe(false);
     expect(await pdfjsTitle(locked, 'x')).toBe('LEAK-INFO');
 
     // The strings decrypt back to the originals.
@@ -159,8 +161,11 @@ test.describe('Protect PDF', () => {
     await page.locator('input[type=password]').fill('x');
     const doc = await loadPdf((await runAndDownload(page)).bytes);
     expect(doc.getTitle()).toBe('LEAK-INFO');
-    const annot = doc.getPage(0).node.Annots()!.lookup(0, PDFDict);
-    expect(annot.lookup(PDFName.of('Contents'), PDFString, PDFHexString).decodeText()).toBe('LEAK-ANNOT');
+    const annots = doc.getPage(0).node.Annots()!;
+    const contents = (i: number) =>
+      annots.lookup(i, PDFDict).lookup(PDFName.of('Contents'), PDFString, PDFHexString).decodeText();
+    expect(contents(0)).toBe('LEAK-ANNOT');
+    expect(contents(1)).toBe('LEAK-INDIRECT');
   });
 
   test('AES-256: V5/R6 with AESV3 for streams and strings; the password opens it and nothing else does', async ({ page }) => {

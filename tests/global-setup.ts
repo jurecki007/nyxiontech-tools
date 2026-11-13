@@ -108,7 +108,16 @@ async function plainStrings(): Promise<Uint8Array> {
   page.drawText('Protected body text', { x: 50, y: 780, size: 12, font: await doc.embedFont(StandardFonts.Helvetica) });
   page.node.set(
     PDFName.of('Annots'),
-    doc.context.obj([doc.context.obj({ Type: 'Annot', Subtype: 'Text', Rect: [50, 700, 70, 720], Contents: PDFString.of('LEAK-ANNOT') })]),
+    doc.context.obj([
+      doc.context.obj({ Type: 'Annot', Subtype: 'Text', Rect: [50, 700, 70, 720], Contents: PDFString.of('LEAK-ANNOT') }),
+      // Some producers keep a string as its own indirect object instead of inline.
+      doc.context.obj({
+        Type: 'Annot',
+        Subtype: 'Text',
+        Rect: [50, 660, 70, 680],
+        Contents: doc.context.register(PDFString.of('LEAK-INDIRECT')),
+      }),
+    ]),
   );
   const bytes = await doc.save({ useObjectStreams: false });
   // Same length, so the cross-reference offsets stay valid.
