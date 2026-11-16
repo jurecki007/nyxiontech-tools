@@ -12,6 +12,8 @@ Edit, sign, merge, split, compress, OCR, redact and convert, without uploading a
 
 [![As seen on Open Source Alternatives](https://www.opensourcealternatives.to/badge-osa.svg)](https://www.opensourcealternatives.to)
 
+Listed on [EU Software Alternatives](https://eusoftwarealternatives.eu/eu_software/nyxiontech-pdf-tools/)
+
 [Guides](https://tools.nyxiontech.com/guides) · [Report a bug](https://github.com/jurecki007/nyxiontech-tools/issues/new?template=bug_report.yml) · [Request a feature](https://github.com/jurecki007/nyxiontech-tools/issues/new?template=feature_request.yml)
 
 <a href="https://ko-fi.com/nyxiontech"><img alt="Support on Ko-fi" src="https://img.shields.io/badge/Support%20on-Ko--fi-ff5e5b?style=for-the-badge&logo=kofi&logoColor=white"></a>
