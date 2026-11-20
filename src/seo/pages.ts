@@ -11,6 +11,14 @@ import { guidesPath, homePath, TOOL_IDS, toolPath, type Lang, type ToolId } from
 
 export const SITE = 'https://tools.nyxiontech.com';
 const ORG_ID = 'https://nyxiontech.com/#organization';
+
+/** Footer link to Nyxiontech's other product, in the page's language. */
+function loyaltyLink(lang: Lang): string {
+  const pl = lang === 'pl';
+  const href = `https://loyalty.nyxiontech.com/${pl ? 'pl' : 'en'}`;
+  const text = pl ? 'Karta lojalnościowa w Apple i Google Wallet' : 'Loyalty Wallet: stamp cards for Apple & Google Wallet';
+  return `<a href="${href}" hreflang="${pl ? 'pl' : 'en'}">${text}</a>`;
+}
 const WEBSITE_ID = `${SITE}/#website`;
 const REPO = 'https://github.com/jurecki007/nyxiontech-tools';
 
@@ -189,7 +197,7 @@ function toolBody(id: ToolId, lang: Lang, copy: PageCopy, faq: [string, string][
     ...guidesFor(id, lang).map((g) => `${IND}<p><a href="${g.path}">${esc(g.name)}</a></p>`),
     `${IND}<h2>${esc(c.related)}</h2>`,
     list('ul', related),
-    `${IND}<p><a href="${homePath(lang)}">${esc(c.allTools)}</a> · <a href="${guidesPath(lang)}">${esc(c.guides)}</a> · <a href="${toolPath(id, other)}" hreflang="${other}" lang="${other}">${esc(c.otherLanguage)}</a> · <a href="${REPO}">${esc(c.source)}</a></p>`,
+    `${IND}<p><a href="${homePath(lang)}">${esc(c.allTools)}</a> · <a href="${guidesPath(lang)}">${esc(c.guides)}</a> · <a href="${toolPath(id, other)}" hreflang="${other}" lang="${other}">${esc(c.otherLanguage)}</a> · <a href="${REPO}">${esc(c.source)}</a> · ${loyaltyLink(lang)}</p>`,
     `${IND}<p>${esc(c.footer)}</p>`,
   ].join('\n');
 }
@@ -253,7 +261,7 @@ function guidePage(template: string, g: Guide): string {
     `${IND}<p class="crumbs"><a href="${homePath(g.lang)}">${esc(c.home)}</a> › <a href="${toolUrl}">${esc(tool.name)}</a></p>`,
     `${IND}<h1>${esc(g.h1)}</h1>`,
     ...g.blocks.map(blockHtml),
-    `${IND}<footer><p><a href="${homePath(g.lang)}">${esc(c.allTools)}</a> · <a href="${guidesPath(g.lang)}">${esc(c.guides)}</a> · <a href="${REPO}">${esc(c.source)}</a> · ${esc(c.footer)}</p></footer>`,
+    `${IND}<footer><p><a href="${homePath(g.lang)}">${esc(c.allTools)}</a> · <a href="${guidesPath(g.lang)}">${esc(c.guides)}</a> · <a href="${REPO}">${esc(c.source)}</a> · ${loyaltyLink(g.lang)} · ${esc(c.footer)}</p></footer>`,
   ].join('\n');
   let html = render(template, {
     lang: g.lang,
@@ -343,7 +351,7 @@ function guidesIndexPage(template: string, lang: Lang): string {
         guides.map((g) => `<a href="${g.path}">${esc(g.h1)}</a><br /><span class="note">${esc(g.description)}</span>`),
       ),
     ]),
-    `${IND}<footer><p><a href="${homePath(lang)}">${esc(c.allTools)}</a> · <a href="${guidesPath(other)}" hreflang="${other}" lang="${other}">${esc(COMMON[other].guides)}</a> · <a href="${REPO}">${esc(c.source)}</a> · ${esc(c.footer)}</p></footer>`,
+    `${IND}<footer><p><a href="${homePath(lang)}">${esc(c.allTools)}</a> · <a href="${guidesPath(other)}" hreflang="${other}" lang="${other}">${esc(COMMON[other].guides)}</a> · <a href="${REPO}">${esc(c.source)}</a> · ${loyaltyLink(lang)} · ${esc(c.footer)}</p></footer>`,
   ].join('\n');
   return asArticle(
     render(template, {
@@ -473,7 +481,7 @@ export function buildPages(template: string): StaticPage[] {
         `${IND}${toolLinks('pl')}`,
         `${IND}<h2>${esc(COMMON.pl.faq)}</h2>`,
         faqHtml(HOME_PL.faq),
-        `${IND}<p><a href="${guidesPath('pl')}">${esc(COMMON.pl.guides)}</a> · <a href="/" hreflang="en" lang="en">English</a> · <a href="${REPO}">${esc(COMMON.pl.source)}</a> · <a href="${REPO}/releases/latest">Aplikacja na Windows</a> · <a href="https://nyxiontech.com">Nyxiontech</a></p>`,
+        `${IND}<p><a href="${guidesPath('pl')}">${esc(COMMON.pl.guides)}</a> · <a href="/" hreflang="en" lang="en">English</a> · <a href="${REPO}">${esc(COMMON.pl.source)}</a> · <a href="${REPO}/releases/latest">Aplikacja na Windows</a> · <a href="https://nyxiontech.com">Nyxiontech</a> · ${loyaltyLink('pl')}</p>`,
         `${IND}<p>${esc(COMMON.pl.footer)}</p>`,
       ].join('\n'),
     }),

@@ -5,6 +5,9 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+### Changed
+- The footer of every tool and guide page links to Loyalty Wallet, Nyxiontech's digital stamp card for Apple Wallet and Google Wallet.
+
 ## [1.2.0] - 2026-11-12
 
 ### Added
